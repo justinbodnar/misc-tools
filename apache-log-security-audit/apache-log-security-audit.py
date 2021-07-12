@@ -43,12 +43,17 @@ elif len(os.listdir("tmp")) > 0:
 # copies all files from apache logs
 if len(os.listdir(log_dir)) < 1:
 	print( "[ERROR] '"+log_dir+"' has 0 files to analyze" )
+	throw_fatal_error()
 else:
 	print( "[INFO] '"+log_dir+"' has "+str(len(os.listdir(log_dir)))+" files" )
+	os.system( "cp "+log_dir+"* tmp/")
+	print( "[INFO] Copied "+str(len(os.listdir("tmp")))+" files to tmp directory" )
 
-# go through all files in log dir
-#for file in os.listdir( log_dir ):
-#	print( file )
-
-# print ending newline for readability
-print
+# unzip all gunzip files
+print( "[INFO] Beginning decompression of gunzip files. This may take some time." )
+gzs = 0
+for file in os.listdir( "tmp" ):
+	if ".gz" in file:
+		os.system( "gunzip tmp/"+file )
+		gzs += 1
+print( "[INFO] Decompressed "+str(gzs)+" gunzip files" )
