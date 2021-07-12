@@ -1,8 +1,0 @@
-13.48.53.51 - - [03/Mar/2021:04:04:21 -0500] "GET /wp-login.php HTTP/1.1" 301 566 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 Safari/537.36"
-13.48.53.51 - - [03/Mar/2021:04:04:21 -0500] "GET /wp-login.php HTTP/1.1" 404 4152 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 Safari/537.36"
-13.48.53.51 - - [03/Mar/2021:04:04:21 -0500] "GET /wordpress/wp-login.php HTTP/1.1" 301 586 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 Safari/537.36"
-13.48.53.51 - - [03/Mar/2021:04:04:22 -0500] "GET /wordpress/wp-login.php HTTP/1.1" 404 4152 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 Safari/537.36"
-13.48.53.51 - - [03/Mar/2021:04:04:22 -0500] "GET /blog/wp-login.php HTTP/1.1" 301 576 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 Safari/537.36"
-13.48.53.51 - - [03/Mar/2021:04:04:22 -0500] "GET /blog/wp-login.php HTTP/1.1" 404 4152 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 Safari/537.36"
-13.48.53.51 - - [03/Mar/2021:04:04:22 -0500] "GET /wp/wp-login.php HTTP/1.1" 301 572 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 Safari/537.36"
-13.48.53.51 - - [03/Mar/2021:04:04:23 -0500] "GET /wp/wp-login.php HTTP/1.1" 404 4152 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 Safari/537.36"

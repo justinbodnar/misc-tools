@@ -1,2 +1,0 @@
-[Fri Jul 02 21:13:52.082857 2021] [php7:notice] [pid 18055] [client 69.30.225.102:59581] PHP Notice:  Undefined variable: title in /var/www/html/politisort.com/functions.php on line 97, referer: http://www.google.com.hk
-[Fri Jul 02 21:13:52.082906 2021] [php7:notice] [pid 18055] [client 69.30.225.102:59581] PHP Notice:  Undefined variable: desc in /var/www/html/politisort.com/functions.php on line 98, referer: http://www.google.com.hk

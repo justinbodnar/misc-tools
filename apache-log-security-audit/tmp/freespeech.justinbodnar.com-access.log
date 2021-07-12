@@ -1,5 +1,0 @@
-66.249.65.166 - - [12/Jul/2021:03:44:43 -0400] "GET /robots.txt HTTP/1.1" 301 630 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-66.249.65.175 - - [12/Jul/2021:03:44:43 -0400] "GET /robots.txt HTTP/1.1" 404 6555 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-66.249.65.175 - - [12/Jul/2021:03:44:43 -0400] "GET /ads.txt HTTP/1.1" 404 528 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-66.249.65.166 - - [12/Jul/2021:03:44:44 -0400] "GET /ads.txt HTTP/1.1" 301 623 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-92.118.160.17 - - [12/Jul/2021:08:11:23 -0400] "GET / HTTP/1.1" 200 5570 "-" "NetSystemsResearch studies the availability of various services across the internet. Our website is netsystemsresearch.com"

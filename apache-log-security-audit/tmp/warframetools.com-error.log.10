@@ -1,2 +1,0 @@
-[Wed Jun 30 14:06:19.606757 2021] [php7:error] [pid 3861] [client 52.254.70.89:54966] script '/var/www/html/warframetools.com/xmlrpc.php' not found or unable to stat
-[Wed Jun 30 18:49:22.634080 2021] [php7:error] [pid 9793] [client 143.244.128.164:64915] script '/var/www/html/warframetools.com/xmlrpc.php' not found or unable to stat

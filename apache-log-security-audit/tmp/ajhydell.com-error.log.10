@@ -1,5 +1,0 @@
-[Fri Jul 02 00:43:40.389870 2021] [ssl:error] [pid 17845] [client 3.83.166.173:55866] AH02042: rejecting client initiated renegotiation
-[Fri Jul 02 05:57:23.406693 2021] [negotiation:error] [pid 23426] [client 34.212.4.78:49596] AH00690: no acceptable variant: /var/www/html/ajhydell.com/ads.txt
-[Fri Jul 02 06:02:06.989331 2021] [ssl:error] [pid 23426] [client 109.70.100.54:45141] AH02032: Hostname warframetools.com provided via SNI and hostname nanochanqzaytwlydykbg5nxkgyjxk3zsrctxuoxdmbx5jbh2ydyprid.onion provided via HTTP have no compatible SSL setup
-[Fri Jul 02 10:24:56.505241 2021] [negotiation:error] [pid 27425] [client 100.27.39.15:48452] AH00690: no acceptable variant: /var/www/html/ajhydell.com/ads.txt
-[Fri Jul 02 20:11:33.517336 2021] [php7:error] [pid 13084] [client 121.41.118.55:52186] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /var/www/html/ajhydell.com/wp-content/themes/twentyseventeen/404.php:13\nStack trace:\n#0 {main}\n  thrown in /var/www/html/ajhydell.com/wp-content/themes/twentyseventeen/404.php on line 13, referer: http://simplesite.com

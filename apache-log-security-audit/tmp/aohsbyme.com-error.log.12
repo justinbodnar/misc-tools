@@ -1,1 +1,0 @@
-[Wed Oct 23 02:12:15.678929 2019] [php7:error] [pid 18197] [client 193.106.30.99:53064] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /var/www/html/aohsbyme.com/wp-content/themes/twentyseventeen/404.php:13\nStack trace:\n#0 {main}\n  thrown in /var/www/html/aohsbyme.com/wp-content/themes/twentyseventeen/404.php on line 13

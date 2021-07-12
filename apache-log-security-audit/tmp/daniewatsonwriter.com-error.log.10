@@ -1,5 +1,0 @@
-[Fri Jul 02 07:28:04.492565 2021] [php7:error] [pid 27939] [client 148.70.125.137:39998] script '/var/www/html/daniewatsonwriter.com/wp-content/uploads/404.php' not found or unable to stat, referer: http://daniewatsonwriter.com/wp-content/uploads/404.php
-[Fri Jul 02 15:01:53.401835 2021] [ssl:error] [pid 7687] [client 92.118.160.41:50557] AH02032: Hostname mail.paintedprophecies.com provided via SNI and hostname daniewatsonwriter.com provided via HTTP have no compatible SSL setup, referer: http://daniewatsonwriter.com/
-[Fri Jul 02 15:47:47.435408 2021] [ssl:error] [pid 7687] [client 92.118.160.13:37019] AH02032: Hostname mail.ronniekstephens.com provided via SNI and hostname daniewatsonwriter.com provided via HTTP have no compatible SSL setup
-[Fri Jul 02 16:42:37.270361 2021] [ssl:error] [pid 10267] [client 92.118.160.13:53435] AH02032: Hostname blog.paintedprophecies.com provided via SNI and hostname daniewatsonwriter.com provided via HTTP have no compatible SSL setup
-[Fri Jul 02 17:28:39.061999 2021] [php7:error] [pid 10210] [client 185.191.34.215:49684] script '/var/www/html/daniewatsonwriter.com/ludk.php' not found or unable to stat

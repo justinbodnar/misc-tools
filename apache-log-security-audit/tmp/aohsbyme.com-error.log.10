@@ -1,4 +1,0 @@
-[Sun Nov 10 23:23:18.424878 2019] [ssl:error] [pid 32393] [client 134.249.141.83:64310] AH02032: Hostname a provided via SNI and hostname aohsbyme.com provided via HTTP have no compatible SSL setup
-[Sun Nov 10 23:23:18.926202 2019] [ssl:error] [pid 322] [client 134.249.141.83:65065] AH02032: Hostname a provided via SNI and hostname aohsbyme.com provided via HTTP have no compatible SSL setup
-[Sun Nov 10 23:23:19.423610 2019] [ssl:error] [pid 32379] [client 134.249.141.83:49459] AH02032: Hostname a provided via SNI and hostname aohsbyme.com provided via HTTP have no compatible SSL setup
-[Sun Nov 10 23:23:19.921584 2019] [ssl:error] [pid 32388] [client 134.249.141.83:50091] AH02032: Hostname a provided via SNI and hostname aohsbyme.com provided via HTTP have no compatible SSL setup

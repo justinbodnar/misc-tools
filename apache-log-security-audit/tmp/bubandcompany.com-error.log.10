@@ -1,2 +1,0 @@
-[Thu Jul 01 00:57:04.348561 2021] [php7:error] [pid 15790] [client 43.225.44.191:60942] script '/var/www/html/bubandcompany.com/installer.php' not found or unable to stat
-[Thu Jul 01 00:57:04.555314 2021] [php7:error] [pid 16258] [client 43.225.44.191:60958] script '/var/www/html/bubandcompany.com/installer-backup.php' not found or unable to stat

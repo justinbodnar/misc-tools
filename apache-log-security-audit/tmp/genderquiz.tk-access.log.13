@@ -1,4 +1,0 @@
-209.17.97.82 - - [17/Jul/2020:05:34:31 -0400] "GET / HTTP/1.1" 200 16914 "-" "Mozilla/5.0 (compatible; Nimbostratus-Bot/v1.3.2; http://cloudsystemnetworks.com)"
-183.136.225.46 - - [17/Jul/2020:15:55:57 -0400] "GET / HTTP/1.1" 200 17165 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:47.0) Gecko/20100101 Firefox/47.0"
-183.136.225.46 - - [17/Jul/2020:16:17:37 -0400] "GET / HTTP/1.1" 301 568 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:47.0) Gecko/20100101 Firefox/47.0"
-183.136.225.46 - - [17/Jul/2020:16:17:39 -0400] "GET / HTTP/1.1" 200 17165 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:47.0) Gecko/20100101 Firefox/47.0"

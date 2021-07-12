@@ -1,2 +1,0 @@
-[Sat Jun 26 13:31:54.399424 2021] [php7:error] [pid 13234] [client 82.156.101.17:48882] script '/var/www/html/warframetools.com/wp-login.php' not found or unable to stat
-[Sat Jun 26 17:03:41.501578 2021] [php7:error] [pid 17086] [client 45.119.212.93:57604] script '/var/www/html/warframetools.com/wp-login.php' not found or unable to stat

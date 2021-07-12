@@ -1,3 +1,0 @@
-[Thu Jul 01 23:15:06.470974 2021] [php7:error] [pid 15426] [client 54.39.22.135:35060] script '/var/www/html/wilkescw.com/wp-login.php' not found or unable to stat, referer: http://wilkescw.com/wp-login.php
-[Thu Jul 01 23:15:06.476148 2021] [php7:error] [pid 15427] [client 54.39.22.135:35058] script '/var/www/html/wilkescw.com/wp-login.php' not found or unable to stat, referer: http://wilkescw.com/wp-login.php
-[Thu Jul 01 23:15:06.533973 2021] [php7:error] [pid 13156] [client 54.39.22.135:35066] script '/var/www/html/wilkescw.com/wp-login.php' not found or unable to stat, referer: http://wilkescw.com/wp-login.php

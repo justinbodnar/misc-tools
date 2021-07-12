@@ -1,2 +1,0 @@
-51.68.205.115 - - [15/Jun/2021:20:37:22 -0400] "GET / HTTP/1.0" 301 595 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36"
-51.68.205.115 - - [15/Jun/2021:20:37:22 -0400] "GET / HTTP/1.0" 200 5050 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36"

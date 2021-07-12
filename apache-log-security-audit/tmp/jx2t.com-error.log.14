@@ -1,3 +1,0 @@
-[Wed Jan 08 09:06:11.420025 2020] [php7:error] [pid 25579] [client 89.248.160.152:62358] script '/var/www/html/jx2t.com/wp-login.php' not found or unable to stat
-[Wed Jan 08 09:06:13.493683 2020] [php7:error] [pid 25579] [client 89.248.160.152:62358] script '/var/www/html/jx2t.com/wp-login.php' not found or unable to stat
-[Wed Jan 08 14:17:08.980040 2020] [php7:error] [pid 29106] [client 202.143.111.228:41526] script '/var/www/html/jx2t.com/wp-login.php' not found or unable to stat, referer: http://JX2T.COM/wp-login.php

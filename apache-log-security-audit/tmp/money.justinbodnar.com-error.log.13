@@ -1,2 +1,0 @@
-[Fri Jun 04 00:21:00.711566 2021] [php7:error] [pid 18552] [client 3.8.68.2:49437] script '/var/www/html/money.justinbodnar.com/wp-login.php' not found or unable to stat
-[Fri Jun 04 16:05:29.041997 2021] [php7:error] [pid 6777] [client 162.241.120.138:53488] script '/var/www/html/money.justinbodnar.com/wp-login.php' not found or unable to stat, referer: http://money.justinbodnar.com/wp-login.php

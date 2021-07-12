@@ -1,5 +1,0 @@
-[Wed May 20 07:48:55.726287 2020] [ssl:error] [pid 9083] [client 89.238.131.138:44779] AH02032: Hostname p provided via SNI and hostname pamelaturchin.com provided via HTTP have no compatible SSL setup
-[Wed May 20 07:48:56.332146 2020] [ssl:error] [pid 27391] [client 89.238.131.138:11169] AH02032: Hostname p provided via SNI and hostname pamelaturchin.com provided via HTTP have no compatible SSL setup
-[Wed May 20 07:48:56.940284 2020] [ssl:error] [pid 24769] [client 89.238.131.138:61110] AH02032: Hostname p provided via SNI and hostname pamelaturchin.com provided via HTTP have no compatible SSL setup
-[Wed May 20 07:48:57.602425 2020] [ssl:error] [pid 27395] [client 89.238.131.138:41361] AH02032: Hostname p provided via SNI and hostname pamelaturchin.com provided via HTTP have no compatible SSL setup
-[Wed May 20 07:51:58.380856 2020] [ssl:error] [pid 26888] [client 89.238.131.138:63338] AH02032: Hostname p provided via SNI and hostname pamelaturchin.com provided via HTTP have no compatible SSL setup

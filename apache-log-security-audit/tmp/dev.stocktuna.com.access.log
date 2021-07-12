@@ -1,2 +1,0 @@
-92.118.160.17 - - [12/Jul/2021:00:58:50 -0400] "GET / HTTP/1.1" 301 524 "-" "NetSystemsResearch studies the availability of various services across the internet. Our website is netsystemsresearch.com"
-92.118.160.17 - - [12/Jul/2021:00:58:50 -0400] "GET / HTTP/1.1" 200 8954 "http://204.48.19.85:80/" "Go http package"

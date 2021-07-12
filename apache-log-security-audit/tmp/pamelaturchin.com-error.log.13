@@ -1,3 +1,0 @@
-[Sun May 10 12:19:36.976672 2020] [php7:error] [pid 13327] [client 77.88.87.74:12276] script '/var/www/html/pamelaturchin.com/wp-cl-plugin.php' not found or unable to stat, referer: pamelaturchin.com
-[Sun May 10 12:20:25.068594 2020] [php7:error] [pid 13930] [client 77.88.87.74:3358] script '/var/www/html/pamelaturchin.com/wp-dl-plugin.php' not found or unable to stat, referer: pamelaturchin.com
-[Sun May 10 12:21:28.142906 2020] [php7:error] [pid 31128] [client 77.88.87.74:9079] script '/var/www/html/pamelaturchin.com/wp-content/uploads/wp-cl-plugin.php' not found or unable to stat, referer: pamelaturchin.com

@@ -1,3 +1,0 @@
-[Mon Jan 13 00:16:40.923311 2020] [php7:error] [pid 30218] [client 128.199.249.213:57748] script '/var/www/html/jx2t.com/wp-login.php' not found or unable to stat, referer: http://jx2t.com/wp-login.php
-[Mon Jan 13 00:16:41.035659 2020] [php7:error] [pid 30219] [client 128.199.249.213:57766] script '/var/www/html/jx2t.com/wp-login.php' not found or unable to stat, referer: http://jx2t.com/wp-login.php
-[Mon Jan 13 21:58:42.881003 2020] [php7:error] [pid 8956] [client 47.75.126.75:51726] script '/var/www/html/jx2t.com/wp-login.php' not found or unable to stat, referer: http://jx2t.com/wp-login.php

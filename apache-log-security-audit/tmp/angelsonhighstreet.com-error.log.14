@@ -1,1 +1,0 @@
-[Sat May 15 07:55:29.218953 2021] [authz_core:error] [pid 10445] [client 223.238.195.223:34854] AH01630: client denied by server configuration: /var/www/html/angelsonhighstreet.com/.htaccess

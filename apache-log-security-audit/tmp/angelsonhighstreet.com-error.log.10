@@ -1,2 +1,0 @@
-[Tue May 25 02:25:20.601457 2021] [ssl:error] [pid 19551] [client 178.62.74.6:42390] AH02032: Hostname www.napeyeg.com provided via SNI and hostname angelsonhighstreet.com provided via HTTP have no compatible SSL setup
-[Tue May 25 02:25:27.570042 2021] [ssl:error] [pid 21074] [client 178.62.74.6:44602] AH02032: Hostname skilltechnical.com provided via SNI and hostname angelsonhighstreet.com provided via HTTP have no compatible SSL setup

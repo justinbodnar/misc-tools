@@ -1,2 +1,0 @@
-[Wed Sep 02 09:59:35.999496 2020] [php7:error] [pid 15358] [client 170.245.164.11:6364] script '/var/www/html/politicalcompassv2.com/xmlrpc.php' not found or unable to stat
-[Wed Sep 02 13:13:45.911412 2020] [php7:error] [pid 17213] [client 86.108.22.205:45725] script '/var/www/html/politicalcompassv2.com/xmlrpc.php' not found or unable to stat

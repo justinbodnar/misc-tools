@@ -1,4 +1,0 @@
-[Mon Mar 29 18:02:01.871488 2021] [authz_core:error] [pid 20180] [client 103.49.117.187:60168] AH01630: client denied by server configuration: /var/www/html/forum.ajhydell.com/config/databases.yml
-[Mon Mar 29 18:39:58.112786 2021] [authz_core:error] [pid 22033] [client 103.49.117.187:46624] AH01630: client denied by server configuration: /var/www/html/forum.ajhydell.com/.htpasswd
-[Mon Mar 29 19:44:08.384771 2021] [authz_core:error] [pid 24022] [client 103.49.117.187:59174] AH01630: client denied by server configuration: /var/www/html/forum.ajhydell.com/config/database.yml
-[Mon Mar 29 20:28:05.999955 2021] [authz_core:error] [pid 25671] [client 103.49.117.187:33866] AH01630: client denied by server configuration: /var/www/html/forum.ajhydell.com/store/app

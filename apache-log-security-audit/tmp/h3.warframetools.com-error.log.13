@@ -1,3 +1,0 @@
-[Sat Jun 05 14:28:29.838985 2021] [php7:error] [pid 13209] [client 34.203.37.48:23710] script '/var/www/html/h3.warframetools.com/wp-login.php' not found or unable to stat
-[Sat Jun 05 17:50:21.889458 2021] [php7:error] [pid 17682] [client 193.176.85.92:48156] script '/var/www/html/h3.warframetools.com/adminer.php' not found or unable to stat
-[Sat Jun 05 17:50:23.358728 2021] [php7:error] [pid 17681] [client 193.176.85.92:50698] script '/var/www/html/h3.warframetools.com/sql.php' not found or unable to stat

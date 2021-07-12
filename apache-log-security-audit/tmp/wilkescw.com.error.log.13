@@ -1,2 +1,0 @@
-[Tue Sep 01 08:45:42.607084 2020] [php7:error] [pid 15707] [client 213.136.93.171:43558] script '/var/www/html/wilkescw.com/wp-login.php' not found or unable to stat, referer: http://wilkescw.com/wp-login.php
-[Tue Sep 01 14:07:59.943327 2020] [php7:error] [pid 15672] [client 51.79.21.92:57008] script '/var/www/html/wilkescw.com/wp-login.php' not found or unable to stat, referer: http://wilkescw.com/wp-login.php

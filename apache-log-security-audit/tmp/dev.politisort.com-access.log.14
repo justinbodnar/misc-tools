@@ -1,4 +1,0 @@
-66.249.79.233 - - [28/Jun/2021:23:13:07 -0400] "GET /robots.txt HTTP/1.1" 301 603 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-66.249.79.254 - - [28/Jun/2021:23:13:07 -0400] "GET /robots.txt HTTP/1.1" 404 5708 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-66.249.79.226 - - [28/Jun/2021:23:13:07 -0400] "GET /ads.txt HTTP/1.1" 404 5708 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-66.249.79.231 - - [28/Jun/2021:23:13:08 -0400] "GET /ads.txt HTTP/1.1" 301 597 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"

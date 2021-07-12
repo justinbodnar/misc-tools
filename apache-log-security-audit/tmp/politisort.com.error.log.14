@@ -1,2 +1,0 @@
-[Mon Jun 28 08:07:50.154427 2021] [php7:error] [pid 14689] [client 104.244.210.58:45916] script '/var/www/html/politisort.com/xmlrpc.php' not found or unable to stat
-[Mon Jun 28 13:30:42.434799 2021] [php7:error] [pid 26038] [client 188.166.113.91:59402] script '/var/www/html/politisort.com/wp-login.php' not found or unable to stat, referer: http://politisort.com/wp-login.php

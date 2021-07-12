@@ -1,2 +1,0 @@
-[Mon Jun 28 14:48:29.061087 2021] [php7:error] [pid 26929] [client 185.145.13.85:62665] script '/var/www/html/suncoastoutdoor.net/wp-plugins.php' not found or unable to stat, referer: http://suncoastoutdoor.net/wp-plugins.php
-[Mon Jun 28 20:25:00.494909 2021] [php7:error] [pid 879] [client 118.178.123.221:52961] script '/var/www/html/suncoastoutdoor.net/shell.php' not found or unable to stat, referer: http://suncoastoutdoor.net/shell.php

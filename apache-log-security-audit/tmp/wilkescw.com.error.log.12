@@ -1,3 +1,0 @@
-[Wed Sep 02 16:43:47.498242 2020] [php7:error] [pid 22259] [client 5.188.62.25:55539] script '/var/www/html/wilkescw.com/login.php' not found or unable to stat
-[Wed Sep 02 16:43:52.514259 2020] [php7:error] [pid 22259] [client 5.188.62.25:55539] script '/var/www/html/wilkescw.com/administrator.php' not found or unable to stat
-[Wed Sep 02 16:43:54.794491 2020] [php7:error] [pid 22259] [client 5.188.62.25:55539] script '/var/www/html/wilkescw.com/admin_login.php' not found or unable to stat

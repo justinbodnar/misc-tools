@@ -1,2 +1,0 @@
-142.93.249.103 - - [02/Jul/2021:05:06:17 -0400] "GET /.env HTTP/1.1" 301 600 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36"
-142.93.249.103 - - [02/Jul/2021:05:06:17 -0400] "POST / HTTP/1.1" 301 592 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36"

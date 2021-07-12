@@ -1,3 +1,0 @@
-[Wed Jun 30 01:38:41.901686 2021] [php7:error] [pid 19609] [client 162.241.76.91:51516] script '/var/www/html/qualitycraftsmanshipllc.com/alfa.php' not found or unable to stat, referer: http://qualitycraftsmanshipllc.com/alfa.php
-[Wed Jun 30 20:40:30.644978 2021] [php7:error] [pid 11642] [client 65.21.148.16:40564] script '/var/www/html/qualitycraftsmanshipllc.com/3index.php' not found or unable to stat
-[Wed Jun 30 22:33:04.903504 2021] [php7:error] [pid 12701] [client 121.41.118.55:47540] script '/var/www/html/qualitycraftsmanshipllc.com/wp-admin/css/common.php' not found or unable to stat, referer: http://qualitycraftsmanshipllc.com/wp-admin/css/common.php

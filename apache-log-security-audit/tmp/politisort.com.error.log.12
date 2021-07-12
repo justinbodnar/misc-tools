@@ -1,2 +1,0 @@
-[Wed Jun 30 07:25:01.928432 2021] [php7:notice] [pid 21345] [client 177.234.143.242:39116] PHP Notice:  Undefined variable: title in /var/www/html/politisort.com/functions.php on line 97, referer: https://politisort.com/
-[Wed Jun 30 07:25:01.928491 2021] [php7:notice] [pid 21345] [client 177.234.143.242:39116] PHP Notice:  Undefined variable: desc in /var/www/html/politisort.com/functions.php on line 98, referer: https://politisort.com/

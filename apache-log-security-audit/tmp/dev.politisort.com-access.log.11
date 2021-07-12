@@ -1,6 +1,0 @@
-167.99.118.34 - - [01/Jul/2021:10:11:31 -0400] "GET / HTTP/1.0" 301 546 "-" "Mozilla/5.0 (compatible; NetcraftSurveyAgent/1.0; +info@netcraft.com)"
-167.99.118.34 - - [01/Jul/2021:10:11:36 -0400] "GET / HTTP/1.0" 200 11735 "-" "Mozilla/5.0 (compatible; NetcraftSurveyAgent/1.0; +info@netcraft.com)"
-66.249.66.34 - - [01/Jul/2021:21:43:33 -0400] "GET /robots.txt HTTP/1.1" 404 5708 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-66.249.66.34 - - [01/Jul/2021:21:43:33 -0400] "GET /ads.txt HTTP/1.1" 404 519 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-66.249.66.46 - - [01/Jul/2021:22:13:24 -0400] "GET /robots.txt HTTP/1.1" 301 603 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-66.249.66.48 - - [01/Jul/2021:22:13:24 -0400] "GET /ads.txt HTTP/1.1" 301 597 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"

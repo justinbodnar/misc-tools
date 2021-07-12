@@ -1,3 +1,0 @@
-[Thu Jul 01 05:01:09.770216 2021] [php7:error] [pid 19613] [client 95.131.182.119:55052] script '/var/www/html/suncoastoutdoor.net/wp-admin/network/network.php' not found or unable to stat, referer: http://suncoastoutdoor.net/wp-admin/network/network.php
-[Thu Jul 01 23:11:23.750919 2021] [php7:error] [pid 15427] [client 45.40.166.167:59578] script '/var/www/html/suncoastoutdoor.net/installer.php' not found or unable to stat
-[Thu Jul 01 23:11:23.759658 2021] [php7:error] [pid 13156] [client 45.40.166.167:59634] script '/var/www/html/suncoastoutdoor.net/installer-backup.php' not found or unable to stat

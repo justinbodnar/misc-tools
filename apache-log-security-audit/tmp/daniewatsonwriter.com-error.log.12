@@ -1,2 +1,0 @@
-[Wed Jun 30 11:27:21.095324 2021] [php7:error] [pid 1049] [client 69.163.163.198:42378] script '/var/www/html/daniewatsonwriter.com/shx.php' not found or unable to stat, referer: http://daniewatsonwriter.com/shx.php
-[Wed Jun 30 17:21:06.828923 2021] [php7:error] [pid 8907] [client 62.171.152.145:55009] script '/var/www/html/daniewatsonwriter.com/installer.php' not found or unable to stat

@@ -1,2 +1,0 @@
-[Fri Apr 16 04:15:35.566375 2021] [php7:error] [pid 27774] [client 52.52.190.187:4892] script '/var/www/html/tools.justinbodnar.com/wp-login.php' not found or unable to stat
-[Fri Apr 16 12:50:02.680164 2021] [php7:error] [pid 11034] [client 52.52.190.187:15226] script '/var/www/html/tools.justinbodnar.com/wp-login.php' not found or unable to stat

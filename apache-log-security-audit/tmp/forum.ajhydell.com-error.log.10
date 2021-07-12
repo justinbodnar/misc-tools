@@ -1,6 +1,0 @@
-[Sun Apr 04 02:31:39.677625 2021] [authz_core:error] [pid 8444] [client 194.110.114.72:52006] AH01630: client denied by server configuration: /var/www/html/forum.ajhydell.com/store/index.php
-[Sun Apr 04 02:31:57.127107 2021] [authz_core:error] [pid 12102] [client 194.110.114.72:37195] AH01630: client denied by server configuration: /var/www/html/forum.ajhydell.com/store/rss
-[Sun Apr 04 02:31:57.634313 2021] [authz_core:error] [pid 8448] [client 194.110.114.72:37621] AH01630: client denied by server configuration: /var/www/html/forum.ajhydell.com/store/rss
-[Sun Apr 04 02:31:58.139262 2021] [authz_core:error] [pid 7597] [client 194.110.114.72:38018] AH01630: client denied by server configuration: /var/www/html/forum.ajhydell.com/store/rss
-[Sun Apr 04 02:32:05.852474 2021] [authz_core:error] [pid 12106] [client 194.110.114.72:44018] AH01630: client denied by server configuration: /var/www/html/forum.ajhydell.com/store/downloader
-[Sun Apr 04 02:32:11.050200 2021] [authz_core:error] [pid 12107] [client 194.110.114.72:48008] AH01630: client denied by server configuration: /var/www/html/forum.ajhydell.com/store/errors

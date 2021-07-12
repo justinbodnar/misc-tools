@@ -1,2 +1,0 @@
-[Thu Apr 08 00:36:29.528760 2021] [php7:error] [pid 28390] [client 52.30.16.188:54932] script '/var/www/html/tools.justinbodnar.com/wp-login.php' not found or unable to stat
-[Thu Apr 08 23:25:18.497031 2021] [php7:error] [pid 14769] [client 191.101.252.107:3189] script '/var/www/html/tools.justinbodnar.com/xmlrpc.php' not found or unable to stat

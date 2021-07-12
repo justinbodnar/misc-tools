@@ -1,7 +1,0 @@
-[Sun Jun 27 01:27:40.177442 2021] [php7:error] [pid 417] [client 137.74.76.179:38528] script '/var/www/html/suncoastoutdoor.net/wp-class.php' not found or unable to stat
-[Sun Jun 27 09:24:16.257472 2021] [php7:error] [pid 14561] [client 20.185.234.56:61031] script '/var/www/html/suncoastoutdoor.net/wp-includes/class-wp-page-cache.php' not found or unable to stat, referer: www.google.com
-[Sun Jun 27 09:24:16.908608 2021] [php7:error] [pid 15843] [client 20.185.234.56:59475] script '/var/www/html/suncoastoutdoor.net/wp-includes/lfx.php' not found or unable to stat, referer: www.google.com
-[Sun Jun 27 13:20:13.549477 2021] [php7:error] [pid 20389] [client 202.254.236.102:50174] script '/var/www/html/suncoastoutdoor.net/a.php' not found or unable to stat, referer: http://suncoastoutdoor.net/a.php
-[Sun Jun 27 19:08:15.488464 2021] [php7:error] [pid 27006] [client 148.70.125.137:36992] script '/var/www/html/suncoastoutdoor.net/ini.php' not found or unable to stat, referer: http://suncoastoutdoor.net/ini.php
-[Sun Jun 27 19:10:06.209322 2021] [php7:error] [pid 29535] [client 23.102.115.42:55427] script '/var/www/html/suncoastoutdoor.net/wp-admin/includes/wp-class.php' not found or unable to stat, referer: www.google.com
-[Sun Jun 27 19:10:14.637235 2021] [php7:error] [pid 25813] [client 23.102.115.42:58057] script '/var/www/html/suncoastoutdoor.net/wp-admin/includes/wp-class.php' not found or unable to stat, referer: www.google.com

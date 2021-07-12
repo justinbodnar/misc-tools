@@ -1,8 +1,0 @@
-[Thu May 21 19:35:28.330665 2020] [ssl:error] [pid 13873] [client 52.183.12.132:50509] AH02032: Hostname p provided via SNI and hostname paranoidmicrobiology.com provided via HTTP have no compatible SSL setup
-[Thu May 21 19:35:28.664700 2020] [ssl:error] [pid 16222] [client 52.183.12.132:50609] AH02032: Hostname p provided via SNI and hostname paranoidmicrobiology.com provided via HTTP have no compatible SSL setup
-[Thu May 21 19:35:28.985972 2020] [ssl:error] [pid 12020] [client 52.183.12.132:50715] AH02032: Hostname p provided via SNI and hostname paranoidmicrobiology.com provided via HTTP have no compatible SSL setup
-[Thu May 21 19:35:29.320238 2020] [ssl:error] [pid 12214] [client 52.183.12.132:50804] AH02032: Hostname p provided via SNI and hostname paranoidmicrobiology.com provided via HTTP have no compatible SSL setup
-[Thu May 21 19:35:29.646011 2020] [ssl:error] [pid 9563] [client 52.183.12.132:50921] AH02032: Hostname p provided via SNI and hostname paranoidmicrobiology.com provided via HTTP have no compatible SSL setup
-[Thu May 21 19:35:29.981571 2020] [ssl:error] [pid 8230] [client 52.183.12.132:51013] AH02032: Hostname p provided via SNI and hostname paranoidmicrobiology.com provided via HTTP have no compatible SSL setup
-[Thu May 21 19:35:30.307573 2020] [ssl:error] [pid 16223] [client 52.183.12.132:51104] AH02032: Hostname p provided via SNI and hostname paranoidmicrobiology.com provided via HTTP have no compatible SSL setup
-[Thu May 21 19:35:30.630171 2020] [ssl:error] [pid 15817] [client 52.183.12.132:51197] AH02032: Hostname p provided via SNI and hostname paranoidmicrobiology.com provided via HTTP have no compatible SSL setup
