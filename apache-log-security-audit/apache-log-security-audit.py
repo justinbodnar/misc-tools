@@ -57,3 +57,28 @@ for file in os.listdir( "tmp" ):
 		os.system( "gunzip tmp/"+file )
 		gzs += 1
 print( "[INFO] Decompressed "+str(gzs)+" gunzip files" )
+
+# concatenate all files into one
+# use first two prefixes as clues
+keys = {}
+for file in os.listdir( "tmp" ):
+	elements = file.split(".")
+	# deal with short names
+	if len(elements) > 3:
+		key = elements[0]+"."+elements[1]+"."+elements[2]
+		last_index_added = 2
+	else:
+		key = elements[0]+"."+elements[1]
+		last_index_added = 1
+	key = key.lower()
+	if "access" not in key and "error" not in key and len(elements) > last_index_added+1:
+		last_index_added += 1
+		key = key + "." + elements[last_index_added]
+
+	if key not in keys:
+		keys[key] = []
+
+print( "[INFO] "+str(len(keys))+" distinct sites were found." )
+
+for key in keys:
+	print(key)

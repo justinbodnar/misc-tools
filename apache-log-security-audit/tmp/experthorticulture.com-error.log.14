@@ -1,0 +1,7 @@
+[Mon Jun 28 02:08:27.859115 2021] [php7:error] [pid 5359] [client 208.113.170.111:46090] script '/var/www/html/experthorticulture.com/a.php' not found or unable to stat, referer: http://experthorticulture.com/a.php
+[Mon Jun 28 03:18:31.115576 2021] [php7:error] [pid 11349] [client 120.76.201.177:45479] script '/var/www/html/experthorticulture.com/docindex.php' not found or unable to stat, referer: http://experthorticulture.com/docindex.php
+[Mon Jun 28 03:18:37.395842 2021] [php7:error] [pid 9389] [client 120.76.201.177:46043] script '/var/www/html/experthorticulture.com/docindex.php' not found or unable to stat, referer: http://experthorticulture.com/docindex.php
+[Mon Jun 28 05:10:34.561307 2021] [php7:error] [pid 14467] [client 144.202.18.97:57312] script '/var/www/html/experthorticulture.com/wp-includes/class-wp-page-cache.php' not found or unable to stat, referer: www.google.com
+[Mon Jun 28 05:10:55.093700 2021] [php7:error] [pid 14323] [client 144.202.18.97:57071] script '/var/www/html/experthorticulture.com/wp-includes/lfx.php' not found or unable to stat, referer: www.google.com
+[Mon Jun 28 19:47:51.680105 2021] [php7:error] [pid 1228] [client 103.48.193.28:42200] script '/var/www/html/experthorticulture.com/wp-info.php' not found or unable to stat, referer: http://experthorticulture.com/wp-info.php
+[Mon Jun 28 21:31:34.221547 2021] [php7:error] [pid 3465] [client 43.129.215.71:46239] script '/var/www/html/experthorticulture.com/doc.php' not found or unable to stat, referer: http://experthorticulture.com/doc.php

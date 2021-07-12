@@ -1,0 +1,2 @@
+[Fri Oct 02 07:59:33.808681 2020] [php7:error] [pid 14568] [client 79.137.62.157:65396] script '/var/www/html/nepatechnology.com/wp-login.php' not found or unable to stat, referer: http://nepatechnology.com/wp-login.php
+[Fri Oct 02 14:05:33.946840 2020] [php7:error] [pid 23637] [client 217.170.205.71:43750] script '/var/www/html/nepatechnology.com/wp-login.php' not found or unable to stat

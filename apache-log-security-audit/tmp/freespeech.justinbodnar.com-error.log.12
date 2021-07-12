@@ -1,0 +1,2 @@
+[Tue Jun 08 08:49:57.536355 2021] [php7:error] [pid 26846] [client 34.209.105.222:53104] script '/var/www/html/freespeech.justinbodnar.com/wp-login.php' not found or unable to stat
+[Tue Jun 08 10:46:10.593854 2021] [php7:error] [pid 28726] [client 20.94.223.33:51952] script '/var/www/html/freespeech.justinbodnar.com/xmlrpc.php' not found or unable to stat

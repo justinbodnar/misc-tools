@@ -1,0 +1,2 @@
+[Wed Sep 30 05:11:32.607717 2020] [php7:error] [pid 20076] [client 167.88.170.2:52280] script '/var/www/html/nepatechnology.com/wp-login.php' not found or unable to stat, referer: http://nepatechnology.com/wp-login.php
+[Wed Sep 30 11:10:39.314263 2020] [php7:error] [pid 28985] [client 13.72.118.223:54685] script '/var/www/html/nepatechnology.com/xmlrpc.php' not found or unable to stat

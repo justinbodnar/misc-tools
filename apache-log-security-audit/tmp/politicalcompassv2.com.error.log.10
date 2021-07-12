@@ -1,0 +1,1 @@
+[Sun Sep 06 13:10:21.692803 2020] [php7:error] [pid 16243] [client 64.227.5.3:55570] script '/var/www/html/politicalcompassv2.com/wp-login.php' not found or unable to stat, referer: http://politicalcompassv2.com/wp-login.php

@@ -1,0 +1,7 @@
+[Tue Jun 29 04:55:04.806468 2021] [php7:error] [pid 15650] [client 18.222.119.93:55985] script '/var/www/html/nepadesigns.com/wp-admin/includes/wp-class.php' not found or unable to stat, referer: www.google.com
+[Tue Jun 29 04:55:23.569566 2021] [php7:error] [pid 15650] [client 18.222.119.93:59145] script '/var/www/html/nepadesigns.com/wp-admin/includes/wp-class.php' not found or unable to stat, referer: www.google.com
+[Tue Jun 29 18:27:22.156990 2021] [php7:error] [pid 2373] [client 193.176.85.112:42566] script '/var/www/html/nepadesigns.com/adminer.php' not found or unable to stat
+[Tue Jun 29 18:27:23.560387 2021] [php7:error] [pid 2401] [client 193.176.85.112:43514] script '/var/www/html/nepadesigns.com/sql.php' not found or unable to stat
+[Tue Jun 29 19:19:59.836127 2021] [php7:error] [pid 5638] [client 148.72.232.125:53618] script '/var/www/html/nepadesigns.com/alfa.php' not found or unable to stat, referer: http://nepadesigns.com/alfa.php
+[Tue Jun 29 21:24:14.414272 2021] [php7:error] [pid 12313] [client 82.165.85.238:54534] script '/var/www/html/nepadesigns.com/shx.php' not found or unable to stat, referer: http://nepadesigns.com/shx.php
+[Tue Jun 29 23:38:44.603665 2021] [php7:error] [pid 16574] [client 188.166.218.146:55370] script '/var/www/html/nepadesigns.com/index2.php' not found or unable to stat, referer: http://nepadesigns.com/index2.php

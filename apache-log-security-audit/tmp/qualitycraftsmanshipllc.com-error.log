@@ -1,0 +1,10 @@
+[Mon Jul 12 01:06:08.667721 2021] [php7:error] [pid 5817] [client 185.191.34.215:58856] script '/var/www/html/qualitycraftsmanshipllc.com/wp-includes/SimplePie/Decode/HTML/bug.php' not found or unable to stat
+[Mon Jul 12 01:17:37.834586 2021] [php7:error] [pid 5803] [client 185.191.34.215:33962] script '/var/www/html/qualitycraftsmanshipllc.com/license.php' not found or unable to stat
+[Mon Jul 12 02:12:01.446445 2021] [php7:error] [pid 5803] [client 185.191.34.215:46934] script '/var/www/html/qualitycraftsmanshipllc.com/wp-includes/output.php' not found or unable to stat
+[Mon Jul 12 04:34:13.354610 2021] [php7:error] [pid 9912] [client 185.191.34.215:53462] script '/var/www/html/qualitycraftsmanshipllc.com/wp-content/plugins/SocketIontrol.php' not found or unable to stat
+[Mon Jul 12 07:23:30.783729 2021] [php7:error] [pid 16682] [client 185.191.34.215:47620] script '/var/www/html/qualitycraftsmanshipllc.com/wp-content/plugins/szalog.php' not found or unable to stat
+[Mon Jul 12 09:19:07.700137 2021] [php7:error] [pid 20457] [client 185.191.34.215:36328] script '/var/www/html/qualitycraftsmanshipllc.com/wp-includes/css/newgolden.php' not found or unable to stat
+[Mon Jul 12 09:41:38.602085 2021] [php7:error] [pid 20456] [client 185.191.34.215:40960] script '/var/www/html/qualitycraftsmanshipllc.com/wp-content/plugins/500.php' not found or unable to stat
+[Mon Jul 12 09:41:38.603024 2021] [php7:error] [pid 21267] [client 185.191.34.215:40968] script '/var/www/html/qualitycraftsmanshipllc.com/writebab.php' not found or unable to stat
+[Mon Jul 12 10:49:29.591683 2021] [php7:error] [pid 21382] [client 185.191.34.215:38066] script '/var/www/html/qualitycraftsmanshipllc.com/wp-content/uploads/rnnvhs.php' not found or unable to stat
+[Mon Jul 12 11:52:58.718596 2021] [php7:error] [pid 24409] [client 185.191.34.215:33652] script '/var/www/html/qualitycraftsmanshipllc.com/st.php' not found or unable to stat

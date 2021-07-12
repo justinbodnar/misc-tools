@@ -1,0 +1,5 @@
+[Mon Jun 28 06:16:03.684727 2021] [php7:error] [pid 14579] [client 192.254.138.161:44578] script '/var/www/html/nepadesigns.com/wp-info.php' not found or unable to stat, referer: http://nepadesigns.com/wp-info.php
+[Mon Jun 28 06:53:45.157937 2021] [php7:error] [pid 14561] [client 66.33.194.39:34732] script '/var/www/html/nepadesigns.com/docindex.php' not found or unable to stat, referer: http://nepadesigns.com/docindex.php
+[Mon Jun 28 07:34:57.250779 2021] [php7:error] [pid 14689] [client 148.251.54.72:42472] script '/var/www/html/nepadesigns.com/404.php' not found or unable to stat, referer: http://nepadesigns.com/404.php
+[Mon Jun 28 14:43:40.276508 2021] [php7:error] [pid 27298] [client 207.148.125.52:56212] script '/var/www/html/nepadesigns.com/shell.php' not found or unable to stat, referer: http://nepadesigns.com/shell.php
+[Mon Jun 28 15:31:57.442519 2021] [php7:error] [pid 28439] [client 62.171.152.145:51550] script '/var/www/html/nepadesigns.com/installer.php' not found or unable to stat

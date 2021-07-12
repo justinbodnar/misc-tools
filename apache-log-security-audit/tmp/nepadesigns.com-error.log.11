@@ -1,0 +1,3 @@
+[Thu Jul 01 05:17:52.876005 2021] [php7:error] [pid 19002] [client 144.76.78.178:52122] script '/var/www/html/nepadesigns.com/wp-admin/user/user-profile.php' not found or unable to stat, referer: http://nepadesigns.com/wp-admin/user/user-profile.php
+[Thu Jul 01 19:16:00.944768 2021] [php7:error] [pid 10197] [client 192.254.138.161:49790] script '/var/www/html/nepadesigns.com/wp-includes/widgets/class-wp-widget-header.php' not found or unable to stat, referer: http://nepadesigns.com/wp-includes/widgets/class-wp-widget-header.php
+[Thu Jul 01 23:04:24.568795 2021] [php7:error] [pid 15350] [client 47.103.77.10:17244] script '/var/www/html/nepadesigns.com/wp-admin/links.php' not found or unable to stat, referer: http://nepadesigns.com/wp-admin/links.php

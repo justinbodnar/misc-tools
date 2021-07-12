@@ -1,0 +1,5 @@
+[Thu Jul 01 14:03:14.350369 2021] [php7:notice] [pid 1510] [client 95.163.255.154:58111] PHP Notice:  Undefined variable: title in /var/www/html/politisort.com/functions.php on line 97
+[Thu Jul 01 14:03:14.350416 2021] [php7:notice] [pid 1510] [client 95.163.255.154:58111] PHP Notice:  Undefined variable: desc in /var/www/html/politisort.com/functions.php on line 98
+[Thu Jul 01 18:40:36.245567 2021] [php7:error] [pid 9493] [client 148.72.22.169:46298] script '/var/www/html/politisort.com/wp-login.php' not found or unable to stat, referer: http://politisort.com/wp-login.php
+[Thu Jul 01 18:40:36.251193 2021] [php7:error] [pid 9494] [client 148.72.22.169:46296] script '/var/www/html/politisort.com/wp-login.php' not found or unable to stat, referer: http://politisort.com/wp-login.php
+[Thu Jul 01 18:40:36.251786 2021] [php7:error] [pid 9581] [client 148.72.22.169:46294] script '/var/www/html/politisort.com/wp-login.php' not found or unable to stat, referer: http://politisort.com/wp-login.php

@@ -1,0 +1,5 @@
+13.90.153.101 - - [30/Jun/2021:07:24:43 -0400] "GET /.env HTTP/1.1" 301 597 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36"
+13.90.153.101 - - [30/Jun/2021:07:24:48 -0400] "POST / HTTP/1.1" 301 589 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36"
+51.15.205.3 - - [30/Jun/2021:11:57:05 -0400] "GET / HTTP/1.1" 200 10444 "-" "-"
+167.99.118.181 - - [30/Jun/2021:22:23:15 -0400] "GET / HTTP/1.0" 301 552 "-" "Mozilla/5.0 (compatible; NetcraftSurveyAgent/1.0; +info@netcraft.com)"
+167.99.118.181 - - [30/Jun/2021:22:23:20 -0400] "GET / HTTP/1.0" 200 10463 "-" "Mozilla/5.0 (compatible; NetcraftSurveyAgent/1.0; +info@netcraft.com)"

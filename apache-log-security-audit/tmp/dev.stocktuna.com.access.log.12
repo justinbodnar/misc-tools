@@ -1,0 +1,4 @@
+139.155.54.119 - - [23/Jun/2021:05:44:25 -0400] "GET / HTTP/1.1" 301 543 "-" "Mozilla/5.0 (compatible; ThinkBot/0.3.0; +In_the_test_phase,_if_the_spider_brings_you_trouble,_please_add_our_IP_to_the_blacklist._Thank_you.)"
+139.155.54.119 - - [23/Jun/2021:05:44:34 -0400] "GET / HTTP/1.1" 200 5016 "http://dev.stocktuna.com" "Mozilla/5.0 (compatible; ThinkBot/0.3.0; +In_the_test_phase,_if_the_spider_brings_you_trouble,_please_add_our_IP_to_the_blacklist._Thank_you.)"
+139.155.54.119 - - [23/Jun/2021:05:44:34 -0400] "GET / HTTP/1.1" 301 543 "-" "Mozilla/5.0 (compatible; ThinkBot/0.3.0; +In_the_test_phase,_if_the_spider_brings_you_trouble,_please_add_our_IP_to_the_blacklist._Thank_you.)"
+139.155.54.119 - - [23/Jun/2021:05:44:39 -0400] "GET / HTTP/1.1" 200 5016 "http://dev.stocktuna.com" "Mozilla/5.0 (compatible; ThinkBot/0.3.0; +In_the_test_phase,_if_the_spider_brings_you_trouble,_please_add_our_IP_to_the_blacklist._Thank_you.)"

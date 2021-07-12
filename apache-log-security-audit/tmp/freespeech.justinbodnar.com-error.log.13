@@ -1,0 +1,4 @@
+[Sat Jun 05 08:21:34.929503 2021] [php7:error] [pid 4623] [client 79.98.45.77:50854] script '/var/www/html/freespeech.justinbodnar.com/wp-login.php' not found or unable to stat, referer: http://freespeech.justinbodnar.com/wp-login.php
+[Sat Jun 05 14:11:36.641225 2021] [php7:error] [pid 11765] [client 13.124.222.242:1089] script '/var/www/html/freespeech.justinbodnar.com/wp-login.php' not found or unable to stat
+[Sat Jun 05 19:49:02.034607 2021] [php7:error] [pid 20873] [client 193.176.85.92:42056] script '/var/www/html/freespeech.justinbodnar.com/adminer.php' not found or unable to stat
+[Sat Jun 05 19:49:03.977943 2021] [php7:error] [pid 20898] [client 193.176.85.92:45006] script '/var/www/html/freespeech.justinbodnar.com/sql.php' not found or unable to stat

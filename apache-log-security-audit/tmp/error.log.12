@@ -1,0 +1,216 @@
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 00:00:02.521427 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 00:00:02.521455 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 00:51:26.251520 2021] [php7:error] [pid 18896] [client 20.199.121.36:55268] script '/var/www/html/204.48.19.85/xmlrpc.php' not found or unable to stat
+[Wed Jun 30 02:02:41.372097 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:02:41.511014 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:02:41.511033 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:02:49.404830 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:02:49.546025 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:02:49.546045 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:02:51.819904 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:02:51.922519 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:02:51.922540 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:02:58.386325 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:02:58.554964 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:02:58.554987 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:03:00.546210 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:03:00.675786 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:03:00.675811 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:03:07.183289 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:03:07.334113 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:03:07.334138 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:03:09.205445 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:03:09.350618 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:03:09.350638 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:03:15.604284 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:03:15.774259 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:03:15.774287 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:03:17.913598 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:03:18.048633 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:03:18.048656 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:03:24.484305 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:03:24.579757 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:03:24.579780 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:03:26.526598 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:03:26.619158 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:03:26.619180 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:03:32.997743 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:03:33.153227 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:03:33.153250 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:03:35.306472 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:03:35.412190 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:03:35.412216 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 02:03:42.046612 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 02:03:42.173024 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 02:03:42.173040 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 05:00:19.284909 2021] [php7:notice] [pid 24485] [client 204.48.19.85:42500] WordPress database error Unknown column 'wp_core' in 'where clause' for query SELECT `version`, `new_version` FROM `wp_updater_list` WHERE `wp_key` = `wp_core` made by do_action_ref_array('pdtr_auto_hook'), WP_Hook->do_action, WP_Hook->apply_filters, pdtr_auto_function, pdtr_notification_exist_update, referer: https://justinbodnar.com/wf/wp-cron.php?doing_wp_cron=1625043618.0692379474639892578125
+[Wed Jun 30 05:00:20.901015 2021] [php7:warn] [pid 24492] [client 204.48.19.85:42536] PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/justinbodnar.com/wf/wp-includes/class-wp-xmlrpc-server.php on line 1579
+[Wed Jun 30 05:00:20.901102 2021] [php7:warn] [pid 24492] [client 204.48.19.85:42536] PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/justinbodnar.com/wf/wp-includes/class-wp-xmlrpc-server.php on line 1579
+[Wed Jun 30 09:55:28.838689 2021] [php7:error] [pid 29602] [client 132.148.20.66:44936] script '/var/www/html/justinbodnar.com/wp-login.php' not found or unable to stat, referer: http://justinbodnar.com/wp-login.php
+[Wed Jun 30 12:00:21.739119 2021] [php7:warn] [pid 2568] [client 204.48.19.85:36620] PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/justinbodnar.com/wf/wp-includes/class-wp-xmlrpc-server.php on line 1579
+[Wed Jun 30 12:00:21.739212 2021] [php7:warn] [pid 2568] [client 204.48.19.85:36620] PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/justinbodnar.com/wf/wp-includes/class-wp-xmlrpc-server.php on line 1579
+[Wed Jun 30 16:00:19.077590 2021] [php7:warn] [pid 7034] [client 204.48.19.85:39104] PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/justinbodnar.com/wf/wp-includes/class-wp-xmlrpc-server.php on line 1579
+[Wed Jun 30 16:00:19.077697 2021] [php7:warn] [pid 7034] [client 204.48.19.85:39104] PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/justinbodnar.com/wf/wp-includes/class-wp-xmlrpc-server.php on line 1579
+[Wed Jun 30 17:09:20.507640 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:09:20.681545 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:09:20.681564 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:09:28.040812 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:09:28.152562 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:09:28.152585 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:09:30.144265 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:09:30.219039 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:09:30.219066 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:09:36.697052 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:09:36.762302 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:09:36.762323 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:09:39.058999 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:09:39.148250 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:09:39.148272 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:09:45.588420 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:09:45.747815 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:09:45.747837 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:09:47.607898 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:09:47.702535 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:09:47.702555 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:09:53.947082 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:09:54.076105 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:09:54.076138 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:09:56.072898 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:09:56.179950 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:09:56.179970 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:10:02.638111 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:10:02.727381 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:10:02.727402 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:10:05.011362 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:10:05.130157 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:10:05.130183 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:10:11.510061 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:10:11.630496 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:10:11.630513 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:10:13.864551 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:10:13.961159 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:10:13.961181 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 17:10:20.603296 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql' (tried: /usr/lib/php/20180731/pdo_mysql (/usr/lib/php/20180731/pdo_mysql: cannot open shared object file: No such file or directory), /usr/lib/php/20180731/pdo_mysql.so (/usr/lib/php/20180731/pdo_mysql.so: undefined symbol: mysqlnd_allocator)) in Unknown on line 0
+PHP Warning:  Module 'curl' already loaded in Unknown on line 0
+[Wed Jun 30 17:10:20.761682 2021] [mpm_prefork:notice] [pid 865] AH00163: Apache/2.4.38 (Debian) OpenSSL/1.1.1d configured -- resuming normal operations
+[Wed Jun 30 17:10:20.761700 2021] [core:notice] [pid 865] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jun 30 18:25:03.723271 2021] [php7:error] [pid 8890] [client 62.109.19.125:41744] script '/var/www/html/204.48.19.85/wp-login.php' not found or unable to stat
+[Wed Jun 30 18:36:14.911694 2021] [core:error] [pid 9696] (36)File name too long: [client 167.99.44.221:53458] AH00036: access to /3000D00E0000FFFF3F0031313744373731343634304537353046007A7A7A7A7A7A7A7A7A7A7A7A7A7A7A0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000008047A7A7A7A7A7A7A7A7A0000000000000000000000000000000000000000000000000000000000000000 failed (filesystem path '/var/www/html/justinbodnar.com/3000D00E0000FFFF3F0031313744373731343634304537353046007A7A7A7A7A7A7A7A7A7A7A7A7A7A7A0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000008047A7A7A7A7A7A7A7A7A0000000000000000000000000000000000000000000000000000000000000000')
+[Wed Jun 30 19:28:06.974231 2021] [php7:error] [pid 10552] [client 20.199.121.36:53327] script '/var/www/html/204.48.19.85/xmlrpc.php' not found or unable to stat
+[Wed Jun 30 21:55:26.850633 2021] [php7:error] [pid 13138] [client 20.199.121.36:55524] script '/var/www/html/204.48.19.85/xmlrpc.php' not found or unable to stat
+[Thu Jul 01 00:00:07.104399 2021] [mpm_prefork:notice] [pid 865] AH00171: Graceful restart requested, doing restart
+AH00557: apache2: apr_sockaddr_info_get() failed for primary-webserver
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1. Set the 'ServerName' directive globally to suppress this message

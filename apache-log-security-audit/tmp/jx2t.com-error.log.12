@@ -1,0 +1,8 @@
+[Sat Jan 11 02:40:38.001035 2020] [ssl:error] [pid 16831] [client 185.212.168.142:63029] AH02032: Hostname j provided via SNI and hostname jx2t.com provided via HTTP have no compatible SSL setup
+[Sat Jan 11 02:40:38.400697 2020] [ssl:error] [pid 16992] [client 185.212.168.142:63164] AH02032: Hostname j provided via SNI and hostname jx2t.com provided via HTTP have no compatible SSL setup
+[Sat Jan 11 02:40:38.819532 2020] [ssl:error] [pid 16569] [client 185.212.168.142:63279] AH02032: Hostname j provided via SNI and hostname jx2t.com provided via HTTP have no compatible SSL setup
+[Sat Jan 11 02:40:39.253138 2020] [ssl:error] [pid 16571] [client 185.212.168.142:63390] AH02032: Hostname j provided via SNI and hostname jx2t.com provided via HTTP have no compatible SSL setup
+[Sat Jan 11 02:40:39.683363 2020] [ssl:error] [pid 17260] [client 185.212.168.142:63514] AH02032: Hostname j provided via SNI and hostname jx2t.com provided via HTTP have no compatible SSL setup
+[Sat Jan 11 02:40:40.089881 2020] [ssl:error] [pid 16753] [client 185.212.168.142:63625] AH02032: Hostname j provided via SNI and hostname jx2t.com provided via HTTP have no compatible SSL setup
+[Sat Jan 11 02:40:40.510449 2020] [ssl:error] [pid 18604] [client 185.212.168.142:63723] AH02032: Hostname j provided via SNI and hostname jx2t.com provided via HTTP have no compatible SSL setup
+[Sat Jan 11 02:40:40.935635 2020] [ssl:error] [pid 16577] [client 185.212.168.142:63854] AH02032: Hostname j provided via SNI and hostname jx2t.com provided via HTTP have no compatible SSL setup

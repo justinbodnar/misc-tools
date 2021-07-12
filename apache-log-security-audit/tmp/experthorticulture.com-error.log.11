@@ -1,0 +1,21 @@
+[Thu Jul 01 01:12:17.705866 2021] [php7:error] [pid 16415] [client 82.165.86.11:36446] script '/var/www/html/experthorticulture.com/wp-includes/css/wp-pointer.php' not found or unable to stat, referer: http://experthorticulture.com/wp-includes/css/wp-pointer.php
+[Thu Jul 01 03:50:35.460380 2021] [php7:error] [pid 19171] [client 184.168.152.198:60737] script '/var/www/html/experthorticulture.com/wp-content/uploads/404.php' not found or unable to stat, referer: http://experthorticulture.com/wp-content/uploads/404.php
+[Thu Jul 01 05:27:13.424685 2021] [php7:error] [pid 19002] [client 135.181.153.54:56608] script '/var/www/html/experthorticulture.com/showteam.php' not found or unable to stat
+[Thu Jul 01 05:27:14.163206 2021] [php7:error] [pid 21330] [client 135.181.153.54:56734] script '/var/www/html/experthorticulture.com/reputation.php' not found or unable to stat
+[Thu Jul 01 06:22:32.875467 2021] [php7:error] [pid 22817] [client 168.119.248.149:33610] script '/var/www/html/experthorticulture.com/portal.php' not found or unable to stat
+[Thu Jul 01 06:22:33.535619 2021] [php7:error] [pid 22812] [client 168.119.248.149:33700] script '/var/www/html/experthorticulture.com/calendar.php' not found or unable to stat
+[Thu Jul 01 06:22:34.185863 2021] [php7:error] [pid 22979] [client 168.119.248.149:33786] script '/var/www/html/experthorticulture.com/misc.php' not found or unable to stat
+[Thu Jul 01 06:22:37.107710 2021] [php7:error] [pid 22818] [client 168.119.248.149:34018] script '/var/www/html/experthorticulture.com/forumdisplay.php' not found or unable to stat
+[Thu Jul 01 06:22:37.642553 2021] [php7:error] [pid 22810] [client 168.119.248.149:34104] script '/var/www/html/experthorticulture.com/misc.php' not found or unable to stat
+[Thu Jul 01 06:22:37.894579 2021] [php7:error] [pid 22811] [client 168.119.248.149:34132] script '/var/www/html/experthorticulture.com/calendar.php' not found or unable to stat
+[Thu Jul 01 06:37:30.448511 2021] [php7:error] [pid 24534] [client 20.97.18.34:55167] script '/var/www/html/experthorticulture.com/wp-admin/vuln.php' not found or unable to stat
+[Thu Jul 01 06:37:46.415489 2021] [php7:error] [pid 22811] [client 20.97.18.34:58711] script '/var/www/html/experthorticulture.com/wp-content/vuln.php' not found or unable to stat
+[Thu Jul 01 06:37:49.672897 2021] [php7:error] [pid 22817] [client 20.97.18.34:63729] script '/var/www/html/experthorticulture.com/wp-content/uploads/2021/07/settings_auto.php' not found or unable to stat
+[Thu Jul 01 06:37:54.547200 2021] [php7:error] [pid 22808] [client 20.97.18.34:55480] script '/var/www/html/experthorticulture.com/wp-content/vuln.php' not found or unable to stat
+[Thu Jul 01 09:25:02.610397 2021] [php7:error] [pid 28160] [client 120.76.201.177:39589] script '/var/www/html/experthorticulture.com/wp-includes/widgets/class-wp-widget-header.php' not found or unable to stat, referer: http://experthorticulture.com/wp-includes/widgets/class-wp-widget-header.php
+[Thu Jul 01 13:39:16.139259 2021] [php7:error] [pid 1510] [client 20.97.18.34:57962] script '/var/www/html/experthorticulture.com/wp-admin/vuln.php' not found or unable to stat
+[Thu Jul 01 13:39:33.987114 2021] [php7:error] [pid 1609] [client 20.97.18.34:63540] script '/var/www/html/experthorticulture.com/wp-content/vuln.php' not found or unable to stat
+[Thu Jul 01 13:39:36.866626 2021] [php7:error] [pid 896] [client 20.97.18.34:64356] script '/var/www/html/experthorticulture.com/wp-content/uploads/2021/07/settings_auto.php' not found or unable to stat
+[Thu Jul 01 13:39:41.180752 2021] [php7:error] [pid 1611] [client 20.97.18.34:65407] script '/var/www/html/experthorticulture.com/wp-content/vuln.php' not found or unable to stat
+[Thu Jul 01 23:36:29.679750 2021] [php7:error] [pid 15595] [client 81.88.49.25:41194] script '/var/www/html/experthorticulture.com/wp-admin/user/user-profile.php' not found or unable to stat, referer: http://experthorticulture.com/wp-admin/user/user-profile.php
+[Thu Jul 01 23:36:37.421636 2021] [php7:error] [pid 14594] [client 81.88.49.40:26658] script '/var/www/html/experthorticulture.com/wp-admin/user/user-profile.php' not found or unable to stat, referer: http://experthorticulture.com/wp-admin/user/user-profile.php

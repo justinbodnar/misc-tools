@@ -1,0 +1,4 @@
+[Mon Jul 12 00:42:17.144163 2021] [php7:error] [pid 3740] [client 185.191.34.215:55618] script '/var/www/html/daniewatsonwriter.com/wp-caches.php' not found or unable to stat
+[Mon Jul 12 01:19:46.687030 2021] [php7:error] [pid 3738] [client 185.191.34.215:56270] script '/var/www/html/daniewatsonwriter.com/wp-config_bak.php' not found or unable to stat
+[Mon Jul 12 01:33:06.604335 2021] [php7:error] [pid 6139] [client 185.191.34.215:60956] script '/var/www/html/daniewatsonwriter.com/wp-admin/user/users-new.php' not found or unable to stat
+[Mon Jul 12 07:25:53.689348 2021] [php7:error] [pid 18073] [client 185.191.34.215:50304] script '/var/www/html/daniewatsonwriter.com/wp-sbb.php' not found or unable to stat

@@ -1,0 +1,4 @@
+[Sat Jun 26 11:47:52.620168 2021] [php7:error] [pid 10539] [client 160.153.249.218:53478] script '/var/www/html/stocktuna.com/wp-login.php' not found or unable to stat, referer: http://stocktuna.com/wp-login.php
+[Sat Jun 26 14:48:40.759998 2021] [php7:error] [pid 15772] [client 206.189.141.23:62768] script '/var/www/html/stocktuna.com/xmlrpc.php' not found or unable to stat
+[Sat Jun 26 16:31:52.678923 2021] [php7:error] [pid 18059] [client 159.203.176.82:52640] script '/var/www/html/stocktuna.com/wp-login.php' not found or unable to stat, referer: http://www.stocktuna.com/wp-login.php
+[Sat Jun 26 17:56:20.433866 2021] [php7:error] [pid 17706] [client 129.213.160.208:50950] script '/var/www/html/stocktuna.com/xmlrpc.php' not found or unable to stat

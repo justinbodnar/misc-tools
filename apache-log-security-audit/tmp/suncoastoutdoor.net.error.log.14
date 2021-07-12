@@ -1,0 +1,2 @@
+[Sat Jun 26 14:20:43.146150 2021] [php7:error] [pid 14505] [client 89.161.250.174:53904] script '/var/www/html/suncoastoutdoor.net/reskyber.php' not found or unable to stat, referer: http://suncoastoutdoor.net/reskyber.php
+[Sat Jun 26 18:15:50.678477 2021] [php7:error] [pid 19447] [client 66.210.158.60:41478] script '/var/www/html/suncoastoutdoor.net/installer-backup.php' not found or unable to stat

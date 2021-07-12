@@ -1,0 +1,1 @@
+[Sun Jun 13 01:08:54.014194 2021] [php7:error] [pid 3983] [client 198.12.226.30:40804] script '/var/www/html/vb.warframetools.com/wp-login.php' not found or unable to stat, referer: http://vb.warframetools.com/wp-login.php

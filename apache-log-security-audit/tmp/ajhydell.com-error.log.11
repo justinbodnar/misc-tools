@@ -1,0 +1,4 @@
+[Thu Jul 01 01:50:30.159314 2021] [ssl:error] [pid 15821] [client 185.130.44.108:41139] AH02032: Hostname warframetools.com provided via SNI and hostname nanochanqzaytwlydykbg5nxkgyjxk3zsrctxuoxdmbx5jbh2ydyprid.onion provided via HTTP have no compatible SSL setup
+[Thu Jul 01 05:51:52.084747 2021] [negotiation:error] [pid 19613] [client 34.212.4.78:50096] AH00690: no acceptable variant: /var/www/html/ajhydell.com/ads.txt
+[Thu Jul 01 10:08:10.208765 2021] [negotiation:error] [pid 24544] [client 18.234.197.76:50590] AH00690: no acceptable variant: /var/www/html/ajhydell.com/ads.txt
+[Thu Jul 01 13:38:07.207291 2021] [negotiation:error] [pid 896] [client 159.127.40.228:32019] AH00690: no acceptable variant: /var/www/html/ajhydell.com/ads.txt

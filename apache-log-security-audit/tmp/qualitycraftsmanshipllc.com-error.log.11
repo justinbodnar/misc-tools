@@ -1,0 +1,1 @@
+[Thu Jul 01 22:18:15.761165 2021] [php7:error] [pid 14327] [client 69.163.152.113:54512] script '/var/www/html/qualitycraftsmanshipllc.com/wp-includes/widgets/class-wp-widget-header.php' not found or unable to stat, referer: http://qualitycraftsmanshipllc.com/wp-includes/widgets/class-wp-widget-header.php

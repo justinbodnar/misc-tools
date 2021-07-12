@@ -1,0 +1,1 @@
+[Sun Jun 13 02:06:55.341524 2021] [php7:error] [pid 8961] [client 183.90.173.95:58104] script '/var/www/html/wiki.justinbodnar.com/wp-login.php' not found or unable to stat, referer: http://wiki.justinbodnar.com/wp-login.php

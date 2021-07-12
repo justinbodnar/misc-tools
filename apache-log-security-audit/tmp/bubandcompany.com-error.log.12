@@ -1,0 +1,7 @@
+[Tue Jun 29 00:33:48.930429 2021] [php7:error] [pid 9075] [client 140.143.247.188:40914] script '/var/www/html/bubandcompany.com/media-admin.php' not found or unable to stat, referer: http://bubandcompany.com/media-admin.php
+[Tue Jun 29 16:26:49.312792 2021] [php7:error] [pid 28950] [client 156.67.222.111:27358] script '/var/www/html/bubandcompany.com/data.php' not found or unable to stat, referer: http://bubandcompany.com/data.php
+[Tue Jun 29 16:26:55.199928 2021] [php7:error] [pid 552] [client 156.67.222.111:28252] script '/var/www/html/bubandcompany.com/data.php' not found or unable to stat, referer: http://bubandcompany.com/data.php
+[Tue Jun 29 19:14:04.869380 2021] [php7:error] [pid 4045] [client 176.123.7.102:46174] script '/var/www/html/bubandcompany.com/wp-content/tt.php' not found or unable to stat
+[Tue Jun 29 19:14:07.703853 2021] [php7:error] [pid 5327] [client 162.247.74.7:37836] script '/var/www/html/bubandcompany.com/tt.php' not found or unable to stat
+[Tue Jun 29 19:14:10.644275 2021] [php7:error] [pid 5332] [client 149.56.99.85:41056] script '/var/www/html/bubandcompany.com/fmanager.php' not found or unable to stat
+[Tue Jun 29 22:53:45.997737 2021] [php7:error] [pid 14470] [client 103.81.84.152:36192] script '/var/www/html/bubandcompany.com/2.php' not found or unable to stat, referer: http://bubandcompany.com/2.php

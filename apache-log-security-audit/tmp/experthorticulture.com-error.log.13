@@ -1,0 +1,10 @@
+[Tue Jun 29 07:06:30.192479 2021] [php7:error] [pid 20584] [client 5.188.210.8:61485] script '/var/www/html/experthorticulture.com/newreply.php' not found or unable to stat, referer: https://experthorticulture.com/newreply.php?tid=1618&replyto=1619
+[Tue Jun 29 13:45:51.677827 2021] [ssl:error] [pid 29249] [client 64.225.79.191:62655] AH02032: Hostname e provided via SNI and hostname experthorticulture.com provided via HTTP have no compatible SSL setup
+[Tue Jun 29 13:45:52.044181 2021] [ssl:error] [pid 28912] [client 64.225.79.191:62677] AH02032: Hostname e provided via SNI and hostname experthorticulture.com provided via HTTP have no compatible SSL setup
+[Tue Jun 29 13:45:52.396639 2021] [ssl:error] [pid 29653] [client 64.225.79.191:62710] AH02032: Hostname e provided via SNI and hostname experthorticulture.com provided via HTTP have no compatible SSL setup
+[Tue Jun 29 13:45:52.763923 2021] [ssl:error] [pid 29248] [client 64.225.79.191:62735] AH02032: Hostname e provided via SNI and hostname experthorticulture.com provided via HTTP have no compatible SSL setup
+[Tue Jun 29 13:45:53.126473 2021] [ssl:error] [pid 28951] [client 64.225.79.191:62760] AH02032: Hostname e provided via SNI and hostname experthorticulture.com provided via HTTP have no compatible SSL setup
+[Tue Jun 29 13:45:53.487005 2021] [ssl:error] [pid 29565] [client 64.225.79.191:62783] AH02032: Hostname e provided via SNI and hostname experthorticulture.com provided via HTTP have no compatible SSL setup
+[Tue Jun 29 13:45:53.851042 2021] [ssl:error] [pid 27732] [client 64.225.79.191:62807] AH02032: Hostname e provided via SNI and hostname experthorticulture.com provided via HTTP have no compatible SSL setup
+[Tue Jun 29 13:45:54.217854 2021] [ssl:error] [pid 29249] [client 64.225.79.191:62834] AH02032: Hostname e provided via SNI and hostname experthorticulture.com provided via HTTP have no compatible SSL setup
+[Tue Jun 29 16:52:58.639219 2021] [php7:error] [pid 1751] [client 165.231.103.79:47456] script '/var/www/html/experthorticulture.com/forum/archive/member.php' not found or unable to stat, referer: https://experthorticulture.com/
