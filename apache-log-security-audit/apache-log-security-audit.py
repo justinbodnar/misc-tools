@@ -98,7 +98,7 @@ for file in os.listdir( "tmp" ):
 print( "[INFO] "+str(len(keys))+" distinct sites were found." )
 
 # create command to concat these files into a master file for each key
-print( "[INFO] Concatenating logs together" )
+print( "[INFO] Concatenating logs together. This may take some time." )
 count = 0
 for key in keys:
 	count += 1
@@ -111,5 +111,17 @@ for key in keys:
 	# delete old files
 	for file in keys[key]:
 		os.system( "rm tmp/"+file )
-
 print( "[INFO] "+str(len(os.listdir("tmp")))+" master files were created." )
+
+#################################
+# STEP 3                        #
+# RUN SCALP ON EACH MASTER FILE #
+#################################
+i = 0
+print( "[INFO] Running Scalp on all files." )
+for file in os.listdir("tmp"):
+	i += 1
+	if i > 4:
+		break
+	command = "python scalp.py -l tmp/"+file+" -f ./default_filter.xml -o ./scalp-output --html >/dev/null"
+	os.system( command )
