@@ -6,3 +6,6 @@ installs apache mysql and php on a fresh ubuntu install
 
 # fix-webserver.sh
 fixes apache server permissions. recursively targets the /var/www directory
+
+# ./apache-log-security-audit/
+analyzes Apache2 logs for evidence of hacking
