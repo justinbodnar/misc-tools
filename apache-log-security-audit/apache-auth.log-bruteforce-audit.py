@@ -103,7 +103,12 @@ f = open( "tmp/auth.log.MASTER", "r" )
 curr = 0
 no_ident_strings = 0
 disconnects = 0
+bad_protocols = 0
+ftp_refused = 0
+accepted_passwords = 0
 sessions_opened = 0
+failed_nones = 0
+ignoring_max_retries = 0
 disconnects2 = 0
 disconnecteds = 0
 max_attempts = 0
@@ -187,6 +192,19 @@ for line in f:
 	# need users
 	elif "session closed for user" in line:
 		sessions_closed += 1
+	# need users
+	elif " Failed none for invalid user" in line:
+		failed_nones += 1
+	elif "ignoring max retries" in line:
+		ignoring_max_retries += 1
+	# NEED USERS #
+	elif "Accepted password for" in line:
+		accepted_passwords += 1
+	# need users
+	elif "Bad protocol version identification" in line:
+		bad_protocols += 1
+	elif "Refused user" in line and " for service vsftpd" in line:
+		ftp_refused += 1
 	else:
 #		print( line )
 		unknowns += 1
@@ -203,15 +221,23 @@ print( "\n#######################################" )
 #########################
 # print message reports #
 sessions_opened = "{:,}".format(sessions_opened)
-print( "[REPORT] Sessions opened: " + sessions_opened )
+print( "[REPORT] SSH Sessions opened: " + sessions_opened )
+ftp_refused = "{:,}".format(ftp_refused)
+print( "[REPORT] FTP connections refused: " + ftp_refused )
+accepted_passwords = "{:,}".format(accepted_passwords)
+print( "[REPORT] Accepted passwords: " + accepted_passwords )
 auth_failures = "{:,}".format(auth_failures)
 print( "[REPORT] Auth failures: " + auth_failures )
 max_attempts = "{:,}".format(max_attempts)
 print( "[REPORT] Max num of attempts messages: " + max_attempts )
+ignoring_max_retries = "{:,}".format(ignoring_max_retries)
+print( "[REPORT] Ignoring max retries messages: " + ignoring_max_retries )
 failed_passwords = "{:,}".format(failed_passwords)
 print( "[REPORT] Failed passwords: " + failed_passwords )
 invalid_users = "{:,}".format(invalid_users)
 print( "[REPORT] Invalid users: " + invalid_users )
+failed_nones = "{:,}".format(failed_nones)
+print( "[REPORT] Failed none from invalid user messages: " + failed_nones )
 user_unknowns = "{:,}".format(user_unknowns)
 print( "[REPORT] User unknown messages: " + user_unknowns )
 invalid_user_auth_failures = "{:,}".format(invalid_user_auth_failures)
@@ -232,6 +258,8 @@ disconnects2 = "{:,}".format(disconnects2)
 print( "[REPORT] Disconnect messages type b: " + disconnects2 )
 con_closed = "{:,}".format(con_closed)
 print( "[REPORT] Connection closed messages: " + con_closed )
+bad_protocols = "{:,}".format(bad_protocols)
+print( "[REPORT] Bad protocol messages: " + bad_protocols )
 unknowns = "{:,}".format(unknowns)
 print( "[REPORT] Unknown messages: " + unknowns )
 
