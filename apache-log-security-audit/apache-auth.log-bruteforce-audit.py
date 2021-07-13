@@ -7,6 +7,9 @@ import os
 import re
 import os.path
 
+# for debugging
+verbosity = 1
+
 # default log file
 log_file = "/var/log/auth.log"
 
@@ -17,7 +20,7 @@ def throw_fatal_error():
 	exit()
 
 # print opening
-for i in range(25): print
+for i in range(50): print
 print( "####################################" )
 print( "# Apache auth.log Bruteforce Audit #" )
 print( "# by Justin Bodnar                 #" )
@@ -101,6 +104,10 @@ num_lines ="{:,}".format(num_lines)
 seen_ips = {}
 f = open( "tmp/auth.log.MASTER", "r" )
 curr = 0
+server_listenings = 0
+new_seats = 0
+misc_sudos = 0
+delusers = 0
 auth_codes = 0
 bad_lengths = 0
 nonnegotiables = 0
@@ -142,27 +149,27 @@ auth_failures = 0
 invalid_users = 0
 con_closed = 0
 unknowns = 0
-print( "[INFO] Processing file. This may take some time." )
+print( "[INFO] Processing file with "+num_lines+" lines. This may take some time." )
 for line in f:
 	curr = curr + 1
 	if curr == p1:
-		print( "[ITER] 10% of "+num_lines+" lines processed." )
+		print( "[ITER] 10% processed." )
 	elif curr == p2:
-		print( "[ITER] 20% of "+num_lines+" lines processed." )
+		print( "[ITER] 20% processed." )
 	elif curr == p3:
-		print( "[ITER] 30% of "+num_lines+" lines processed." )
+		print( "[ITER] 30% processed." )
 	elif curr == p4:
-		print( "[ITER] 40% of "+num_lines+" lines processed." )
+		print( "[ITER] 40% processed." )
 	elif curr == p5:
-		print( "[ITER] 50% of "+num_lines+" lines processed." )
+		print( "[ITER] 50% processed." )
 	elif curr == p6:
-		print( "[ITER] 60% of "+num_lines+" lines processed." )
+		print( "[ITER] 60% processed." )
 	elif curr == p7:
-		print( "[ITER] 70% of "+num_lines+" lines processed." )
+		print( "[ITER] 70% processed." )
 	elif curr == p8:
-		print( "[ITER] 80% of "+num_lines+" lines processed." )
+		print( "[ITER] 80% processed." )
 	elif curr == p9:
-		print( "[ITER] 90% of "+num_lines+" lines processed." )
+		print( "[ITER] 90% processed." )
 	################
 	# look for ips #
 	ips = re.findall( r'[0-9]+(?:\.[0-9]+){3}', line )
@@ -282,10 +289,24 @@ for line in f:
 	# idek
 	elif "message authentication code incorrect" in line:
 		auth_codes += 1
+	# need users
+	elif "userdel" in line:
+		delusers += 1
+	# need more info
+	elif "sudo:" in line:
+		misc_sudos += 1
+	elif "New seat" in line:
+		new_seats += 1
+	# need more info
+	elif "Server listening on" in line:
+		server_listenings += 1
+	# unknown messages should be investigated
 	else:
-		print( line )
-		unknowns += 1
-print( "[ITER] 100% of "+num_lines+" lines processed." )
+		unknown += 1
+		if verbosity > 0:
+			print( line )
+print( "[ITER] 100% processed." )
+print( "[FIN] Audit complete. Generating results.\n" )
 
 ################
 # STEP 4       #
@@ -317,10 +338,15 @@ sus = "{:,}".format(sus)
 print( "[REPORT] Su messages: " + sus )
 delete_users = "{:,}".format(delete_users)
 print( "[REPORT] Delete user messages: " + delete_users )
+delusers = "{:,}".format(delusers)
+print( "[REPORT] Deluser messages: " + delusers )
 remove_groups = "{:,}".format(remove_groups)
 print( "[REPORT] Remove group messages: " + remove_groups )
 remove_shadow_groups = "{:,}".format(remove_shadow_groups)
 print( "[REPORT] Remove shadow group messages: " + remove_shadow_groups )
+misc_sudos = "{:,}".format(misc_sudos)
+print( "[REPORT] Misc SUDO messages: " + misc_sudos )
+
 #######################
 # print auth failures #
 print( "\n##################" )
@@ -392,6 +418,10 @@ bad_lengths = "{:,}".format(bad_lengths)
 print( "[REPORT] Bad length messages: " + bad_lengths )
 system_buttons = "{:,}".format(system_buttons)
 print( "[REPORT] System button and Power messages: " + system_buttons )
+new_seats = "{:,}".format(new_seats)
+print( "[REPORT] New seat messages: " + new_seats )
+server_listenings = "{:,}".format(server_listenings)
+print( "[REPORT] Server listening messages: " + server_listenings )
 
 ###################
 # print IP report #
@@ -415,9 +445,14 @@ for ip in sorted_seen_ips:
 
 ##################
 # print unknowns #
-print( "\n###############" )
-print( "# UNPROCESSED #" )
-print( "###############" )
-unknowns = "{:,}".format(unknowns)
-print( "[REPORT] Unknown messages: " + unknowns )
+if unknowns > 0:
+	print( "\n############################" )
+	print( "#     UNKNOWN MESSAGES     #" )
+	print( "# devs, investigate these  #" )
+	print( "# by setting verbosity > 0 #" )
+	print( "############################" )
+	unknowns = "{:,}".format(unknowns)
+	print( "[REPORT] Unknown messages: " + unknowns )
+
+# for pretty terminal output
 print
