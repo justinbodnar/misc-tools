@@ -103,6 +103,12 @@ f = open( "tmp/auth.log.MASTER", "r" )
 curr = 0
 disconnects = 0
 disconnects2 = 0
+invalid_disconnects = 0
+user_unknowns = 0
+con_resets = 0
+sessions_closed = 0
+invalid_user_auth_failures = 0
+failed_passwords = 0
 auth_failures = 0
 invalid_users = 0
 con_closed = 0
@@ -148,6 +154,23 @@ for line in f:
 		invalid_users += 1
 	elif "Connection closed" in line:
 		con_closed += 1
+	elif "Disconnected from invalid user" in line:
+		invalid_disconnects += 1
+	# need users
+	elif "Connection reset by" in line:
+		con_resets += 1
+	# need users
+	elif "check pass; user unknown" in line:
+		user_unknowns += 1
+	# need users
+	elif "Failed password for invalid user" in line:
+		invalid_user_auth_failures += 1
+	# need users
+	elif "Failed password for" in line:
+		failed_passwords += 1
+	# need users
+	elif "session closed for user" in line:
+		sessions_closed += 1
 	else:
 #		print( line )
 		unknowns += 1
@@ -164,9 +187,21 @@ print( "\n#######################################" )
 #########################
 # print message reports #
 auth_failures = "{:,}".format(auth_failures)
-print( "[REPORT] Auth Failures: " + auth_failures )
+print( "[REPORT] Auth failures: " + auth_failures )
+failed_passwords = "{:,}".format(failed_passwords)
+print( "[REPORT] Failed passwords: " + failed_passwords )
 invalid_users = "{:,}".format(invalid_users)
-print( "[REPORT] Invalid Users: " + invalid_users )
+print( "[REPORT] Invalid users: " + invalid_users )
+user_unknowns = "{:,}".format(user_unknowns)
+print( "[REPORT] User unknown messages: " + user_unknowns )
+invalid_user_auth_failures = "{:,}".format(invalid_user_auth_failures)
+print( "[REPORT] Invalid user auth failures: " + invalid_user_auth_failures )
+invalid_disconnects = "{:,}".format(invalid_disconnects)
+print( "[REPORT] Invalid user disconnect messages: " + invalid_disconnects )
+sessions_closed = "{:,}".format(sessions_closed)
+print( "[REPORT] Session closed messages: " + sessions_closed )
+con_resets = "{:,}".format(con_resets)
+print( "[REPORT] Connection reset messages: " + con_resets )
 disconnects = "{:,}".format(disconnects)
 print( "[REPORT] Disconnect messages type a: " + disconnects )
 disconnects2 = "{:,}".format(disconnects2)
