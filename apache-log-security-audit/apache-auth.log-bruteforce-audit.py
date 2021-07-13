@@ -101,8 +101,12 @@ num_lines ="{:,}".format(num_lines)
 seen_ips = {}
 f = open( "tmp/auth.log.MASTER", "r" )
 curr = 0
+no_ident_strings = 0
 disconnects = 0
+sessions_opened = 0
 disconnects2 = 0
+disconnecteds = 0
+max_attempts = 0
 invalid_disconnects = 0
 user_unknowns = 0
 con_resets = 0
@@ -148,17 +152,29 @@ for line in f:
 		disconnects += 1
 	elif "Disconnected from authenticating user" in line:
 		disconnects2 += 1
+	# need ups
 	elif "authentication failure" in line:
 		auth_failures += 1
+	elif "Disconnected from invalid user" in line:
+		invalid_disconnects += 1
+	elif "Disconnected from" in line:
+		disconnecteds += 1
 	elif "Invalid user" in line:
 		invalid_users += 1
 	elif "Connection closed" in line:
 		con_closed += 1
-	elif "Disconnected from invalid user" in line:
-		invalid_disconnects += 1
+	# NEED USERS #
+	elif " session opened for user" in line:
+		sessions_opened += 1
+	# need users
+	elif "Did not receive identification string from" in line:
+		no_ident_strings += 1
 	# need users
 	elif "Connection reset by" in line:
 		con_resets += 1
+	# need users
+	elif " maximum authentication attempts exceeded for" in line:
+		max_attempts += 1
 	# need users
 	elif "check pass; user unknown" in line:
 		user_unknowns += 1
@@ -186,8 +202,12 @@ print( "\n#######################################" )
 
 #########################
 # print message reports #
+sessions_opened = "{:,}".format(sessions_opened)
+print( "[REPORT] Sessions opened: " + sessions_opened )
 auth_failures = "{:,}".format(auth_failures)
 print( "[REPORT] Auth failures: " + auth_failures )
+max_attempts = "{:,}".format(max_attempts)
+print( "[REPORT] Max num of attempts messages: " + max_attempts )
 failed_passwords = "{:,}".format(failed_passwords)
 print( "[REPORT] Failed passwords: " + failed_passwords )
 invalid_users = "{:,}".format(invalid_users)
@@ -198,10 +218,14 @@ invalid_user_auth_failures = "{:,}".format(invalid_user_auth_failures)
 print( "[REPORT] Invalid user auth failures: " + invalid_user_auth_failures )
 invalid_disconnects = "{:,}".format(invalid_disconnects)
 print( "[REPORT] Invalid user disconnect messages: " + invalid_disconnects )
+no_ident_strings = "{:,}".format(no_ident_strings)
+print( "[REPORT] No identity string messages: " + no_ident_strings )
 sessions_closed = "{:,}".format(sessions_closed)
 print( "[REPORT] Session closed messages: " + sessions_closed )
 con_resets = "{:,}".format(con_resets)
 print( "[REPORT] Connection reset messages: " + con_resets )
+disconnecteds = "{:,}".format(disconnecteds)
+print( "[REPORT] Disconnected from messages: " + disconnecteds )
 disconnects = "{:,}".format(disconnects)
 print( "[REPORT] Disconnect messages type a: " + disconnects )
 disconnects2 = "{:,}".format(disconnects2)
