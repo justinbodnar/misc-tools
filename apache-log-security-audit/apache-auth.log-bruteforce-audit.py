@@ -101,11 +101,21 @@ num_lines ="{:,}".format(num_lines)
 seen_ips = {}
 f = open( "tmp/auth.log.MASTER", "r" )
 curr = 0
+auth_codes = 0
 bad_lengths = 0
 nonnegotiables = 0
 fatals = 0
 sus = 0
+dlopens = 0
+remove_groups = 0
+system_buttons = 0
+remove_shadow_groups = 0
 new_sessions = 0
+delete_users = 0
+attempted_logins = 0
+faulty_modules = 0
+bad_users = 0
+bad_ownerships = 0
 failed_to_releases = 0
 removed_sessions = 0
 logouts = 0
@@ -123,6 +133,7 @@ disconnecteds = 0
 max_attempts = 0
 invalid_disconnects = 0
 user_unknowns = 0
+invalid_users2 = 0
 con_resets = 0
 sessions_closed = 0
 invalid_user_auth_failures = 0
@@ -175,6 +186,8 @@ for line in f:
 		disconnecteds += 1
 	elif "Invalid user" in line:
 		invalid_users += 1
+	elif "Connection from invalid user" in line:
+		invalid_users2 += 1
 	elif "Connection closed" in line:
 		con_closed += 1
 	# NEED USERS #
@@ -240,8 +253,37 @@ for line in f:
 	# need users
 	elif "primary-webserver su:" in line:
 		sus += 1
+	# need users
+	elif "bad username" in line:
+		bad_users += 1
+	elif "PAM adding faulty module" in line:
+		faulty_modules += 1
+	# need files
+	elif " Authentication refused: bad ownership or modes for file" in line:
+		bad_ownerships += 1
+	# need users
+	elif "delete user" in line:
+		delete_users += 1
+	# need groups
+	elif "removed group" in line:
+		remove_groups += 1
+	# need shadow groups
+	elif "removed shadow group" in line:
+		remove_shadow_groups += 1
+	# need users
+	elif "Attempted login by" in line:
+		attempted_logins += 1
+	# need files
+	elif "PAM unable to dlopen" in line:
+		dlopens += 1
+	# need more info
+	elif "Power key pressed" in line or "Powering Off..." in line or "System is powering down" in line or "Watching system buttons on" in line:
+		system_buttons += 1
+	# idek
+	elif "message authentication code incorrect" in line:
+		auth_codes += 1
 	else:
-#		print( line )
+		print( line )
 		unknowns += 1
 print( "[ITER] 100% of "+num_lines+" lines processed." )
 
@@ -273,7 +315,12 @@ failed_to_releases = "{:,}".format(failed_to_releases)
 print( "[REPORT] Failed to release; interupted system call messages: " + failed_to_releases )
 sus = "{:,}".format(sus)
 print( "[REPORT] Su messages: " + sus )
-
+delete_users = "{:,}".format(delete_users)
+print( "[REPORT] Delete user messages: " + delete_users )
+remove_groups = "{:,}".format(remove_groups)
+print( "[REPORT] Remove group messages: " + remove_groups )
+remove_shadow_groups = "{:,}".format(remove_shadow_groups)
+print( "[REPORT] Remove shadow group messages: " + remove_shadow_groups )
 #######################
 # print auth failures #
 print( "\n##################" )
@@ -281,12 +328,18 @@ print( "# INVALID LOGINS #" )
 print( "##################" )
 auth_failures = "{:,}".format(auth_failures)
 print( "[REPORT] Auth failures: " + auth_failures )
+attempted_logins = "{:,}".format(attempted_logins)
+print( "[REPORT] Attempted login messages: " + attempted_logins )
 failed_passwords = "{:,}".format(failed_passwords)
-print( "[REPORT] Failed passwords: " + failed_passwords )
+print( "[REPORT] Failed password messagess: " + failed_passwords )
 ftp_refused = "{:,}".format(ftp_refused)
-print( "[REPORT] FTP connections refused: " + ftp_refused )
+print( "[REPORT] FTP connection refused messages: " + ftp_refused )
 invalid_users = "{:,}".format(invalid_users)
-print( "[REPORT] Invalid users: " + invalid_users )
+print( "[REPORT] Invalid user messages type a: " + invalid_users )
+invalid_users2 = "{:,}".format(invalid_users2)
+print( "[REPORT] Invalid user messages type b: " + invalid_users2 )
+bad_users = "{:,}".format(bad_users)
+print( "[REPORT] Bad user messages: " + bad_users )
 user_unknowns = "{:,}".format(user_unknowns)
 print( "[REPORT] User unknown messages: " + user_unknowns )
 failed_nones = "{:,}".format(failed_nones)
@@ -299,6 +352,10 @@ ignoring_max_retries = "{:,}".format(ignoring_max_retries)
 print( "[REPORT] Ignoring max retries messages: " + ignoring_max_retries )
 invalid_disconnects = "{:,}".format(invalid_disconnects)
 print( "[REPORT] Invalid user disconnect messages: " + invalid_disconnects )
+bad_ownerships = "{:,}".format(bad_ownerships)
+print( "[REPORT] Bad ownership or mode messages: " + bad_ownerships )
+auth_codes = "{:,}".format(auth_codes)
+print( "[REPORT] Invalid auth code messages: " + auth_codes )
 
 #######################
 # print misc messages #
@@ -309,6 +366,10 @@ fatals = "{:,}".format(fatals)
 print( "[REPORT] Fatal error messages: " + fatals )
 timeouts = "{:,}".format(timeouts)
 print( "[REPORT] Timeout messages: " + timeouts )
+dlopens = "{:,}".format(dlopens)
+print( "[REPORT] Can't dlopen() messages: " + dlopens )
+faulty_modules = "{:,}".format(faulty_modules)
+print( "[REPORT] Faulty module messages: " + faulty_modules )
 nonnegotiables = "{:,}".format(nonnegotiables)
 print( "[REPORT] Can't negotiate messages: " + nonnegotiables )
 no_ident_strings = "{:,}".format(no_ident_strings)
@@ -329,6 +390,8 @@ bad_protocols = "{:,}".format(bad_protocols)
 print( "[REPORT] Bad protocol messages: " + bad_protocols )
 bad_lengths = "{:,}".format(bad_lengths)
 print( "[REPORT] Bad length messages: " + bad_lengths )
+system_buttons = "{:,}".format(system_buttons)
+print( "[REPORT] System button and Power messages: " + system_buttons )
 
 ###################
 # print IP report #
