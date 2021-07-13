@@ -103,8 +103,14 @@ f = open( "tmp/auth.log.MASTER", "r" )
 curr = 0
 bad_lengths = 0
 nonnegotiables = 0
+fatals = 0
+sus = 0
+new_sessions = 0
+failed_to_releases = 0
 removed_sessions = 0
+logouts = 0
 no_ident_strings = 0
+timeouts = 0
 disconnects = 0
 bad_protocols = 0
 ftp_refused = 0
@@ -217,6 +223,23 @@ for line in f:
 	# need session ids
 	elif "Removed session" in line:
 		removed_sessions += 1
+	# need users
+	elif " Timeout, client not responding from user" in line:
+		timeouts += 1
+	# need user ints (?)
+	elif "logged out. Waiting for processes to exit." in line:
+		logouts += 1
+	elif "Failed to release session: Interrupted system call" in line:
+		failed_to_releases += 1
+	# need to differentiate
+	elif "fatal: fork of unprivileged child failed" in line or "error: fork: Cannot allocate memory" in line:
+		fatals += 1
+	# need users
+	elif "New session" in line:
+		new_sessions += 1
+	# need users
+	elif "primary-webserver su:" in line:
+		sus += 1
 	else:
 #		print( line )
 		unknowns += 1
@@ -226,7 +249,6 @@ print( "[ITER] 100% of "+num_lines+" lines processed." )
 # STEP 4       #
 # PRINT REPORT #
 ################
-
 # results header
 print( "\n#######################" )
 print( "#######################" )
@@ -241,8 +263,16 @@ print( "# VALID LOGINS #" )
 print( "################" )
 sessions_opened = "{:,}".format(sessions_opened)
 print( "[REPORT] SSH Sessions opened: " + sessions_opened )
+new_sessions = "{:,}".format(new_sessions)
+print( "[REPORT] New session messages: " + new_sessions )
 accepted_passwords = "{:,}".format(accepted_passwords)
-print( "[REPORT] Accepted passwords: " + accepted_passwords )
+print( "[REPORT] Accepted password messages: " + accepted_passwords )
+logouts = "{:,}".format(logouts)
+print( "[REPORT] Logout messages: " + logouts )
+failed_to_releases = "{:,}".format(failed_to_releases)
+print( "[REPORT] Failed to release; interupted system call messages: " + failed_to_releases )
+sus = "{:,}".format(sus)
+print( "[REPORT] Su messages: " + sus )
 
 #######################
 # print auth failures #
@@ -275,7 +305,10 @@ print( "[REPORT] Invalid user disconnect messages: " + invalid_disconnects )
 print( "\n#################" )
 print( "# MISC MESSAGES #" )
 print( "#################" )
-
+fatals = "{:,}".format(fatals)
+print( "[REPORT] Fatal error messages: " + fatals )
+timeouts = "{:,}".format(timeouts)
+print( "[REPORT] Timeout messages: " + timeouts )
 nonnegotiables = "{:,}".format(nonnegotiables)
 print( "[REPORT] Can't negotiate messages: " + nonnegotiables )
 no_ident_strings = "{:,}".format(no_ident_strings)
