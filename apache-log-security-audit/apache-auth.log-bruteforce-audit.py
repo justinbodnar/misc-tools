@@ -101,6 +101,9 @@ num_lines ="{:,}".format(num_lines)
 seen_ips = {}
 f = open( "tmp/auth.log.MASTER", "r" )
 curr = 0
+bad_lengths = 0
+nonnegotiables = 0
+removed_sessions = 0
 no_ident_strings = 0
 disconnects = 0
 bad_protocols = 0
@@ -200,11 +203,20 @@ for line in f:
 	# NEED USERS #
 	elif "Accepted password for" in line:
 		accepted_passwords += 1
+	# need ips
+	elif "Unable to negotiate" in line:
+		nonnegotiables += 1
 	# need users
 	elif "Bad protocol version identification" in line:
 		bad_protocols += 1
+	# need sizes
+	elif " Bad packet length" in line:
+		bad_lengths += 1
 	elif "Refused user" in line and " for service vsftpd" in line:
 		ftp_refused += 1
+	# need session ids
+	elif "Removed session" in line:
+		removed_sessions += 1
 	else:
 #		print( line )
 		unknowns += 1
@@ -216,34 +228,56 @@ print( "[ITER] 100% of "+num_lines+" lines processed." )
 ################
 
 # results header
-print( "\n#######################################" )
+print( "\n#######################" )
+print( "#######################" )
+print( "#### BEGIN RESULTS ####" )
+print( "#######################" )
+print( "#######################\n" )
 
 #########################
-# print message reports #
+# print auth reports #
+print( "\n################" )
+print( "# VALID LOGINS #" )
+print( "################" )
 sessions_opened = "{:,}".format(sessions_opened)
 print( "[REPORT] SSH Sessions opened: " + sessions_opened )
-ftp_refused = "{:,}".format(ftp_refused)
-print( "[REPORT] FTP connections refused: " + ftp_refused )
 accepted_passwords = "{:,}".format(accepted_passwords)
 print( "[REPORT] Accepted passwords: " + accepted_passwords )
+
+#######################
+# print auth failures #
+print( "\n##################" )
+print( "# INVALID LOGINS #" )
+print( "##################" )
 auth_failures = "{:,}".format(auth_failures)
 print( "[REPORT] Auth failures: " + auth_failures )
+failed_passwords = "{:,}".format(failed_passwords)
+print( "[REPORT] Failed passwords: " + failed_passwords )
+ftp_refused = "{:,}".format(ftp_refused)
+print( "[REPORT] FTP connections refused: " + ftp_refused )
+invalid_users = "{:,}".format(invalid_users)
+print( "[REPORT] Invalid users: " + invalid_users )
+user_unknowns = "{:,}".format(user_unknowns)
+print( "[REPORT] User unknown messages: " + user_unknowns )
+failed_nones = "{:,}".format(failed_nones)
+print( "[REPORT] Failed none from invalid user messages: " + failed_nones )
+invalid_user_auth_failures = "{:,}".format(invalid_user_auth_failures)
+print( "[REPORT] Invalid user auth failures: " + invalid_user_auth_failures )
 max_attempts = "{:,}".format(max_attempts)
 print( "[REPORT] Max num of attempts messages: " + max_attempts )
 ignoring_max_retries = "{:,}".format(ignoring_max_retries)
 print( "[REPORT] Ignoring max retries messages: " + ignoring_max_retries )
-failed_passwords = "{:,}".format(failed_passwords)
-print( "[REPORT] Failed passwords: " + failed_passwords )
-invalid_users = "{:,}".format(invalid_users)
-print( "[REPORT] Invalid users: " + invalid_users )
-failed_nones = "{:,}".format(failed_nones)
-print( "[REPORT] Failed none from invalid user messages: " + failed_nones )
-user_unknowns = "{:,}".format(user_unknowns)
-print( "[REPORT] User unknown messages: " + user_unknowns )
-invalid_user_auth_failures = "{:,}".format(invalid_user_auth_failures)
-print( "[REPORT] Invalid user auth failures: " + invalid_user_auth_failures )
 invalid_disconnects = "{:,}".format(invalid_disconnects)
 print( "[REPORT] Invalid user disconnect messages: " + invalid_disconnects )
+
+#######################
+# print misc messages #
+print( "\n#################" )
+print( "# MISC MESSAGES #" )
+print( "#################" )
+
+nonnegotiables = "{:,}".format(nonnegotiables)
+print( "[REPORT] Can't negotiate messages: " + nonnegotiables )
 no_ident_strings = "{:,}".format(no_ident_strings)
 print( "[REPORT] No identity string messages: " + no_ident_strings )
 sessions_closed = "{:,}".format(sessions_closed)
@@ -260,11 +294,14 @@ con_closed = "{:,}".format(con_closed)
 print( "[REPORT] Connection closed messages: " + con_closed )
 bad_protocols = "{:,}".format(bad_protocols)
 print( "[REPORT] Bad protocol messages: " + bad_protocols )
-unknowns = "{:,}".format(unknowns)
-print( "[REPORT] Unknown messages: " + unknowns )
+bad_lengths = "{:,}".format(bad_lengths)
+print( "[REPORT] Bad length messages: " + bad_lengths )
 
 ###################
 # print IP report #
+print( "\n#############" )
+print( "# IP Report #" )
+print( "#############" )
 seen_ips = sorted(seen_ips.items(), key=lambda x:x[1])
 sorted_seen_ips = []
 for ip in seen_ips:
@@ -279,3 +316,12 @@ for ip in sorted_seen_ips:
 		break
 	mentions ="{:,}".format(ip[1])
 	print( "[REPORT] "+str(i)+": "+str(ip[0])+" with "+mentions+" mentions" )
+
+##################
+# print unknowns #
+print( "\n###############" )
+print( "# UNPROCESSED #" )
+print( "###############" )
+unknowns = "{:,}".format(unknowns)
+print( "[REPORT] Unknown messages: " + unknowns )
+print
