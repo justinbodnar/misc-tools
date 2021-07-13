@@ -101,6 +101,12 @@ num_lines ="{:,}".format(num_lines)
 seen_ips = {}
 f = open( "tmp/auth.log.MASTER", "r" )
 curr = 0
+disconnects = 0
+disconnects2 = 0
+auth_failures = 0
+invalid_users = 0
+con_closed = 0
+unknowns = 0
 print( "[INFO] Processing file. This may take some time." )
 for line in f:
 	curr = curr + 1
@@ -122,14 +128,29 @@ for line in f:
 		print( "[ITER] 80% of "+num_lines+" lines processed." )
 	elif curr == p9:
 		print( "[ITER] 90% of "+num_lines+" lines processed." )
-	# look for ips
+	################
+	# look for ips #
 	ips = re.findall( r'[0-9]+(?:\.[0-9]+){3}', line )
 	for ip in ips:
 		if ip not in seen_ips:
 			seen_ips[ip] = 1
 		else:
 			seen_ips[ip] = seen_ips[ip] + 1
-
+	########################
+	# look for message types #
+	if "Received disconnect from" in line:
+		disconnects += 1
+	elif "Disconnected from authenticating user" in line:
+		disconnects2 += 1
+	elif "authentication failure" in line:
+		auth_failures += 1
+	elif "Invalid user" in line:
+		invalid_users += 1
+	elif "Connection closed" in line:
+		con_closed += 1
+	else:
+#		print( line )
+		unknowns += 1
 print( "[ITER] 100% of "+num_lines+" lines processed." )
 
 ################
@@ -140,6 +161,21 @@ print( "[ITER] 100% of "+num_lines+" lines processed." )
 # results header
 print( "\n#######################################" )
 
+#########################
+# print message reports #
+auth_failures = "{:,}".format(auth_failures)
+print( "[REPORT] Auth Failures: " + auth_failures )
+invalid_users = "{:,}".format(invalid_users)
+print( "[REPORT] Invalid Users: " + invalid_users )
+disconnects = "{:,}".format(disconnects)
+print( "[REPORT] Disconnect messages type a: " + disconnects )
+disconnects2 = "{:,}".format(disconnects2)
+print( "[REPORT] Disconnect messages type b: " + disconnects2 )
+con_closed = "{:,}".format(con_closed)
+print( "[REPORT] Connection closed messages: " + con_closed )
+unknowns = "{:,}".format(unknowns)
+print( "[REPORT] Unknown messages: " + unknowns )
+
 ###################
 # print IP report #
 seen_ips = sorted(seen_ips.items(), key=lambda x:x[1])
@@ -147,7 +183,7 @@ sorted_seen_ips = []
 for ip in seen_ips:
 	sorted_seen_ips = [ip] + sorted_seen_ips
 count ="{:,}".format(len(seen_ips))
-print( "[REPORT] "+str(count)+" unique IPs seen" )
+print( "[REPORT] Unique IPs Seen: "+count )
 print( "[REPORT] Top 5 IPs Seen" )
 i = 0
 for ip in sorted_seen_ips:
@@ -155,4 +191,4 @@ for ip in sorted_seen_ips:
 	if i > 5:
 		break
 	mentions ="{:,}".format(ip[1])
-	print( "[REPORT] "+str(i)+": "+str(ip[0])+" "+mentions+" mentions" )
+	print( "[REPORT] "+str(i)+": "+str(ip[0])+" with "+mentions+" mentions" )
