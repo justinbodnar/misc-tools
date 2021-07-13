@@ -90,16 +90,7 @@ print( "[INFO] Deleted temporary files." )
 
 # get number of total lines to go through
 num_lines = sum(1 for line in open('tmp/auth.log.MASTER'))
-# calculate percentages
-p1 = int(.10 * num_lines)
-p2 = int(.20 * num_lines)
-p3 = int(.30 * num_lines)
-p4 = int(.40 * num_lines)
-p5 = int(.50 * num_lines)
-p6 = int(.60 * num_lines)
-p7 = int(.70 * num_lines)
-p8 = int(.80 * num_lines)
-p9 = int(.90 * num_lines)
+nlf = float( num_lines )
 num_lines ="{:,}".format(num_lines)
 seen_ips = {}
 f = open( "tmp/auth.log.MASTER", "r" )
@@ -150,26 +141,21 @@ invalid_users = 0
 con_closed = 0
 unknowns = 0
 print( "[INFO] Processing file with "+num_lines+" lines. This may take some time." )
+
+# used to print progress
+percentages = [ .1*nlf, .2*nlf, .3*nlf, .4*nlf, .5*nlf, .6*nlf, .7*nlf, .8*nlf, .9*nlf ]
+last_percent = 0
+
+# loop through all messages in MASTER file
 for line in f:
+
+	# check if we should print something to screen so user knwos were alive
 	curr = curr + 1
-	if curr == p1:
-		print( "[ITER] 10% processed." )
-	elif curr == p2:
-		print( "[ITER] 20% processed." )
-	elif curr == p3:
-		print( "[ITER] 30% processed." )
-	elif curr == p4:
-		print( "[ITER] 40% processed." )
-	elif curr == p5:
-		print( "[ITER] 50% processed." )
-	elif curr == p6:
-		print( "[ITER] 60% processed." )
-	elif curr == p7:
-		print( "[ITER] 70% processed." )
-	elif curr == p8:
-		print( "[ITER] 80% processed." )
-	elif curr == p9:
-		print( "[ITER] 90% processed." )
+	for percentage in percentages:
+		if curr == int(percentage):
+			last_percent += 10
+			print( "[ITER]  "+str(last_percent)+"% processed" )
+
 	################
 	# look for ips #
 	ips = re.findall( r'[0-9]+(?:\.[0-9]+){3}', line )
