@@ -6,7 +6,7 @@
 apt-get update
 apt-get dist-upgrade
 
-# check for lib updqtes/upgrades
+# check for lib updates/upgrades
 apt-get update
 apt-get -y upgrade
 apt-get autoremove
