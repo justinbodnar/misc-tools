@@ -5,13 +5,17 @@
 #!/bin/bash
 
 # move to the web root directory
-cd /var/www/
+echo "[fix-webserver.sh] Moving to /var/www/html"
+cd /var/www/html/
 
 # change ownership
+echo "[fix-webserver.sh] Changing ownership to www-data"
 chown -R www-data:www-data /var/www/html
 
 # change directory permissions recursively
+echo "[fix-webserver.sh] Changing directory permissions"
 find -type d -exec chmod 0775 {} \;
 
 # change file permissions recursively
+echo "[fix-webserver.sh] Changing file permissions"
 find -type f -exec chmod 0664 {} \;
