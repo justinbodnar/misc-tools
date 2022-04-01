@@ -14,8 +14,8 @@ chown -R www-data:www-data /var/www/html
 
 # change directory permissions recursively
 echo "[fix-webserver.sh] Changing directory permissions"
-find -type d -exec chmod 0775 {} \;
+find -type d -exec chmod 0755 {} \;
 
 # change file permissions recursively
 echo "[fix-webserver.sh] Changing file permissions"
-find -type f -exec chmod 0664 {} \;
+find -type f -exec chmod 0644 {} \;
