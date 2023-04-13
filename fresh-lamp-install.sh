@@ -16,10 +16,12 @@ apt-get install apache2 -y
 
 # install and configure mysql server with user interaction
 apt-get install mysql-server -y
+service mysql start
+systemctl mysql start
 mysql_secure_installation
 
 # install PHP
 apt-get install php libapache2-mod-php php-mysql -y
 
 # install certbot for free SSL
-apt-get install certbot python3-certbot-apache -y
+apt-get install certbot python3-certbot-apache python3-pip -y
