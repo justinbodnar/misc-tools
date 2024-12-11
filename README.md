@@ -18,7 +18,7 @@ Usage:
 1. Save the script in your webroot directory.
 2. Run the command: `./sitemap_generator.sh`
 3. Enter your domain name when prompted (e.g., `example.com` or `https://example.com`).
-4. 
+4. Inspect sitemap.xml
 
 ---
 
