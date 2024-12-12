@@ -24,4 +24,4 @@ mysql_secure_installation
 apt-get install php libapache2-mod-php php-mysql -y
 
 # install certbot for free SSL
-apt-get install git certbot python3-certbot-apache python3-pip -y
+apt-get install git certbot python3 python3-certbot-apache python3-pip -y
