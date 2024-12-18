@@ -288,7 +288,7 @@ for line in f:
 		server_listenings += 1
 	# unknown messages should be investigated
 	else:
-		unknown += 1
+		unknowns += 1
 		if verbosity > 0:
 			print( line )
 print( "[ITER] 100% processed." )
