@@ -21,7 +21,10 @@ systemctl mysql start
 mysql_secure_installation
 
 # install PHP
-apt-get install php libapache2-mod-php php-mysql -y
+apt-get install php libapache2-mod-php php-mysql php-zip php-curl -y
+
+# enamble mods
+phpenmod curl
 
 # install certbot for free SSL
 apt-get install git certbot python3 python3-certbot-apache python3-pip -y
