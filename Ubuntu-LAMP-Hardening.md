@@ -49,6 +49,15 @@ ServerSignature Off
   </LocationMatch>
 </IfModule>
 
+<IfModule mod_security2.c>
+  # ─── Turn off ModSecurity completely for REST API & block-editor endpoints ───
+  <LocationMatch "^/(wp-json/|index\.php/wp-json/)">
+    SecRuleEngine Off
+    SecRequestBodyAccess Off
+    SecResponseBodyAccess Off
+  </LocationMatch>
+</IfModule>
+
 <IfModule mod_headers.c>
   # ─── Strip out the Server header entirely ───
   Header always unset Server
@@ -71,6 +80,9 @@ ServerSignature Off
   SetEnvIf Request_URI "^/wp-admin(/|$)"       CspOff
   SetEnvIf Query_String "redirect_to="         CspOff
   SetEnvIf Query_String "reauth=1"             CspOff
+
+  # ─── Disable CSP on REST API endpoints ───
+  SetEnvIf Request_URI "^/wp-json/"            CspOff
   Header always unset Content-Security-Policy  env=CspOff
 
   # ─── Content Security Policy (all other URLs) ───
