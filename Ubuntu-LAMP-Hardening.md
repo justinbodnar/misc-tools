@@ -25,6 +25,10 @@ ServerSignature Off
 
 # ─── Silence only the two CRS rules firing false-positives on WP login/ajax ───
 <IfModule security2_module>
+  # raise PCRE backtrack & recursion limits for ModSecurity
+  SecPcreMatchLimit           500000
+  SecPcreMatchLimitRecursion  500000
+
   <LocationMatch "^/(wp-login\.php|wp-admin/admin-ajax\.php)">
     # Remove only the SQLi & anomaly-score rules misfiring on your pwd field
     SecRuleRemoveById 942100 949110
@@ -35,6 +39,13 @@ ServerSignature Off
     SecRuleEngine Off
     SecRequestBodyAccess Off
     SecResponseBodyAccess Off
+  </LocationMatch>
+
+  # ─── Turn off blocking under /wp-admin (keep detection only) ───
+  <LocationMatch "^/wp-admin/">
+    SecRuleEngine DetectionOnly
+    # (disabled because this directive isn’t recognized in your mod_security build)
+    # SecRuleRemoveByFile /usr/share/modsecurity-crs/rules/RESPONSE-951-DATA-LEAKAGES-SQL.conf
   </LocationMatch>
 </IfModule>
 
@@ -55,7 +66,7 @@ ServerSignature Off
   # ─── Disable unnecessary browser features ───
   Header always set Permissions-Policy         "geolocation=(), camera=(), microphone=(), payment=()"
 
-  # ─── Disable CSP on WP admin & login (handled above by mod_security whitelisting) ───
+  # ─── Disable CSP on WP admin & login ───
   SetEnvIf Request_URI "^/wp-login\.php"       CspOff
   SetEnvIf Request_URI "^/wp-admin(/|$)"       CspOff
   SetEnvIf Query_String "redirect_to="         CspOff
