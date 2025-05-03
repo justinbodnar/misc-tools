@@ -23,11 +23,18 @@ Place the following in `/etc/apache2/conf-available/security-headers.conf` (your
 ServerTokens Prod
 ServerSignature Off
 
-# ─── Silence only the two CRS rules firing false‑positives on WP login/ajax ───
+# ─── Silence only the two CRS rules firing false-positives on WP login/ajax ───
 <IfModule security2_module>
   <LocationMatch "^/(wp-login\.php|wp-admin/admin-ajax\.php)">
-    # Remove only the SQLi & anomaly‑score rules misfiring on your pwd field
+    # Remove only the SQLi & anomaly-score rules misfiring on your pwd field
     SecRuleRemoveById 942100 949110
+  </LocationMatch>
+
+  # ─── Disable ModSecurity multipart-boundary check on plugin install/update ───
+  <LocationMatch "^/wp-admin/(plugin-install\.php|update\.php)$">
+    SecRuleEngine Off
+    SecRequestBodyAccess Off
+    SecResponseBodyAccess Off
   </LocationMatch>
 </IfModule>
 
