@@ -1,0 +1,59 @@
+# 1. DNS: Prevent mail spoofing
+#    Add to your DNS zone:
+TXT @ "v=spf1 -all"
+
+# 2. Hide Apache version in errors & signature
+#    In /etc/modsecurity/modsecurity.conf:
+SecServerSignature "Unknown"
+#    In /etc/apache2/conf-available/security-headers.conf:
+ServerTokens Prod
+ServerSignature Off
+
+# 3. Enable ModSecurity & security headers
+<IfModule security2_module>
+  <LocationMatch "^/(wp-login\.php|wp-admin/admin-ajax\.php)">
+    SecRuleRemoveById 942100 949110
+  </LocationMatch>
+</IfModule>
+<IfModule mod_headers.c>
+  Header always unset Server
+  Header always set Server ""
+  Header always set X-Frame-Options           "SAMEORIGIN"
+  Header always set X-Content-Type-Options    "nosniff"
+  Header always set Referrer-Policy           "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy        "geolocation=(), camera=(), microphone=(), payment=()"
+  SetEnvIf Request_URI "^/wp-login\.php"       CspOff
+  SetEnvIf Request_URI "^/wp-admin(/|$)"       CspOff
+  Header always unset Content-Security-Policy  env=CspOff
+  Header always set Content-Security-Policy    "\
+    default-src 'self'; \
+    base-uri 'self'; \
+    script-src 'self' 'unsafe-inline' 'unsafe-eval'; \
+    style-src 'self' 'unsafe-inline'; \
+    img-src 'self' data: https:; \
+    font-src 'self'; \
+    form-action 'self'; \
+    object-src 'none'; \
+    frame-ancestors 'none'; \
+    upgrade-insecure-requests;" env=!CspOff
+  <If "%{HTTPS} == 'on'">
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  </If>
+</IfModule>
+
+# 4. Exception: silence ModSecurity on WP upload & AJAX
+#    In /etc/apache2/conf-available/disable-modsec-uploads.conf:
+<IfModule mod_security2.c>
+  <LocationMatch "^/wp-admin/(async-upload\.php|admin-ajax\.php)$">
+    SecRuleEngine Off
+    SecRequestBodyAccess Off
+    SecResponseBodyAccess Off
+  </LocationMatch>
+</IfModule>
+
+# 5. Tame CPU during media uploads
+#    Disable Imagick so PHP falls back to GD (single‑threaded):
+sudo phpdismod imagick
+sudo systemctl restart apache2
+#    Verify:
+php -m | grep -E 'imagick|gd'
