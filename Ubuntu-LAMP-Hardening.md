@@ -26,16 +26,16 @@ ServerTokens Prod
 ServerSignature Off
 
 <IfModule security2_module>
-  # ─── Disable ModSecurity entirely for every WP-Admin URL ───
+  # ─── ModSecurity enabled for every WP-Admin URL ───
   <LocationMatch "^/wp-admin/">
-    SecRuleEngine Off
-    SecRequestBodyAccess Off
-    SecResponseBodyAccess Off
+    SecRuleEngine On
+    SecRequestBodyAccess On
+    SecResponseBodyAccess On
   </LocationMatch>
 </IfModule>
 
 <IfModule mod_security2.c>
-  # ─── Also turn off ModSecurity for REST API & block-editor endpoints ───
+  # ─── Disable ModSecurity for REST API & block-editor endpoints ───
   <LocationMatch "^/(wp-json/|index\.php/wp-json/)">
     SecRuleEngine Off
     SecRequestBodyAccess Off
