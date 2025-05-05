@@ -41,6 +41,13 @@ ServerSignature Off
     SecRequestBodyAccess Off
     SecResponseBodyAccess Off
   </LocationMatch>
+
+  # ─── Disable ModSecurity for XML-RPC endpoint ───
+  <LocationMatch "^/xmlrpc\.php$">
+    SecRuleEngine Off
+    SecRequestBodyAccess Off
+    SecResponseBodyAccess Off
+  </LocationMatch>
 </IfModule>
 
 <IfModule mod_headers.c>
@@ -72,16 +79,14 @@ ServerSignature Off
 
   # ─── Content Security Policy (everything else) ───
   Header always set Content-Security-Policy "\
-    default-src 'self' https://www.gstatic.com https://www.google.com/recaptcha/; \
-    script-src  'self' 'unsafe-inline' 'unsafe-eval' \
-                https://www.google.com https://www.gstatic.com; \
-    frame-src   https://www.google.com/recaptcha/; \
-    connect-src 'self' https://www.google.com https://www.gstatic.com; \
-    img-src     'self' data: blob: https://www.google.com/recaptcha/ https://www.gstatic.com; \
-    style-src   'self' 'unsafe-inline'; \
-    font-src    'self'; \
+    default-src 'self'; \
+    base-uri 'self'; \
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; \
+    style-src 'self' 'unsafe-inline'; \
+    img-src 'self' data: blob: https:; \
+    font-src 'self'; \
     form-action 'self'; \
-    object-src  'none'; \
+    object-src 'none'; \
     frame-ancestors 'none'; \
     upgrade-insecure-requests;"
 
