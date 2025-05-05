@@ -19,7 +19,7 @@ SecServerSignature "Unknown"
 Place the following in `/etc/apache2/conf-available/security-headers.conf` (your working file):
 
 ```apache
-# /etc/apache2/conf-available/security-headers.conf
+ # /etc/apache2/conf-available/security-headers.conf
 
 # ─── Hide Apache version info and signature ───
 ServerTokens Prod
@@ -74,9 +74,9 @@ ServerSignature Off
   Header always set Content-Security-Policy "\
     default-src 'self'; \
     base-uri 'self'; \
-    script-src 'self' 'unsafe-inline' 'unsafe-eval'; \
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; \
     style-src 'self' 'unsafe-inline'; \
-    img-src 'self' data: https:; \
+    img-src 'self' data: blob: https:; \
     font-src 'self'; \
     form-action 'self'; \
     object-src 'none'; \
