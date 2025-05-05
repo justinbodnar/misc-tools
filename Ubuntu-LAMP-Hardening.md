@@ -77,6 +77,16 @@ ServerSignature Off
     Header always unset Content-Security-Policy
   </LocationMatch>
 
+  # ─── Remove CSP on cart & checkout pages ───
+  <LocationMatch "^/(cart-2|checkout)/">
+    Header always unset Content-Security-Policy
+  </LocationMatch>
+
+  # ─── Remove CSP on PayPal plugin assets ───
+  <LocationMatch "^/wp-content/plugins/(pymntpl-paypal-woocommerce|woocommerce-paypal-payments)/">
+    Header always unset Content-Security-Policy
+  </LocationMatch>
+
   # ─── Content Security Policy (everything else) ───
   Header always set Content-Security-Policy "\
     default-src 'self'; \
@@ -87,6 +97,7 @@ ServerSignature Off
     font-src 'self'; \
     form-action 'self'; \
     object-src 'none'; \
+    frame-src 'self' https://www.paypal.com https://www.paypalobjects.com; \
     frame-ancestors 'none'; \
     upgrade-insecure-requests;"
 
