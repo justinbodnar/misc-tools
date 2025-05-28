@@ -17,11 +17,11 @@ Features:
 
 Requirements/Caveats:
 - Webroot must be `/var/www/html/`
-- Websites must be in their own folders in webroot. ie. 
+- Websites must be in their own folders in webroot. ie.
     - `/var/www/html/myfirstwebsite.com`
     - `/var/www/html/mysecondwebsite.org`
     - `/var/www/html/staging.mythirdwebsite.net`
-- Users are generated from text found before the final period. ie. the previous websites will create users 
+- Users are generated from text found before the final period. ie. the previous websites will create users
     - `myfirstwebsite`
     - `mysecondwebsite`
     - `staging.mythirdwebsite`
@@ -106,7 +106,38 @@ Usage:
 
 ---
 
-Author: Justin Bodnar  
+## `domain-mx-checker.py`
+
+A simple Python script to audit a list of domains for email protection:
+
+- **Checks**:
+  - MX records
+  - SPF records
+  - DKIM records (only if MX present)
+  - DMARC records
+- **Input file**: `domain-mx-checker-input.txt` (one domain per line)
+- **Output**:
+  - Lists domains missing SPF, DKIM or DMARC
+  - “Fully Protected” domain summary
+  - Final action plan with DNS entries to add
+
+### Requirements
+
+- `python3`
+- `dnspython` (install via `pip3 install dnspython`)
+
+### Usage
+
+```bash
+# Basic run (reads from domain-mx-checker-input.txt)
+python3 domain-mx-checker.py
+
+# Verbose mode for detailed DNS lookup traces
+python3 domain-mx-checker.py -v
+```
+---
+
+Author: Justin Bodnar
 Website: [justinbodnar.com](https://justinbodnar.com)
 
 ---
