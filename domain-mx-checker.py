@@ -109,6 +109,7 @@ def main():
 
         print(f"  Email Setup (MX): {'YES' if has_mx else 'NO'}")
         print(f"  SPF: {'Found' if has_spf else 'Not Found'}")
+        print(f"  MX records: {r['MX']}")  # <<-- ADDED LINE
         print(f"  DMARC: {'Found' if has_dmarc else 'Not Found'}")
         print(f"  DKIM: { 'N/A' if r['DKIM']=='N/A' else ('Found' if has_dkim else 'Not Found')}")
 
