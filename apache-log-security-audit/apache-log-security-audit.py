@@ -131,7 +131,7 @@ print("[INFO] Running Scalp on all files.")
 for file in os.listdir("tmp"):
 	i += 1
 	print("[INFO] Processing file " + str(i) + " of " + count)
-	command = "python scalp.py --exhaustive --tough -l tmp/" + file + " -f ./default_filter.xml -o ./output --html >/dev/null"
+	command = "python3 scalp.py --exhaustive --tough -l tmp/" + file + " -f ./default_filter.xml -o ./output --html >/dev/null"
 	os.system(command)
 print("[INFO] Log analysis complete")
 # check if there are any results
