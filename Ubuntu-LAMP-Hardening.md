@@ -1,4 +1,19 @@
-## 1. DNS: Prevent mail spoofing  
+## 1. Automate Updates/Upgrades
+Install the following:
+```
+sudo apt install -y unattended-upgrades
+sudo dpkg-reconfigure --priority=low unattended-upgrades   # choose “Yes” when asked
+```
+ensure file `/etc/apt/apt.conf.d/20auto-upgrades` contains:
+```
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";
+APT::Periodic::AutocleanInterval "7";
+```
+
+---
+
+## 2. DNS: Prevent mail spoofing  
 Add this TXT record at your DNS provider:  
 ```
 TXT @ "v=spf1 -all"
@@ -6,7 +21,7 @@ TXT @ "v=spf1 -all"
 
 ---
 
-## 2. Hide Apache version in errors & signature  
+## 3. Hide Apache version in errors & signature  
 
 **In** `/etc/modsecurity/modsecurity.conf`  
 ```apache
@@ -15,7 +30,7 @@ SecServerSignature "Unknown"
 
 ---
 
-## 3. Apache security‑headers config  
+## 4. Apache security‑headers config  
 Place the following in `/etc/apache2/conf-available/security-headers.conf` (your working file):
 
 ```apache
@@ -117,7 +132,7 @@ sudo apachectl -k graceful
 
 ---
 
-## 4. Tame CPU during media uploads  
+## 5. Tame CPU during media uploads  
 Force PHP to use GD (single‑threaded) instead of Imagick:
 
 ```bash
