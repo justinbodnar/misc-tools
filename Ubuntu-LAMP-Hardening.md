@@ -140,3 +140,12 @@ sudo phpdismod imagick
 sudo systemctl restart apache2
 php -m | grep -E 'imagick|gd'
 ```
+
+---
+
+## 6. MySQL: Stop BinLog Bloat  
+Add this in `/etc/mysql/mysql.conf.d/mysqld.cnf`:  
+```
+binlog_expire_logs_seconds = 604800
+max_binlog_size = 100M
+```
