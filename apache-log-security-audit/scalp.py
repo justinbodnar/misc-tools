@@ -109,7 +109,10 @@ def __parse_node(node):
 		tmp['value'] = node.text
 	for (k,v) in node.attrib.items():
 		tmp[k] = v
-	for ch in node.getchildren():
+
+	# ``getchildren`` was removed in Python 3.9+.  Use ``list(node)`` so
+	# we support all maintained runtimes.
+	for ch in list(node):
 		cht = ch.tag
 		chp = __parse_node(ch)
 		if cht not in tmp: # the first time, so store it in dict
