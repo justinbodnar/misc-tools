@@ -17,6 +17,7 @@ import os
 import shutil
 import subprocess
 import sys
+from getpass import getpass
 from dataclasses import asdict, dataclass
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
@@ -492,7 +493,13 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--host", default="127.0.0.1", help="Database host (default: 127.0.0.1)")
     parser.add_argument("--port", type=int, help="Database port (default: 3306 for MySQL, 5432 for PostgreSQL)")
     parser.add_argument("--user", help="Database user (default: root for MySQL, postgres for PostgreSQL)")
-    parser.add_argument("--password", help="Database password (uses MYSQL_PWD/PGPASSWORD when omitted)")
+    parser.add_argument(
+        "--password",
+        help=(
+            "Database password. When omitted and running in a TTY, an interactive prompt "
+            "is shown. Otherwise MYSQL_PWD/PGPASSWORD are honored."
+        ),
+    )
     parser.add_argument("--database", help="Optional default database to connect to")
     parser.add_argument("--json", action="store_true", help="Emit the report as JSON instead of text")
     return parser.parse_args()
@@ -508,6 +515,13 @@ def main() -> None:
         args.port = 3306 if client in {"mysql", "mariadb"} else 5432
     if not args.user:
         args.user = "root" if client in {"mysql", "mariadb"} else "postgres"
+
+    if args.password is None and sys.stdin.isatty():
+        try:
+            args.password = getpass(f"Password for {args.user}: ")
+        except (KeyboardInterrupt, EOFError):
+            print("Password entry aborted", file=sys.stderr)
+            sys.exit(1)
 
     report = AuditReport(engine=client, client_path=client_path)
     report.add_metadata("host", args.host)
