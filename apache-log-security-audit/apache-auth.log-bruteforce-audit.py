@@ -1,444 +1,385 @@
-# Apache log security audit
-# by Justin Bodnar
-# 7/12/2021
+#!/usr/bin/env python3
+"""Analyze Linux auth.log files for brute-force attempts and anomalies."""
 
-# imports
+from __future__ import annotations
+
+import gzip
 import os
 import re
-import os.path
+import shutil
+from collections import Counter
+from pathlib import Path
+from typing import Iterable
 
-# for debugging
-verbosity = 1
+LOG_FILE = Path("/var/log/auth.log")
+VAR_LOG_DIR = LOG_FILE.parent
+TMP_DIR = Path("./tmp")
+MASTER_LOG = TMP_DIR / "auth.log.MASTER"
+FAILED_THRESHOLD = 25
+SUDO_SAMPLE_LIMIT = 10
 
-# default log file
-log_file = "/var/log/auth.log"
-
-# function for ending program in a readable way
-def throw_fatal_error():
-	print( "[EXIT] Fatal error encountered" );
-	print
-	exit()
-
-# print opening
-for i in range(50): print
-print( "####################################" )
-print( "# Apache auth.log Bruteforce Audit #" )
-print( "# by Justin Bodnar                 #" )
-print( "# 7/12/2021                        #" )
-print( "####################################\n" )
-
-##################################
-# STEP 1                         #
-# GET A WORKING COPY OF ALL LOGS #
-##################################
-
-# verify default log exists
-if not os.path.exists(log_file):
-	print( "[ERROR] "+log_file+" doesn't exist." )
-	throw_fatal_error()
-
-# make a temporary directory to work in
-if not os.path.isdir("./tmp"):
-	os.system( "mkdir ./tmp" )
-	print( "[INFO] Creating ./tmp directory to work in" )
-elif len(os.listdir("tmp")) > 0:
-	os.system( "rm -rf tmp" )
-	os.system( "mkdir ./tmp" )
-	print( "[INFO] Deleting data from ./tmp directory" )
-
-# copies all auth.log.n files
-count = 0
-for filename in os.listdir( "/var/log" ):
-	if "auth.log" in filename:
-		count += 1
-print( "[INFO] There are "+str(count)+" files" )
-os.system( "cp "+log_file+"* tmp/")
-print( "[INFO] Copied "+str(len(os.listdir("tmp")))+" files to ./tmp directory" )
-
-# unzip all gunzip files
-print( "[INFO] Beginning decompression of gunzip files. This may take some time." )
-gzs = 0
-for file in os.listdir( "tmp" ):
-	if ".gz" in file:
-		os.system( "gunzip tmp/"+file )
-		gzs += 1
-print( "[INFO] Decompressed "+str(gzs)+" gunzip files" )
+FAILED_PASSWORD_PATTERN = re.compile(
+    r"Failed password for (invalid user )?(?P<user>\S+) from (?P<ip>[0-9.]+)"
+)
+ACCEPTED_PASSWORD_PATTERN = re.compile(
+    r"Accepted password for (?P<user>\S+) from (?P<ip>[0-9.]+)"
+)
+INVALID_USER_PATTERN = re.compile(
+    r"Invalid user (?P<user>\S+) from (?P<ip>[0-9.]+)"
+)
+AUTH_FAILURE_PATTERN = re.compile(r"authentication failure.*rhost=(?P<ip>[0-9.]+)")
 
 
-#####################################
-# STEP 2                             #
-# CONCATENATE FILES TOGETHER BY TAGS #
-######################################
-command = "cat "
-seen = []
-for filename in os.listdir( "tmp" ):
-	command = command + " tmp/" + filename
-	seen.append( filename )
-command = command + " > tmp/auth.log.MASTER"
-os.system( command )
-print( "[INFO] One master file created." )
-# delete old files
-for filename in seen:
-	os.system( "rm tmp/"+filename )
-print( "[INFO] Deleted temporary files." )
+def throw_fatal_error(message: str) -> None:
+    print(f"[EXIT] {message}")
+    exit(1)
 
 
-###############################
-# STEP 3                      #
-# ITERATE THROUGH MASTER FILE #
-###############################
+def prepare_tmp_dir() -> None:
+    if TMP_DIR.exists():
+        shutil.rmtree(TMP_DIR)
+    TMP_DIR.mkdir(parents=True)
 
-# get number of total lines to go through
-num_lines = sum(1 for line in open('tmp/auth.log.MASTER'))
-nlf = float( num_lines )
-num_lines ="{:,}".format(num_lines)
-seen_ips = {}
-f = open( "tmp/auth.log.MASTER", "r" )
-curr = 0
-server_listenings = 0
-new_seats = 0
-misc_sudos = 0
-delusers = 0
-auth_codes = 0
-bad_lengths = 0
-nonnegotiables = 0
-fatals = 0
-sus = 0
-dlopens = 0
-remove_groups = 0
-system_buttons = 0
-remove_shadow_groups = 0
-new_sessions = 0
-delete_users = 0
-attempted_logins = 0
-faulty_modules = 0
-bad_users = 0
-bad_ownerships = 0
-failed_to_releases = 0
-removed_sessions = 0
-logouts = 0
-no_ident_strings = 0
-timeouts = 0
-disconnects = 0
-bad_protocols = 0
-ftp_refused = 0
-accepted_passwords = 0
-sessions_opened = 0
-failed_nones = 0
-ignoring_max_retries = 0
-disconnects2 = 0
-disconnecteds = 0
-max_attempts = 0
-invalid_disconnects = 0
-user_unknowns = 0
-invalid_users2 = 0
-con_resets = 0
-sessions_closed = 0
-invalid_user_auth_failures = 0
-failed_passwords = 0
-auth_failures = 0
-invalid_users = 0
-con_closed = 0
-unknowns = 0
-print( "[INFO] Processing file with "+num_lines+" lines. This may take some time." )
 
-# used to print progress
-percentages = [ .1*nlf, .2*nlf, .3*nlf, .4*nlf, .5*nlf, .6*nlf, .7*nlf, .8*nlf, .9*nlf ]
-last_percent = 0
+def copy_logs_into_tmp() -> list[Path]:
+    sources = sorted(VAR_LOG_DIR.glob(f"{LOG_FILE.name}*"))
+    if not sources:
+        throw_fatal_error(f"No {LOG_FILE.name} files found in {VAR_LOG_DIR}")
 
-# loop through all messages in MASTER file
-for line in f:
+    copied: list[Path] = []
+    for src in sources:
+        dest = TMP_DIR / src.name
+        shutil.copy2(src, dest)
+        copied.append(dest)
+    print(f"[INFO] Copied {len(copied)} files into {TMP_DIR}")
+    return copied
 
-	# check if we should print something to screen so user knwos were alive
-	curr = curr + 1
-	for percentage in percentages:
-		if curr == int(percentage):
-			last_percent += 10
-			print( "[ITER]  "+str(last_percent)+"% processed" )
 
-	################
-	# look for ips #
-	ips = re.findall( r'[0-9]+(?:\.[0-9]+){3}', line )
-	for ip in ips:
-		if ip not in seen_ips:
-			seen_ips[ip] = 1
-		else:
-			seen_ips[ip] = seen_ips[ip] + 1
-	########################
-	# look for message types #
-	if "Received disconnect from" in line:
-		disconnects += 1
-	elif "Disconnected from authenticating user" in line:
-		disconnects2 += 1
-	# need ups
-	elif "authentication failure" in line:
-		auth_failures += 1
-	elif "Disconnected from invalid user" in line:
-		invalid_disconnects += 1
-	elif "Disconnected from" in line:
-		disconnecteds += 1
-	elif "Invalid user" in line:
-		invalid_users += 1
-	elif "Connection from invalid user" in line:
-		invalid_users2 += 1
-	elif "Connection closed" in line:
-		con_closed += 1
-	# NEED USERS #
-	elif " session opened for user" in line:
-		sessions_opened += 1
-	# need users
-	elif "Did not receive identification string from" in line:
-		no_ident_strings += 1
-	# need users
-	elif "Connection reset by" in line:
-		con_resets += 1
-	# need users
-	elif " maximum authentication attempts exceeded for" in line:
-		max_attempts += 1
-	# need users
-	elif "check pass; user unknown" in line:
-		user_unknowns += 1
-	# need users
-	elif "Failed password for invalid user" in line:
-		invalid_user_auth_failures += 1
-	# need users
-	elif "Failed password for" in line:
-		failed_passwords += 1
-	# need users
-	elif "session closed for user" in line:
-		sessions_closed += 1
-	# need users
-	elif " Failed none for invalid user" in line:
-		failed_nones += 1
-	elif "ignoring max retries" in line:
-		ignoring_max_retries += 1
-	# NEED USERS #
-	elif "Accepted password for" in line:
-		accepted_passwords += 1
-	# need ips
-	elif "Unable to negotiate" in line:
-		nonnegotiables += 1
-	# need users
-	elif "Bad protocol version identification" in line:
-		bad_protocols += 1
-	# need sizes
-	elif " Bad packet length" in line:
-		bad_lengths += 1
-	elif "Refused user" in line and " for service vsftpd" in line:
-		ftp_refused += 1
-	# need session ids
-	elif "Removed session" in line:
-		removed_sessions += 1
-	# need users
-	elif " Timeout, client not responding from user" in line:
-		timeouts += 1
-	# need user ints (?)
-	elif "logged out. Waiting for processes to exit." in line:
-		logouts += 1
-	elif "Failed to release session: Interrupted system call" in line:
-		failed_to_releases += 1
-	# need to differentiate
-	elif "fatal: fork of unprivileged child failed" in line or "error: fork: Cannot allocate memory" in line:
-		fatals += 1
-	# need users
-	elif "New session" in line:
-		new_sessions += 1
-	# need users
-	elif "primary-webserver su:" in line:
-		sus += 1
-	# need users
-	elif "bad username" in line:
-		bad_users += 1
-	elif "PAM adding faulty module" in line:
-		faulty_modules += 1
-	# need files
-	elif " Authentication refused: bad ownership or modes for file" in line:
-		bad_ownerships += 1
-	# need users
-	elif "delete user" in line:
-		delete_users += 1
-	# need groups
-	elif "removed group" in line:
-		remove_groups += 1
-	# need shadow groups
-	elif "removed shadow group" in line:
-		remove_shadow_groups += 1
-	# need users
-	elif "Attempted login by" in line:
-		attempted_logins += 1
-	# need files
-	elif "PAM unable to dlopen" in line:
-		dlopens += 1
-	# need more info
-	elif "Power key pressed" in line or "Powering Off..." in line or "System is powering down" in line or "Watching system buttons on" in line:
-		system_buttons += 1
-	# idek
-	elif "message authentication code incorrect" in line:
-		auth_codes += 1
-	# need users
-	elif "userdel" in line:
-		delusers += 1
-	# need more info
-	elif "sudo:" in line:
-		misc_sudos += 1
-	elif "New seat" in line:
-		new_seats += 1
-	# need more info
-	elif "Server listening on" in line:
-		server_listenings += 1
-	# unknown messages should be investigated
-	else:
-		unknowns += 1
-		if verbosity > 0:
-			print( line )
-print( "[ITER] 100% processed." )
-print( "[FIN] Audit complete. Generating results.\n" )
+def decompress_logs(files: Iterable[Path]) -> None:
+    decompressed = 0
+    for file in files:
+        if file.suffix != ".gz":
+            continue
+        target = file.with_suffix("")
+        with gzip.open(file, "rb") as src, open(target, "wb") as dst:
+            shutil.copyfileobj(src, dst)
+        file.unlink()
+        decompressed += 1
+    print(f"[INFO] Decompressed {decompressed} gzip archives")
 
-################
-# STEP 4       #
-# PRINT REPORT #
-################
-# results header
-print( "\n#######################" )
-print( "#######################" )
-print( "#### BEGIN RESULTS ####" )
-print( "#######################" )
-print( "#######################\n" )
 
-#########################
-# print auth reports #
-print( "\n################" )
-print( "# VALID LOGINS #" )
-print( "################" )
-sessions_opened = "{:,}".format(sessions_opened)
-print( "[REPORT] SSH Sessions opened: " + sessions_opened )
-new_sessions = "{:,}".format(new_sessions)
-print( "[REPORT] New session messages: " + new_sessions )
-accepted_passwords = "{:,}".format(accepted_passwords)
-print( "[REPORT] Accepted password messages: " + accepted_passwords )
-logouts = "{:,}".format(logouts)
-print( "[REPORT] Logout messages: " + logouts )
-failed_to_releases = "{:,}".format(failed_to_releases)
-print( "[REPORT] Failed to release; interupted system call messages: " + failed_to_releases )
-sus = "{:,}".format(sus)
-print( "[REPORT] Su messages: " + sus )
-delete_users = "{:,}".format(delete_users)
-print( "[REPORT] Delete user messages: " + delete_users )
-delusers = "{:,}".format(delusers)
-print( "[REPORT] Deluser messages: " + delusers )
-remove_groups = "{:,}".format(remove_groups)
-print( "[REPORT] Remove group messages: " + remove_groups )
-remove_shadow_groups = "{:,}".format(remove_shadow_groups)
-print( "[REPORT] Remove shadow group messages: " + remove_shadow_groups )
-misc_sudos = "{:,}".format(misc_sudos)
-print( "[REPORT] Misc SUDO messages: " + misc_sudos )
+def build_master_log() -> Path:
+    with MASTER_LOG.open("wb") as dest:
+        for file in sorted(TMP_DIR.iterdir()):
+            if file == MASTER_LOG:
+                continue
+            with file.open("rb") as src:
+                shutil.copyfileobj(src, dest)
+    print("[INFO] Combined logs into tmp/auth.log.MASTER")
+    for file in list(TMP_DIR.iterdir()):
+        if file != MASTER_LOG:
+            file.unlink()
+    return MASTER_LOG
 
-#######################
-# print auth failures #
-print( "\n##################" )
-print( "# INVALID LOGINS #" )
-print( "##################" )
-auth_failures = "{:,}".format(auth_failures)
-print( "[REPORT] Auth failures: " + auth_failures )
-attempted_logins = "{:,}".format(attempted_logins)
-print( "[REPORT] Attempted login messages: " + attempted_logins )
-failed_passwords = "{:,}".format(failed_passwords)
-print( "[REPORT] Failed password messagess: " + failed_passwords )
-ftp_refused = "{:,}".format(ftp_refused)
-print( "[REPORT] FTP connection refused messages: " + ftp_refused )
-invalid_users = "{:,}".format(invalid_users)
-print( "[REPORT] Invalid user messages type a: " + invalid_users )
-invalid_users2 = "{:,}".format(invalid_users2)
-print( "[REPORT] Invalid user messages type b: " + invalid_users2 )
-bad_users = "{:,}".format(bad_users)
-print( "[REPORT] Bad user messages: " + bad_users )
-user_unknowns = "{:,}".format(user_unknowns)
-print( "[REPORT] User unknown messages: " + user_unknowns )
-failed_nones = "{:,}".format(failed_nones)
-print( "[REPORT] Failed none from invalid user messages: " + failed_nones )
-invalid_user_auth_failures = "{:,}".format(invalid_user_auth_failures)
-print( "[REPORT] Invalid user auth failures: " + invalid_user_auth_failures )
-max_attempts = "{:,}".format(max_attempts)
-print( "[REPORT] Max num of attempts messages: " + max_attempts )
-ignoring_max_retries = "{:,}".format(ignoring_max_retries)
-print( "[REPORT] Ignoring max retries messages: " + ignoring_max_retries )
-invalid_disconnects = "{:,}".format(invalid_disconnects)
-print( "[REPORT] Invalid user disconnect messages: " + invalid_disconnects )
-bad_ownerships = "{:,}".format(bad_ownerships)
-print( "[REPORT] Bad ownership or mode messages: " + bad_ownerships )
-auth_codes = "{:,}".format(auth_codes)
-print( "[REPORT] Invalid auth code messages: " + auth_codes )
 
-#######################
-# print misc messages #
-print( "\n#################" )
-print( "# MISC MESSAGES #" )
-print( "#################" )
-fatals = "{:,}".format(fatals)
-print( "[REPORT] Fatal error messages: " + fatals )
-timeouts = "{:,}".format(timeouts)
-print( "[REPORT] Timeout messages: " + timeouts )
-dlopens = "{:,}".format(dlopens)
-print( "[REPORT] Can't dlopen() messages: " + dlopens )
-faulty_modules = "{:,}".format(faulty_modules)
-print( "[REPORT] Faulty module messages: " + faulty_modules )
-nonnegotiables = "{:,}".format(nonnegotiables)
-print( "[REPORT] Can't negotiate messages: " + nonnegotiables )
-no_ident_strings = "{:,}".format(no_ident_strings)
-print( "[REPORT] No identity string messages: " + no_ident_strings )
-sessions_closed = "{:,}".format(sessions_closed)
-print( "[REPORT] Session closed messages: " + sessions_closed )
-con_resets = "{:,}".format(con_resets)
-print( "[REPORT] Connection reset messages: " + con_resets )
-disconnecteds = "{:,}".format(disconnecteds)
-print( "[REPORT] Disconnected from messages: " + disconnecteds )
-disconnects = "{:,}".format(disconnects)
-print( "[REPORT] Disconnect messages type a: " + disconnects )
-disconnects2 = "{:,}".format(disconnects2)
-print( "[REPORT] Disconnect messages type b: " + disconnects2 )
-con_closed = "{:,}".format(con_closed)
-print( "[REPORT] Connection closed messages: " + con_closed )
-bad_protocols = "{:,}".format(bad_protocols)
-print( "[REPORT] Bad protocol messages: " + bad_protocols )
-bad_lengths = "{:,}".format(bad_lengths)
-print( "[REPORT] Bad length messages: " + bad_lengths )
-system_buttons = "{:,}".format(system_buttons)
-print( "[REPORT] System button and Power messages: " + system_buttons )
-new_seats = "{:,}".format(new_seats)
-print( "[REPORT] New seat messages: " + new_seats )
-server_listenings = "{:,}".format(server_listenings)
-print( "[REPORT] Server listening messages: " + server_listenings )
+def prepare_master_log() -> Path:
+    if not LOG_FILE.exists():
+        throw_fatal_error(f"{LOG_FILE} does not exist")
+    prepare_tmp_dir()
+    copied = copy_logs_into_tmp()
+    decompress_logs(copied)
+    return build_master_log()
 
-###################
-# print IP report #
-print( "\n#############" )
-print( "# IP Report #" )
-print( "#############" )
-seen_ips = sorted(seen_ips.items(), key=lambda x:x[1])
-sorted_seen_ips = []
-for ip in seen_ips:
-	sorted_seen_ips = [ip] + sorted_seen_ips
-count ="{:,}".format(len(seen_ips))
-print( "[REPORT] Unique IPs Seen: "+count )
-print( "[REPORT] Top 5 IPs Seen" )
-i = 0
-for ip in sorted_seen_ips:
-	i = i + 1
-	if i > 5:
-		break
-	mentions ="{:,}".format(ip[1])
-	print( "[REPORT] "+str(i)+": "+str(ip[0])+" with "+mentions+" mentions" )
 
-##################
-# print unknowns #
-if unknowns > 0:
-	print( "\n############################" )
-	print( "#     UNKNOWN MESSAGES     #" )
-	print( "# devs, investigate these  #" )
-	print( "# by setting verbosity > 0 #" )
-	print( "############################" )
-	unknowns = "{:,}".format(unknowns)
-	print( "[REPORT] Unknown messages: " + unknowns )
+def analyze_auth_log(path: Path) -> dict:
+    message_counts: Counter[str] = Counter()
+    seen_ips: Counter[str] = Counter()
+    failed_attempts_by_ip: Counter[str] = Counter()
+    failed_attempts_by_user: Counter[str] = Counter()
+    accepted_by_user: Counter[str] = Counter()
+    accepted_by_ip: Counter[str] = Counter()
+    invalid_user_targets: Counter[str] = Counter()
+    authentication_failures: Counter[str] = Counter()
+    sudo_commands: list[str] = []
+    unknown_samples: list[str] = []
 
-# for pretty terminal output
-print
+    with path.open("r", encoding="utf-8", errors="ignore") as handle:
+        for line in handle:
+            ips = re.findall(r"[0-9]+(?:\.[0-9]+){3}", line)
+            for ip in ips:
+                seen_ips[ip] += 1
+
+            failed_match = FAILED_PASSWORD_PATTERN.search(line)
+            if failed_match:
+                ip = failed_match.group("ip")
+                user = failed_match.group("user")
+                failed_attempts_by_ip[ip] += 1
+                failed_attempts_by_user[user] += 1
+
+            accepted_match = ACCEPTED_PASSWORD_PATTERN.search(line)
+            if accepted_match:
+                ip = accepted_match.group("ip")
+                user = accepted_match.group("user")
+                accepted_by_ip[ip] += 1
+                accepted_by_user[user] += 1
+
+            invalid_match = INVALID_USER_PATTERN.search(line)
+            if invalid_match:
+                invalid_user_targets[invalid_match.group("user")] += 1
+                failed_attempts_by_ip[invalid_match.group("ip")] += 1
+
+            auth_failure_match = AUTH_FAILURE_PATTERN.search(line)
+            if auth_failure_match:
+                authentication_failures[auth_failure_match.group("ip")] += 1
+
+            categorize_line(line, message_counts, sudo_commands, unknown_samples)
+
+    total_lines = sum(message_counts.values()) or 1
+    return {
+        "message_counts": message_counts,
+        "seen_ips": seen_ips,
+        "failed_by_ip": failed_attempts_by_ip,
+        "failed_by_user": failed_attempts_by_user,
+        "accepted_by_ip": accepted_by_ip,
+        "accepted_by_user": accepted_by_user,
+        "invalid_user_targets": invalid_user_targets,
+        "authentication_failures": authentication_failures,
+        "sudo_commands": sudo_commands,
+        "unknown_samples": unknown_samples,
+        "total_lines": total_lines,
+    }
+
+
+def categorize_line(
+    line: str,
+    message_counts: Counter[str],
+    sudo_commands: list[str],
+    unknown_samples: list[str],
+) -> None:
+    if "Received disconnect from" in line:
+        message_counts["disconnects"] += 1
+    elif "Disconnected from authenticating user" in line:
+        message_counts["disconnects2"] += 1
+    elif "authentication failure" in line:
+        message_counts["auth_failures"] += 1
+    elif "Disconnected from invalid user" in line:
+        message_counts["invalid_disconnects"] += 1
+    elif "Disconnected from" in line:
+        message_counts["disconnecteds"] += 1
+    elif "Invalid user" in line:
+        message_counts["invalid_users"] += 1
+    elif "Connection from invalid user" in line:
+        message_counts["invalid_users2"] += 1
+    elif "Connection closed" in line:
+        message_counts["con_closed"] += 1
+    elif " session opened for user" in line:
+        message_counts["sessions_opened"] += 1
+    elif "Did not receive identification string from" in line:
+        message_counts["no_ident_strings"] += 1
+    elif "Connection reset by" in line:
+        message_counts["con_resets"] += 1
+    elif " maximum authentication attempts exceeded for" in line:
+        message_counts["max_attempts"] += 1
+    elif "check pass; user unknown" in line:
+        message_counts["user_unknowns"] += 1
+    elif "Failed password for invalid user" in line:
+        message_counts["invalid_user_auth_failures"] += 1
+    elif "Failed password for" in line:
+        message_counts["failed_passwords"] += 1
+    elif "session closed for user" in line:
+        message_counts["sessions_closed"] += 1
+    elif " Failed none for invalid user" in line:
+        message_counts["failed_nones"] += 1
+    elif "ignoring max retries" in line:
+        message_counts["ignoring_max_retries"] += 1
+    elif "Accepted password for" in line:
+        message_counts["accepted_passwords"] += 1
+    elif "Unable to negotiate" in line:
+        message_counts["nonnegotiables"] += 1
+    elif "Bad protocol version identification" in line:
+        message_counts["bad_protocols"] += 1
+    elif " Bad packet length" in line:
+        message_counts["bad_lengths"] += 1
+    elif "Refused user" in line and " for service vsftpd" in line:
+        message_counts["ftp_refused"] += 1
+    elif "Removed session" in line:
+        message_counts["removed_sessions"] += 1
+    elif " Timeout, client not responding from user" in line:
+        message_counts["timeouts"] += 1
+    elif "logged out. Waiting for processes to exit." in line:
+        message_counts["logouts"] += 1
+    elif "Failed to release session: Interrupted system call" in line:
+        message_counts["failed_to_releases"] += 1
+    elif (
+        "fatal: fork of unprivileged child failed" in line
+        or "error: fork: Cannot allocate memory" in line
+    ):
+        message_counts["fatals"] += 1
+    elif "New session" in line:
+        message_counts["new_sessions"] += 1
+    elif "primary-webserver su:" in line:
+        message_counts["sus"] += 1
+    elif "bad username" in line:
+        message_counts["bad_users"] += 1
+    elif "PAM adding faulty module" in line:
+        message_counts["faulty_modules"] += 1
+    elif " Authentication refused: bad ownership or modes for file" in line:
+        message_counts["bad_ownerships"] += 1
+    elif "delete user" in line:
+        message_counts["delete_users"] += 1
+    elif "removed group" in line:
+        message_counts["remove_groups"] += 1
+    elif "removed shadow group" in line:
+        message_counts["remove_shadow_groups"] += 1
+    elif "Attempted login by" in line:
+        message_counts["attempted_logins"] += 1
+    elif "PAM unable to dlopen" in line:
+        message_counts["dlopens"] += 1
+    elif (
+        "Power key pressed" in line
+        or "Powering Off..." in line
+        or "System is powering down" in line
+        or "Watching system buttons on" in line
+    ):
+        message_counts["system_buttons"] += 1
+    elif "message authentication code incorrect" in line:
+        message_counts["auth_codes"] += 1
+    elif "userdel" in line:
+        message_counts["delusers"] += 1
+    elif "sudo:" in line:
+        message_counts["misc_sudos"] += 1
+        if len(sudo_commands) < SUDO_SAMPLE_LIMIT:
+            sudo_commands.append(line.strip())
+    elif "New seat" in line:
+        message_counts["new_seats"] += 1
+    elif "Server listening on" in line:
+        message_counts["server_listenings"] += 1
+    else:
+        message_counts["unknowns"] += 1
+        if len(unknown_samples) < 5:
+            unknown_samples.append(line.strip())
+
+
+def format_count(value: int) -> str:
+    return "{:,}".format(value)
+
+
+def print_top(counter: Counter[str], label: str, limit: int = 5) -> None:
+    if not counter:
+        print(f"[REPORT] No data for {label}")
+        return
+    print(f"[REPORT] Top {label}:")
+    for i, (key, count) in enumerate(counter.most_common(limit), start=1):
+        print(f"  {i}. {key} -> {format_count(count)} events")
+
+
+def build_warnings(results: dict) -> list[str]:
+    warnings: list[str] = []
+    total_failed = sum(results["failed_by_ip"].values())
+    total_success = sum(results["accepted_by_ip"].values())
+    if total_failed > total_success * 2 and total_failed > 0:
+        warnings.append(
+            "Failed SSH logins significantly outnumber successful authentications"
+        )
+    for ip, count in results["failed_by_ip"].most_common():
+        if count >= FAILED_THRESHOLD:
+            warnings.append(
+                f"IP {ip} generated {format_count(count)} failed logins (possible brute force)"
+            )
+    if results["invalid_user_targets"]:
+        hottest_user, count = results["invalid_user_targets"].most_common(1)[0]
+        if count >= FAILED_THRESHOLD // 2:
+            warnings.append(
+                f"Username '{hottest_user}' was targeted {format_count(count)} times"
+            )
+    message_counts = results["message_counts"]
+    if message_counts["sus"]:
+        warnings.append("Detected 'su' activity in logs. Verify it is expected.")
+    if message_counts["delete_users"] or message_counts["delusers"]:
+        warnings.append("User deletion activity observed in auth.log")
+    if message_counts["bad_ownerships"]:
+        warnings.append("Filesystem permission warnings detected during authentication")
+    if message_counts["fatals"]:
+        warnings.append("Fatal PAM or SSH errors detected")
+    if message_counts["unknowns"]:
+        warnings.append(
+            f"Encountered {format_count(message_counts['unknowns'])} unclassified log lines"
+        )
+    return warnings
+
+
+def print_report(results: dict) -> None:
+    message_counts = results["message_counts"]
+    print("\n#######################")
+    print("#### BEGIN RESULTS ####")
+    print("#######################\n")
+
+    print("[INFO] Summary of authentication activity")
+    print(
+        f"[REPORT] Successful SSH logins: {format_count(message_counts['accepted_passwords'])}"
+    )
+    print(
+        f"[REPORT] SSH sessions opened: {format_count(message_counts['sessions_opened'])}"
+    )
+    print(
+        f"[REPORT] Failed SSH logins: {format_count(message_counts['failed_passwords'])}"
+    )
+    print(
+        f"[REPORT] Invalid user attempts: {format_count(message_counts['invalid_users'])}"
+    )
+    print(
+        f"[REPORT] Authentication failures (PAM): {format_count(message_counts['auth_failures'])}"
+    )
+    print(
+        f"[REPORT] Timeouts: {format_count(message_counts['timeouts'])} | Disconnects: {format_count(message_counts['disconnects'])}"
+    )
+
+    print("\n[DETAIL] Top failed login IPs")
+    print_top(results["failed_by_ip"], "failed login IPs")
+    print("\n[DETAIL] Top usernames targeted by attackers")
+    print_top(results["failed_by_user"], "invalid/failed usernames")
+    print("\n[DETAIL] Successful login sources")
+    print_top(results["accepted_by_ip"], "successful login IPs")
+
+    if results["sudo_commands"]:
+        print("\n[DETAIL] Sample sudo activity:")
+        for entry in results["sudo_commands"]:
+            print(f"  {entry}")
+
+    if results["unknown_samples"]:
+        print("\n[DETAIL] Sample unknown log entries:")
+        for entry in results["unknown_samples"]:
+            print(f"  {entry}")
+
+    warnings = build_warnings(results)
+    print("\n################")
+    print("### WARNINGS ###")
+    print("################")
+    if warnings:
+        for warning in warnings:
+            print(f"[WARN] {warning}")
+    else:
+        print("[INFO] No warning thresholds were triggered.")
+
+    print("\n###############")
+    print("### IP Stats ##")
+    print("###############")
+    print(
+        f"[REPORT] Unique IPs seen: {format_count(len(results['seen_ips']))} (including successes and failures)"
+    )
+    print_top(results["seen_ips"], "overall IP chatter")
+
+
+def main() -> None:
+    print("####################################")
+    print("# Apache auth.log Bruteforce Audit #")
+    print("# Enhanced actionable reporting    #")
+    print("####################################\n")
+
+    master_log = prepare_master_log()
+    results = analyze_auth_log(master_log)
+    print_report(results)
+
+
+if __name__ == "__main__":
+    main()
