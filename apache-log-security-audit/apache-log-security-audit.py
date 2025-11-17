@@ -3,10 +3,12 @@
 # 7/12/2021
 
 # imports
+import json
 import os
 import re
 from collections import Counter
-from typing import Dict, List
+from typing import Dict, List, Optional
+from urllib.request import urlopen
 
 # debugging var
 debugging = 1
@@ -140,6 +142,7 @@ def analyze_access_log(path: str) -> Dict[str, object]:
                 "ip_error_counts": Counter(),
                 "suspicious_paths": Counter(),
                 "warnings": [],
+                "offenders": [],
         }
         suspicious_keywords = [
         "wp-login.php",
@@ -180,6 +183,13 @@ def analyze_access_log(path: str) -> Dict[str, object]:
                         summary["warnings"].append(
                                 f"IP {ip} generated {value} 4xx/5xx responses"
                         )
+                        summary["offenders"].append(
+                                {
+                                        "ip": ip,
+                                        "reason": f"generated {value} HTTP errors",
+                                        "error_count": value,
+                                }
+                        )
         for keyword, hits in summary["suspicious_paths"].most_common():
                 if hits > 0:
                         summary["warnings"].append(
@@ -190,6 +200,20 @@ def analyze_access_log(path: str) -> Dict[str, object]:
                         f"High HTTP error rate ({summary['error_rate']:.2f}%)"
                 )
         return summary
+
+
+def lookup_ip_location(ip: str, cache: Dict[str, Optional[str]]) -> Optional[str]:
+        if ip in cache:
+                return cache[ip]
+        try:
+                with urlopen(f"https://ipinfo.io/{ip}/json", timeout=3) as response:
+                        data = json.load(response)
+                parts = [data.get("city"), data.get("region"), data.get("country")]
+                location = ", ".join(part for part in parts if part)
+        except Exception:
+                location = None
+        cache[ip] = location
+        return location
 
 
 def analyze_error_log(path: str) -> Dict[str, object]:
@@ -246,6 +270,41 @@ def print_behavior_report(access_reports: List[Dict[str, object]], error_reports
                                 print(f"   [WARN] {warning}")
 
 
+def collect_offenders(access_reports: List[Dict[str, object]]) -> List[Dict[str, object]]:
+        offenders: Dict[str, Dict[str, object]] = {}
+        for report in access_reports:
+                for offender in report.get("offenders", []):
+                        ip = offender["ip"]
+                        if ip not in offenders or offender.get("error_count", 0) > offenders[ip].get(
+                                "error_count", 0
+                        ):
+                                offenders[ip] = offender
+        return list(offenders.values())
+
+
+def print_enforcement_guidance(offenders: List[Dict[str, object]]) -> None:
+        if not offenders:
+            print("\n[ACTION] No offending IPs crossed the alert threshold.")
+            return
+        cache: Dict[str, Optional[str]] = {}
+        print("\n########################################")
+        print("# Recommended response for bad actors   #")
+        print("########################################")
+        print("[ACTION] The following IPs generated excessive HTTP errors:")
+        for offender in offenders:
+                ip = offender["ip"]
+                location = lookup_ip_location(ip, cache)
+                location_info = f" ({location})" if location else ""
+                print(f" - {ip}{location_info}: {offender['reason']}")
+        ips = ", ".join(offender["ip"] for offender in offenders)
+        print("\n[ACTION] Quick block examples:")
+        print("   sudo ufw deny from <IP> to any    # e.g., sudo ufw deny from 1.2.3.4")
+        print("   sudo iptables -I INPUT -s <IP> -j DROP")
+        print("   sudo ipset add blocked_ips <IP>   # if using ipset")
+        print("Replace <IP> with any of the following:")
+        print(f"   {ips}")
+
+
 access_reports: List[Dict[str, object]] = []
 error_reports: List[Dict[str, object]] = []
 for master_file in os.listdir("tmp"):
@@ -255,6 +314,8 @@ for master_file in os.listdir("tmp"):
         elif "error" in master_file:
                 error_reports.append(analyze_error_log(path))
 print_behavior_report(access_reports, error_reports)
+offenders = collect_offenders(access_reports)
+print_enforcement_guidance(offenders)
 
 #################################
 # STEP 3                        #
