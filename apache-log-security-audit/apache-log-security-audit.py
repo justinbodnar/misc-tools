@@ -2,12 +2,16 @@
 # by Justin Bodnar
 # 7/12/2021
 
-# imports
+import argparse
+import builtins
 import json
 import os
 import re
+import shutil
+import gzip
+import xml.etree.ElementTree as ET
 from collections import Counter
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Sequence
 from urllib.request import urlopen
 
 # debugging var
@@ -16,121 +20,157 @@ debugging = 1
 # default log directory
 log_dir = "/var/log/apache2/"
 
+VERBOSITY_LEVELS = {"quiet": 0, "error": 0, "info": 1, "debug": 2}
+
+
+def setup_logging(verbosity: int) -> None:
+        """Monkey-patch the global print to honor verbosity flags."""
+
+        original_print = builtins.print
+
+        def controlled_print(*args, level: str = "info", **kwargs):
+                if verbosity >= VERBOSITY_LEVELS.get(level, 1):
+                        original_print(*args, **kwargs)
+
+        builtins.print = controlled_print
+
+
+def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
+        parser = argparse.ArgumentParser(description="Apache Log Security Audit")
+        parser.add_argument(
+                "--verbose",
+                "-v",
+                action="count",
+                default=0,
+                help="Increase output verbosity (use -vv for debug level).",
+        )
+        parser.add_argument(
+                "--quiet",
+                "-q",
+                action="count",
+                default=0,
+                help="Reduce output verbosity (can silence info logs).",
+        )
+        parser.add_argument(
+                "--filter-file",
+                "-f",
+                default="./default_filter.xml",
+                help="XML filter definition to use when scanning master logs.",
+        )
+        parser.add_argument(
+                "--min-impact",
+                type=int,
+                default=1,
+                help="Only evaluate filters with at least this impact score.",
+        )
+        parser.add_argument(
+                "--max-matches-per-rule",
+                type=int,
+                default=50,
+                help="Cap the number of stored matches per rule per file to avoid noise.",
+        )
+        parser.add_argument(
+                "--log-dir",
+                default=log_dir,
+                help="Apache log directory to audit (default: /var/log/apache2/).",
+        )
+        return parser.parse_args(argv)
+
+
 # function for ending program in a readable way
 def throw_fatal_error():
-    print("[EXIT] Fatal error encountered")
+    print("[EXIT] Fatal error encountered", level="error")
     exit()
 
-# print opening
-for i in range(25): print()
-print("#############################")
-print("# Apache Log Security Audit #")
-print("# by Justin Bodnar          #")
-print("# 7/12/2021                 #")
-print("#############################\n")
 
-##################################
-# STEP 1                         #
-# GET A WORKING COPY OF ALL LOGS #
-##################################
+def load_filter_rules(filter_file: str, min_impact: int) -> List[Dict[str, object]]:
+        if not os.path.exists(filter_file):
+                print(f"[WARN] Filter file {filter_file} not found; skipping signature scan.")
+                return []
 
-# verify default dir exists
-if not os.path.isdir(log_dir):
-    print("[ERROR] " + log_dir + " doesn't exist.")
-    throw_fatal_error()
+        tree = ET.parse(filter_file)
+        root = tree.getroot()
+        rules = []
+        for filt in root.findall("filter"):
+                try:
+                        impact = int(filt.findtext("impact", default="0"))
+                except ValueError:
+                        impact = 0
+                if impact < min_impact:
+                        continue
+                rule_id = filt.findtext("id", default="unknown")
+                description = filt.findtext("description", default="")
+                rule_text = filt.findtext("rule", default="")
+                tags = [tag.text for tag in filt.findall("tags/tag") if tag.text]
+                try:
+                        pattern = re.compile(rule_text, re.IGNORECASE)
+                except re.error:
+                        print(f"[WARN] Skipping invalid regex for rule {rule_id}.")
+                        continue
+                rules.append(
+                        {
+                                "id": rule_id,
+                                "description": description,
+                                "impact": impact,
+                                "tags": tags,
+                                "pattern": pattern,
+                        }
+                )
+        print(f"[INFO] Loaded {len(rules)} filters with impact >= {min_impact}.")
+        return rules
 
-# create output directory
-if not os.path.isdir("./output"):
-    os.system("mkdir ./output")
-    print("[INFO] Creating ./output directory to work in")
-elif len(os.listdir("output")) > 0:
-    os.system("rm -rf output")
-    os.system("mkdir ./output")
-    print("[INFO] Deleting data from ./output directory")
 
-# make a temporary directory to work in
-if not os.path.isdir("./tmp"):
-    os.system("mkdir ./tmp")
-    print("[INFO] Creating ./tmp directory to work in")
-elif len(os.listdir("tmp")) > 0:
-    os.system("rm -rf tmp")
-    os.system("mkdir ./tmp")
-    print("[INFO] Deleting data from ./tmp directory")
+def scan_log_file(
+        log_path: str,
+        rules: List[Dict[str, object]],
+        max_matches_per_rule: int,
+) -> List[Dict[str, object]]:
+        findings: List[Dict[str, object]] = []
+        if not rules:
+                return findings
+        with open(log_path, "r", encoding="utf-8", errors="ignore") as handle:
+                for line_no, line in enumerate(handle, start=1):
+                        for rule in rules:
+                                if rule.get("matched", 0) >= max_matches_per_rule:
+                                        continue
+                                if rule["pattern"].search(line):
+                                        rule["matched"] = rule.get("matched", 0) + 1
+                                        findings.append(
+                                                {
+                                                        "rule_id": rule["id"],
+                                                        "impact": rule["impact"],
+                                                        "description": rule["description"],
+                                                        "tags": rule["tags"],
+                                                        "line_no": line_no,
+                                                        "line": line.strip(),
+                                                }
+                                        )
+        return findings
 
-# copies all files from apache logs
-if len(os.listdir(log_dir)) < 1:
-    print("[ERROR] " + log_dir + " has 0 files to analyze")
-    throw_fatal_error()
-else:
-    print("[INFO] " + log_dir + " has " + str(len(os.listdir(log_dir))) + " files")
-    os.system("cp " + log_dir + "* tmp/")
-    print("[INFO] Copied " + str(len(os.listdir("tmp"))) + " files to ./tmp directory")
 
-# unzip all gunzip files
-print("[INFO] Beginning decompression of gunzip files. This may take some time.")
-gzs = 0
-for file in os.listdir("tmp"):
-    if ".gz" in file:
-        os.system("gunzip tmp/" + file)
-        gzs += 1
-print("[INFO] Decompressed " + str(gzs) + " gunzip files")
+def write_scan_results(
+        log_name: str, findings: List[Dict[str, object]], output_dir: str
+) -> Optional[str]:
+        if not findings:
+                return None
+        os.makedirs(output_dir, exist_ok=True)
+        output_path = os.path.join(output_dir, f"{log_name}_findings.txt")
+        with open(output_path, "w", encoding="utf-8") as handle:
+                handle.write(
+                        "Potentially malicious patterns identified in {0}\n".format(log_name)
+                )
+                handle.write("=" * 80 + "\n\n")
+                for finding in findings:
+                        tags = ",".join(finding.get("tags", []))
+                        handle.write(
+                                f"[{finding['rule_id']}] impact={finding['impact']} tags=[{tags}]\n"
+                        )
+                        handle.write(f"{finding['description']}\n")
+                        handle.write(
+                                f"Line {finding['line_no']}: {finding['line']}\n" + "-" * 40 + "\n"
+                        )
+        return output_path
 
-#####################################
-# STEP 2                             #
-# CONCATENATE FILES TOGETHER BY TAGS #
-######################################
-
-# sort all filenames into categories by tag
-# use first two prefixes as tags to sort by
-keys = {}
-for file in os.listdir("tmp"):
-    # first, lets get the category tag
-    elements = file.split(".")
-    # deal with short names
-    if len(elements) > 2:
-        key = elements[0] + "." + elements[1] + "." + elements[2]
-        last_index_added = 2
-    else:
-        key = elements[0] + "." + elements[1]
-        last_index_added = 1
-    key = key.lower()
-    # workaround for hacky situations
-    if "access" not in key and "error" not in key and len(elements) > last_index_added + 1:
-        last_index_added += 1
-        key = key + "." + elements[last_index_added]
-    # workaround for hacky situation
-    if elements[0] == "access" and elements[1] == "log":
-        key = "access.log"
-    if elements[0] == "error" and elements[1] == "log":
-        key = "error.log"
-    # add this key if unseen
-    if key not in keys:
-        keys[key] = []
-    # add this filename to this categories array
-    keys[key] = keys[key] + [file]
-print("[INFO] " + str(len(keys)) + " distinct sites were found.")
-
-# create command to concat these files into a master file for each key
-print("[INFO] Concatenating logs together. This may take some time.")
-count = 0
-for key in keys:
-    count += 1
-    command = "cat "
-    for file in keys[key]:
-        command = command + "tmp/" + file + " "
-    command = command + " > tmp/" + key + "-MASTER"
-    # run concat function
-    os.system(command)
-    # delete old files
-    for file in keys[key]:
-        os.system("rm tmp/" + file)
-count = str(len(os.listdir("tmp")))
-print("[INFO] " + count + " master files were created.")
-
-#####################################
-# STEP 2.5                          #
-# SUMMARIZE MASTER LOG BEHAVIOR     #
-#####################################
 
 
 def analyze_access_log(path: str) -> Dict[str, object]:
@@ -305,76 +345,124 @@ def print_enforcement_guidance(offenders: List[Dict[str, object]]) -> None:
         print(f"   {ips}")
 
 
-access_reports: List[Dict[str, object]] = []
-error_reports: List[Dict[str, object]] = []
-for master_file in os.listdir("tmp"):
-        path = os.path.join("tmp", master_file)
-        if "access" in master_file:
-                access_reports.append(analyze_access_log(path))
-        elif "error" in master_file:
-                error_reports.append(analyze_error_log(path))
-print_behavior_report(access_reports, error_reports)
-offenders = collect_offenders(access_reports)
-print_enforcement_guidance(offenders)
+def concatenate_logs(tmp_dir: str) -> str:
+        keys = {}
+        for file in os.listdir(tmp_dir):
+                elements = file.split(".")
+                if len(elements) > 2:
+                        key = elements[0] + "." + elements[1] + "." + elements[2]
+                        last_index_added = 2
+                else:
+                        key = elements[0] + "." + elements[1]
+                        last_index_added = 1
+                key = key.lower()
+                if "access" not in key and "error" not in key and len(elements) > last_index_added + 1:
+                        last_index_added += 1
+                        key = key + "." + elements[last_index_added]
+                if elements[0] == "access" and elements[1] == "log":
+                        key = "access.log"
+                if elements[0] == "error" and elements[1] == "log":
+                        key = "error.log"
+                if key not in keys:
+                        keys[key] = []
+                keys[key].append(file)
+        print(f"[INFO] {len(keys)} distinct sites were found.")
+        for key, file_list in keys.items():
+                master_path = os.path.join(tmp_dir, f"{key}-MASTER")
+                with open(master_path, "wb") as destination:
+                        for file in file_list:
+                                with open(os.path.join(tmp_dir, file), "rb") as source:
+                                        shutil.copyfileobj(source, destination)
+                                os.remove(os.path.join(tmp_dir, file))
+        total_masters = len(os.listdir(tmp_dir))
+        print(f"[INFO] {total_masters} master files were created.")
+        return total_masters
 
-#################################
-# STEP 3                        #
-# RUN SCALP ON EACH MASTER FILE #
-#################################
-i = 0
-print("[INFO] Running Scalp on all files.")
-for file in os.listdir("tmp"):
-    i += 1
-    print("[INFO] Processing file " + str(i) + " of " + count)
-    command = "python3 scalp.py --exhaustive --tough -l tmp/" + file + " -f ./default_filter.xml -o ./output --html >/dev/null"
-    os.system(command)
-print("[INFO] Log analysis complete")
-# check if there are any results
-if len(os.listdir("output")) < 1:
-    print("[INFO] No evidence of hacking found by Scalp!\n")
-    print("[EXITING] Success!")
-    exit()
-else:
-    print("[INFO] " + str(len(os.listdir("output"))) + " results generated by Scalp.")
-###############################
-# STEP 4                      #
-# CREATE HTML NAVIGATION FILE #
-###############################
-print("[INFO] Creating HTML navigation page ./output/index.html")
-f = open("output/index.html", "w+")
-f.write("""
-<html>
-<head>
-<title>Apache Log Security Audit by Justin Bodnar</title>
-</head>
-<body>
-<center>
-<br /><h2>Results</h2><br />
-<table border="0">
-<tr><td>
-<ul>
-""")
 
-# print HTML hyperlink
-for file in os.listdir("output"):
-    if file == "index.html":
-        continue
-    elements = file.split(".")
-    title = elements[0] + "." + elements[1]
-    f.write("\n<li><a href='" + file + "' target='_blank'>" + title + "</a></li>")
+def main(argv: Optional[Sequence[str]] = None) -> None:
+        args = parse_args(argv)
+        verbosity = max(0, min(2, 1 + args.verbose - args.quiet))
+        setup_logging(verbosity)
 
-# print closing HTML
-f.write("""
-</ul>
-</td></tr>
-</table>
-</center>
-</body>
-</html>""")
-f.close()
+        for _ in range(3):
+                print()
+        print("#############################")
+        print("# Apache Log Security Audit #")
+        print("# by Justin Bodnar          #")
+        print("# Updated with inline scalp #")
+        print("#############################\n")
 
-# shutdown gracefully, empty tmp directory
-print("[INFO] File complete. Removing temporary data.")
-os.system("rm -rf tmp/*")
-print("[EXIT] Program complete.")
+        working_log_dir = args.log_dir
+        if not os.path.isdir(working_log_dir):
+                print(f"[ERROR] {working_log_dir} doesn't exist.")
+                throw_fatal_error()
+
+        if os.path.isdir("./output"):
+                shutil.rmtree("./output")
+        os.makedirs("./output", exist_ok=True)
+        print("[INFO] Using ./output directory for results")
+
+        if os.path.isdir("./tmp"):
+                shutil.rmtree("./tmp")
+        os.makedirs("./tmp", exist_ok=True)
+        print("[INFO] Using ./tmp directory as workspace")
+
+        source_files = [f for f in os.listdir(working_log_dir) if os.path.isfile(os.path.join(working_log_dir, f))]
+        if not source_files:
+                print(f"[ERROR] {working_log_dir} has 0 files to analyze")
+                throw_fatal_error()
+        for filename in source_files:
+                shutil.copy2(os.path.join(working_log_dir, filename), os.path.join("tmp", filename))
+        print(f"[INFO] Copied {len(os.listdir('tmp'))} files to ./tmp directory")
+
+        gzs = 0
+        for filename in list(os.listdir("tmp")):
+                if filename.endswith(".gz"):
+                        gz_path = os.path.join("tmp", filename)
+                        target_path = os.path.join("tmp", filename[:-3])
+                        with gzip.open(gz_path, "rb") as gz_handle, open(target_path, "wb") as out:
+                                shutil.copyfileobj(gz_handle, out)
+                        os.remove(gz_path)
+                        gzs += 1
+        print(f"[INFO] Decompressed {gzs} gunzip files")
+
+        count = concatenate_logs("tmp")
+
+        access_reports: List[Dict[str, object]] = []
+        error_reports: List[Dict[str, object]] = []
+        for master_file in os.listdir("tmp"):
+                path = os.path.join("tmp", master_file)
+                if "access" in master_file:
+                        access_reports.append(analyze_access_log(path))
+                elif "error" in master_file:
+                        error_reports.append(analyze_error_log(path))
+        print_behavior_report(access_reports, error_reports)
+        offenders = collect_offenders(access_reports)
+        print_enforcement_guidance(offenders)
+
+        print("[INFO] Running signature search on master files.")
+        rules = load_filter_rules(args.filter_file, args.min_impact)
+        findings_summary = []
+        for index, master_file in enumerate(os.listdir("tmp"), start=1):
+                print(f"[INFO] Processing file {index} of {count}: {master_file}")
+                path = os.path.join("tmp", master_file)
+                findings = scan_log_file(path, rules, args.max_matches_per_rule)
+                output_path = write_scan_results(master_file, findings, "output")
+                if output_path:
+                        findings_summary.append((master_file, len(findings), output_path))
+
+        if not findings_summary:
+                print("[INFO] No evidence of hacking patterns found in master files.\n")
+                print("[EXITING] Success!")
+        else:
+                print(f"[INFO] {len(findings_summary)} files contained suspicious patterns:")
+                for item in findings_summary:
+                        print(f" - {item[0]}: {item[1]} matches -> {item[2]}")
+
+        shutil.rmtree("./tmp")
+        print("[EXIT] Program complete. Temporary data removed.")
+
+
+if __name__ == "__main__":
+        main()
 
