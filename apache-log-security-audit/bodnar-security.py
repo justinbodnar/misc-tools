@@ -9,7 +9,6 @@ recommendations, and can save run output into ./logs with optional rotation.
 from __future__ import annotations
 
 import datetime
-import getpass
 import gzip
 import json
 import os
@@ -26,6 +25,23 @@ from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 LOG_DIR = Path("./logs")
 TMP_DIR = Path("./tmp")
+
+# Default scan parameters (edit these constants to customize behavior)
+APACHE_LOG_DIR = Path("/var/log/apache2/")
+APACHE_FILTER_FILE = Path("./apache-log-security-audit/default_filter.xml")
+APACHE_MIN_IMPACT = 2
+APACHE_MAX_MATCHES_PER_RULE = 25
+
+AUTH_LOG_FILE = Path("/var/log/auth.log")
+VAR_LOG_DIR = AUTH_LOG_FILE.parent
+MASTER_LOG = TMP_DIR / "auth.log.MASTER"
+
+DEFAULT_DB_CLIENT = "mysql"
+DEFAULT_DB_HOST = "127.0.0.1"
+DEFAULT_DB_PORTS = {"mysql": 3306, "mariadb": 3306, "psql": 5432}
+DEFAULT_DB_USER = {"mysql": "root", "mariadb": "root", "psql": "postgres"}
+
+DEFAULT_SSH_TARGET = ""  # Set to user@host for remote quick checks
 
 
 def prompt(message: str, default: Optional[str] = None) -> str:
@@ -353,10 +369,10 @@ def concatenate_logs(tmp_dir: Path) -> int:
 
 def run_apache_log_audit() -> None:
     lines: List[str] = []
-    working_log_dir = prompt("Apache log directory", default="/var/log/apache2/")
-    filter_file = prompt("Filter file to use (blank to skip signature scan)", default="./apache-log-security-audit/default_filter.xml")
-    min_impact = int(prompt("Minimum rule impact (1-5)", default="1"))
-    max_matches = int(prompt("Max matches per rule", default="50"))
+    working_log_dir = APACHE_LOG_DIR
+    filter_file = str(APACHE_FILTER_FILE) if APACHE_FILTER_FILE.exists() else ""
+    min_impact = APACHE_MIN_IMPACT
+    max_matches = APACHE_MAX_MATCHES_PER_RULE
 
     if not os.path.isdir(working_log_dir):
         print(f"[ERROR] {working_log_dir} doesn't exist.")
@@ -435,9 +451,6 @@ def run_apache_log_audit() -> None:
 
 # ---------- auth.log brute-force audit ----------
 
-AUTH_LOG_FILE = Path("/var/log/auth.log")
-VAR_LOG_DIR = AUTH_LOG_FILE.parent
-MASTER_LOG = TMP_DIR / "auth.log.MASTER"
 FAILED_THRESHOLD = 25
 SUDO_SAMPLE_LIMIT = 10
 
@@ -769,8 +782,7 @@ def print_auth_report(results: dict) -> List[str]:
 
 
 def run_auth_bruteforce_audit() -> None:
-    base = Path(prompt("auth.log directory", default=str(VAR_LOG_DIR)))
-    master_log = prepare_master_log(base)
+    master_log = prepare_master_log(VAR_LOG_DIR)
     if not master_log:
         return
     results = analyze_auth_log(master_log)
@@ -1104,7 +1116,7 @@ def audit_postgres(report: AuditReport, args: argparse.Namespace) -> None:
 
 
 def run_database_audit() -> None:
-    client_pref = prompt("SQL client to use (mysql/mariadb/psql)", default="mysql")
+    client_pref = DEFAULT_DB_CLIENT
     try:
         client, client_path = detect_client(client_pref)
     except SystemExit as exc:
@@ -1116,14 +1128,12 @@ def run_database_audit() -> None:
     args = argparse.Namespace()
     args.client = client
     args.client_path = client_path
-    args.host = prompt("Database host", default="127.0.0.1")
-    default_port = "3306" if client in {"mysql", "mariadb"} else "5432"
-    args.port = int(prompt("Database port", default=default_port))
-    args.user = prompt("Database user", default="root" if client in {"mysql", "mariadb"} else "postgres")
-    password = getpass.getpass("Database password (leave blank to skip): ")
-    args.password = password or None
-    db = prompt("Default database (blank for none)", default="")
-    args.database = db or None
+    args.host = DEFAULT_DB_HOST
+    default_port = DEFAULT_DB_PORTS.get(client, 3306)
+    args.port = int(default_port)
+    args.user = DEFAULT_DB_USER.get(client, "root")
+    args.password = None
+    args.database = None
 
     report = AuditReport(engine=client, client_path=client_path)
     report.add_metadata("host", args.host)
@@ -1162,7 +1172,7 @@ def run_shell(command: List[str]) -> Tuple[int, str, str]:
 
 
 def quick_lamp_checks() -> None:
-    target = prompt("SSH target (user@host) or leave blank for local", default="")
+    target = DEFAULT_SSH_TARGET
     prefix = ssh_prefix(target)
 
     checks = {
