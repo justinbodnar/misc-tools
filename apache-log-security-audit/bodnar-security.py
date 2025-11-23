@@ -9,6 +9,7 @@ recommendations, and can save run output into ./logs with optional rotation.
 from __future__ import annotations
 
 import datetime
+import getpass
 import gzip
 import json
 import os
@@ -23,8 +24,9 @@ from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 # ---------- shared utilities ----------
 
-LOG_DIR = Path("./logs")
-TMP_DIR = Path("./tmp")
+BASE_DIR = Path(__file__).resolve().parent
+LOG_DIR = BASE_DIR / "logs"
+TMP_DIR = BASE_DIR / "tmp"
 
 # Default scan parameters (edit these constants to customize behavior)
 APACHE_LOG_DIR = Path("/var/log/apache2/")
@@ -73,18 +75,46 @@ def rotate_logs(directory: Path, keep_last: int = 5) -> None:
     print(f"[INFO] Rotated logs; kept {keep_last}, removed {len(files) - keep_last} old file(s).")
 
 
-def save_log(lines: List[str], name: str) -> None:
-    LOG_DIR.mkdir(exist_ok=True)
+def save_log(lines: List[str], name: str, *, auto_rotate_keep: Optional[int] = None) -> Path:
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.datetime.utcnow().strftime("%Y%m%d-%H%M%S")
     path = LOG_DIR / f"{name}-{timestamp}.log"
     path.write_text("\n".join(lines), encoding="utf-8")
     print(f"[INFO] Saved log to {path}")
-    if confirm("Rotate/truncate older logs?", default=False):
-        keep = prompt("How many recent logs should be kept?", default="5")
+    if auto_rotate_keep:
+        rotate_logs(LOG_DIR, auto_rotate_keep)
+    return path
+
+
+def maybe_save_log(
+    lines: List[str],
+    name: str,
+    *,
+    interactive: bool = True,
+    auto_rotate_keep: int = 5,
+) -> Optional[Path]:
+    if not lines:
+        return None
+    if not interactive and auto_rotate_keep < 1:
+        auto_rotate_keep = 1
+
+    if interactive:
+        if not confirm("Save this report to ./logs?", default=True):
+            return None
+        keep_default = str(auto_rotate_keep)
+        keep = prompt(
+            "How many most recent log files should be kept (older files will be deleted)?",
+            default=keep_default,
+        )
         try:
-            rotate_logs(LOG_DIR, int(keep))
+            keep_value = int(keep)
         except ValueError:
-            print("[WARN] Invalid number supplied; skipping rotation.")
+            print("[WARN] Invalid number supplied; using default rotation setting.")
+            keep_value = auto_rotate_keep
+        path = save_log(lines, name, auto_rotate_keep=keep_value)
+    else:
+        path = save_log(lines, name, auto_rotate_keep=auto_rotate_keep)
+    return path
 
 
 # ---------- Apache access/error log audit ----------
@@ -367,7 +397,9 @@ def concatenate_logs(tmp_dir: Path) -> int:
     return total_masters
 
 
-def run_apache_log_audit() -> None:
+def run_apache_log_audit(
+    *, interactive: bool = True, auto_rotate_keep: int = 5
+) -> Tuple[List[str], List[str], Optional[Path]]:
     lines: List[str] = []
     working_log_dir = APACHE_LOG_DIR
     filter_file = str(APACHE_FILTER_FILE) if APACHE_FILTER_FILE.exists() else ""
@@ -376,7 +408,7 @@ def run_apache_log_audit() -> None:
 
     if not os.path.isdir(working_log_dir):
         print(f"[ERROR] {working_log_dir} doesn't exist.")
-        return
+        return lines, [], None
 
     for folder in ("./output", TMP_DIR):
         if os.path.isdir(folder):
@@ -388,7 +420,7 @@ def run_apache_log_audit() -> None:
     source_files = [f for f in os.listdir(working_log_dir) if os.path.isfile(os.path.join(working_log_dir, f))]
     if not source_files:
         print(f"[ERROR] {working_log_dir} has 0 files to analyze")
-        return
+        return lines, [], None
     for filename in source_files:
         shutil.copy2(os.path.join(working_log_dir, filename), TMP_DIR / filename)
     print(f"[INFO] Copied {len(os.listdir(TMP_DIR))} files to ./tmp directory")
@@ -445,8 +477,21 @@ def run_apache_log_audit() -> None:
     for entry in lines:
         print(entry)
 
-    if confirm("Save this Apache audit to ./logs?", default=True):
-        save_log(lines, "apache-audit")
+    recommendations: List[str] = []
+    if offenders:
+        offender_ips = ", ".join(offender["ip"] for offender in offenders[:5])
+        recommendations.append(f"Block or throttle abusive IPs observed in Apache logs: {offender_ips}.")
+    if findings_summary:
+        recommendations.append(
+            "Review suspicious patterns noted in ./output findings and harden exposed paths (e.g., wp-login.php, phpMyAdmin)."
+        )
+    saved_path = maybe_save_log(
+        lines,
+        "apache-audit",
+        interactive=interactive,
+        auto_rotate_keep=auto_rotate_keep,
+    )
+    return lines, recommendations, saved_path
 
 
 # ---------- auth.log brute-force audit ----------
@@ -781,16 +826,31 @@ def print_auth_report(results: dict) -> List[str]:
     return lines
 
 
-def run_auth_bruteforce_audit() -> None:
+def run_auth_bruteforce_audit(
+    *, interactive: bool = True, auto_rotate_keep: int = 5
+) -> Tuple[List[str], List[str], Optional[Path]]:
     master_log = prepare_master_log(VAR_LOG_DIR)
     if not master_log:
-        return
+        return [], [], None
     results = analyze_auth_log(master_log)
     lines = print_auth_report(results)
     for line in lines:
         print(line)
-    if confirm("Save this auth.log audit to ./logs?", default=True):
-        save_log(lines, "auth-audit")
+
+    warnings = build_warnings(results)
+    recommendations = warnings.copy()
+    hot_offenders = list(results["failed_by_ip"].most_common(5))
+    if hot_offenders:
+        offender_ips = ", ".join(f"{ip} ({count})" for ip, count in hot_offenders)
+        recommendations.append(f"Block or rate-limit repeated SSH failures from: {offender_ips}.")
+
+    saved_path = maybe_save_log(
+        lines,
+        "auth-audit",
+        interactive=interactive,
+        auto_rotate_keep=auto_rotate_keep,
+    )
+    return lines, recommendations, saved_path
 
 
 # ---------- database security audit ----------
@@ -1115,13 +1175,28 @@ def audit_postgres(report: AuditReport, args: argparse.Namespace) -> None:
         report.add_note(f"Could not enumerate roles: {exc}")
 
 
-def run_database_audit() -> None:
+def summarize_database_recommendations(report: AuditReport) -> List[str]:
+    recommendations: List[str] = []
+    for finding in report.findings:
+        if finding.status in {"FAIL", "ERROR"}:
+            detail = finding.remediation or finding.details
+            recommendations.append(f"{finding.check}: {detail}")
+    recommendations.extend(report.notes)
+    return recommendations
+
+
+def run_database_audit(
+    *,
+    password: Optional[str] = None,
+    interactive: bool = True,
+    auto_rotate_keep: int = 5,
+) -> Tuple[List[str], List[str], Optional[Path]]:
     client_pref = DEFAULT_DB_CLIENT
     try:
         client, client_path = detect_client(client_pref)
     except SystemExit as exc:
         print(exc)
-        return
+        return [], [], None
 
     import argparse
 
@@ -1132,8 +1207,12 @@ def run_database_audit() -> None:
     default_port = DEFAULT_DB_PORTS.get(client, 3306)
     args.port = int(default_port)
     args.user = DEFAULT_DB_USER.get(client, "root")
-    args.password = None
+    args.password = password
     args.database = None
+
+    if interactive and args.password is None:
+        supplied = getpass.getpass("Enter database password (leave blank to try without): ").strip()
+        args.password = supplied or None
 
     report = AuditReport(engine=client, client_path=client_path)
     report.add_metadata("host", args.host)
@@ -1149,14 +1228,20 @@ def run_database_audit() -> None:
             audit_postgres(report, args)
     except KeyboardInterrupt:
         print("Interrupted by user")
-        return
+        return [], [], None
 
     lines = report.render()
     for line in lines:
         print(line)
+    recommendations = summarize_database_recommendations(report)
 
-    if confirm("Save this database audit to ./logs?", default=True):
-        save_log(lines, f"{client}-audit")
+    saved_path = maybe_save_log(
+        lines,
+        f"{client}-audit",
+        interactive=interactive,
+        auto_rotate_keep=auto_rotate_keep,
+    )
+    return lines, recommendations, saved_path
 
 
 # ---------- quick LAMP SSH checklist ----------
@@ -1171,7 +1256,9 @@ def run_shell(command: List[str]) -> Tuple[int, str, str]:
     return result.returncode, result.stdout.strip(), result.stderr.strip()
 
 
-def quick_lamp_checks() -> None:
+def quick_lamp_checks(
+    *, interactive: bool = True, auto_rotate_keep: int = 5
+) -> Tuple[List[str], List[str], Optional[Path]]:
     target = DEFAULT_SSH_TARGET
     prefix = ssh_prefix(target)
 
@@ -1211,13 +1298,64 @@ def quick_lamp_checks() -> None:
     for line in lines:
         print(line)
 
-    if confirm("Save this LAMP SSH check to ./logs?", default=True):
-        save_log(lines, "lamp-ssh-check")
+    saved_path = maybe_save_log(
+        lines,
+        "lamp-ssh-check",
+        interactive=interactive,
+        auto_rotate_keep=auto_rotate_keep,
+    )
+    return lines, recommendations, saved_path
+
+
+def unique_recommendations(recommendations: List[str]) -> List[str]:
+    seen = set()
+    unique: List[str] = []
+    for recommendation in recommendations:
+        cleaned = recommendation.strip()
+        if not cleaned or cleaned in seen:
+            continue
+        seen.add(cleaned)
+        unique.append(cleaned)
+    return unique
+
+
+def run_all_checks(auto_rotate_keep: int = 5) -> None:
+    print("[INFO] Running all checks with defaults. Only database authentication will prompt if needed.\n")
+
+    all_recommendations: List[str] = []
+
+    _, recs, _ = run_apache_log_audit(interactive=False, auto_rotate_keep=auto_rotate_keep)
+    all_recommendations.extend(recs)
+
+    _, recs, _ = run_auth_bruteforce_audit(interactive=False, auto_rotate_keep=auto_rotate_keep)
+    all_recommendations.extend(recs)
+
+    db_password = getpass.getpass("Database password for SQL audit (leave blank to try without): ").strip()
+    _, recs, _ = run_database_audit(
+        password=db_password or None,
+        interactive=False,
+        auto_rotate_keep=auto_rotate_keep,
+    )
+    all_recommendations.extend(recs)
+
+    _, recs, _ = quick_lamp_checks(interactive=False, auto_rotate_keep=auto_rotate_keep)
+    all_recommendations.extend(recs)
+
+    distilled = unique_recommendations(all_recommendations)
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.datetime.utcnow().strftime("%Y%m%d-%H%M%S")
+    rec_path = LOG_DIR / f"recommendations-{timestamp}.txt"
+    if distilled:
+        rec_path.write_text("\n".join(distilled) + "\n", encoding="utf-8")
+    else:
+        rec_path.write_text("No outstanding recommendations detected.\n", encoding="utf-8")
+    print(f"\n[INFO] Saved consolidated recommendations to {rec_path}")
 
 
 # ---------- interactive menu ----------
 
 MENU_OPTIONS = {
+    "0": ("Run all checks (non-interactive)", lambda: run_all_checks()),
     "1": ("Apache access/error log audit", run_apache_log_audit),
     "2": ("auth.log brute-force audit", run_auth_bruteforce_audit),
     "3": ("Database security audit (MySQL/MariaDB/PostgreSQL)", run_database_audit),
