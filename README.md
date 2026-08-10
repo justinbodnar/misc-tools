@@ -2,80 +2,97 @@
 
 A collection of scripts and tools written by [Justin Bodnar](https://justinbodnar.com) and tailored to my personal workflow to simplify server management, web development, and security tasks.
 
+## Documentation
+
+- [Ubuntu LAMP Hardening Guide](Ubuntu-LAMP-Hardening.md)
+
+## Repository Layout
+
+- [`apache-scripts/`](apache-scripts/) — Apache/LAMP setup, isolation, permissions, and sitemap utilities.
+- [`apache-log-security-audit/`](apache-log-security-audit/) — Apache, authentication, MySQL, and security auditing tools.
+- [`broken-link-scanner/`](broken-link-scanner/) — Multi-domain internal/external broken-link scanner.
+- [`mx-checker/`](mx-checker/) — MX, SPF, DKIM, and DMARC auditing tools.
+
 ---
 
-## `isolate_websites.sh`
+## `apache-scripts/isolate_websites.sh`
 
 Automates the isolation of individual websites by compartmentalizing their file systems and assigning dedicated users and groups. This containment strategy hinders adversaries from pivoting between compromised sites, effectively neutralizing lateral movement within the host. By configuring per-site PHP-FPM pools and enforcing `open_basedir` restrictions under `/var/www/html`, this script significantly reduces the attack surface and helps maintain a more secure hosting environment.
 
-
 Features:
+
 - Automatically creates a dedicated system user and group per website.
 - Enforces secure file permissions and `open_basedir` restrictions.
 - Configures individual PHP-FPM pools and updates corresponding Apache virtual hosts.
 - Enhances security by preventing cross-site access to files.
 
 Requirements/Caveats:
+
 - Webroot must be `/var/www/html/`
 - Websites must be in their own folders in webroot. ie.
-    - `/var/www/html/myfirstwebsite.com`
-    - `/var/www/html/mysecondwebsite.org`
-    - `/var/www/html/staging.mythirdwebsite.net`
+  - `/var/www/html/myfirstwebsite.com`
+  - `/var/www/html/mysecondwebsite.org`
+  - `/var/www/html/staging.mythirdwebsite.net`
 - Users are generated from text found before the final period. ie. the previous websites will create users
-    - `myfirstwebsite`
-    - `mysecondwebsite`
-    - `staging.mythirdwebsite`
+  - `myfirstwebsite`
+  - `mysecondwebsite`
+  - `staging.mythirdwebsite`
 
 Usage:
 
-`./isolate_websites.sh`
+`./apache-scripts/isolate_websites.sh`
 
 ---
 
-## `./apache-log-security-audit/`
+## `apache-log-security-audit/`
 
-A tool for analyzing Apache2 logs and identifying potential infiltration attempts.
+A toolset for analyzing Apache2 logs and identifying potential infiltration attempts.
 
 **Features:**
+
 - Parses logs to reveal suspicious activity and indicators of compromise.
+- Includes Apache authentication, MySQL security, and related audit utilities.
 - Delivers actionable intelligence for reinforcing your server’s defenses.
 
 **Recommended Follow-Up:**
 Utilize ClamAV for a comprehensive malware scan and further hardening of your environment:
 
-
-```
+```bash
 clamscan -ir --bell --detect-structured=yes --structured-ssn-format=2 --scan-mail=yes --phishing-sigs=yes --phishing-scan-urls=yes --heuristic-alerts=yes --heuristic-scan-precedence=no --scan-pe=yes --scan-elf=yes --scan-ole2=yes --scan-pdf=yes --scan-swf=yes --scan-html=yes --scan-xmldocs=yes --scan-hwp3=yes --scan-archive=yes --alert-broken=yes --alert-broken-media=yes --alert-encrypted=yes --alert-encrypted-archive=yes --alert-encrypted-doc=yes --alert-macros=yes --alert-phishing-ssl=yes --alert-phishing-cloak=yes --alert-partition-intersection=yes
-
 ```
 
 ---
-## `fix-webserver.sh`
+
+## `apache-scripts/fix-webserver.sh`
 
 Fixes Apache web server permissions by targeting the `/var/www` directory.
 
 Features:
+
 - Recursively updates ownership and permissions to ensure proper web server functionality.
 - This script is NOT compatable with `isolate_websites.sh`
-    -  you must modify or comment out the `chown` line to make it so
+  - you must modify or comment out the `chown` line to make it so
 
 Usage:
+
 1. Place the script in your `/var/www` directory.
 2. Run: `sudo ./fix-webserver.sh`
 
 ---
 
-## `sitemap_generator.sh`
+## `apache-scripts/sitemap_generator.sh`
 
 Easily generate an SEO-friendly XML sitemap for your website.
 
 Features:
+
 - Automatically crawls the webroot to identify HTML, PHP, and (optionally) image files.
 - Recursively searches all directories to ensure comprehensive coverage.
 - Prevents overwriting by creating uniquely named sitemap files (e.g., `sitemap.xml`, `sitemap_2.xml`).
 - Fully configurable, with options for including image files and specifying the domain name.
 
 Usage:
+
 1. Save the script in your webroot directory.
 2. Run the command: `./sitemap_generator.sh`
 3. Enter your domain name when prompted (e.g., `example.com` or `https://example.com`).
@@ -83,11 +100,12 @@ Usage:
 
 ---
 
-## `fresh-lamp-install.sh`
+## `apache-scripts/fresh-lamp-install.sh`
 
 Installs and configures a complete LAMP stack (Linux, Apache, MySQL, PHP) on a fresh Ubuntu server.
 
 Packages:
+
 - `apache2`
 - `mysql-server`
 - `php`
@@ -99,14 +117,13 @@ Packages:
 - `python3-certbot-apache`
 - `python3-pip`
 
-
 Usage:
 
-`sudo ./fresh-lamp-install.sh`
+`sudo ./apache-scripts/fresh-lamp-install.sh`
 
 ---
 
-## `domain-mx-checker.py`
+## `mx-checker/domain-mx-checker.py`
 
 A simple Python script to audit a list of domains for email protection:
 
@@ -115,7 +132,7 @@ A simple Python script to audit a list of domains for email protection:
   - SPF records
   - DKIM records (only if MX present)
   - DMARC records
-- **Input file**: `domain-mx-checker-input.txt` (one domain per line)
+- **Input file**: `mx-checker/domain-mx-checker-input.txt` (one domain per line)
 - **Output**:
   - Lists domains missing SPF, DKIM or DMARC
   - “Fully Protected” domain summary
@@ -129,15 +146,49 @@ A simple Python script to audit a list of domains for email protection:
 ### Usage
 
 ```bash
-# Basic run (reads from domain-mx-checker-input.txt)
+cd mx-checker
+
+# Basic run
 python3 domain-mx-checker.py
 
 # Verbose mode for detailed DNS lookup traces
 python3 domain-mx-checker.py -v
 ```
+
 ---
 
-Author: Justin Bodnar
+## `broken-link-scanner/`
+
+Crawls multiple websites and reports broken internal and external links.
+
+**Features:**
+
+- Reads domains from `domains.txt`.
+- Checks internal and external links for HTTP 404, 410, and 5xx errors.
+- Produces a concise `broken-links.txt` report containing the broken URL, HTTP status, and referring page.
+- Displays concise crawl progress when run interactively.
+- Includes a bundled SiteOne Crawler binary, avoiding a system-wide SiteOne installation.
+- Uses temporary working files that are automatically removed after each scan.
+- Suitable for automated nightly execution through cron.
+
+### Requirements
+
+- Linux x86-64
+- `bash`
+- `jq`
+
+### Usage
+
+```bash
+cd broken-link-scanner
+./check-broken-links.sh
+```
+
+Add one domain per line to `domains.txt`.
+
+---
+
+Author: Justin Bodnar  
 Website: [justinbodnar.com](https://justinbodnar.com)
 
 ---
